@@ -18,7 +18,7 @@ Output flags: `--json`, `--csv`, `--web`
 
 ## JQL Syntax
 
-- Single quotes for values with spaces: `status = 'In Development'`
+- Single quotes for values with spaces: `status = 'Some Status'`
 - Avoid `!=` with backslash - use `NOT status = 'Done'` instead
 - Functions: `currentUser()`, `now()`, `startOfDay()`, `endOfWeek()`
 - Status categories: `statusCategory = Done`, `statusCategory = 'In Progress'`
@@ -28,7 +28,7 @@ Output flags: `--json`, `--csv`, `--web`
 
 ```sql
 project = <PROJECT> AND assignee = currentUser() AND resolution = Unresolved
-project = <PROJECT> AND status = 'In Development'
+project = <PROJECT> AND status = '<status-name>'
 project = <PROJECT> AND statusCategory = 'In Progress'
 project = <PROJECT> AND updated >= -7d ORDER BY updated DESC
 project = <PROJECT> AND Sprint = '<sprint-name>'
@@ -85,7 +85,7 @@ acli jira workitem comment create --key <KEY> --body-file comment.json
 
 ```bash
 acli jira workitem transition --key <KEY> --status "Done"
-acli jira workitem transition --key "<KEY1>,<KEY2>" --status "In Development"
+acli jira workitem transition --key "<KEY1>,<KEY2>" --status "<status>"
 acli jira workitem transition --jql "project = <PROJECT> AND labels = ready" --status "Done" --yes
 acli jira workitem transition --filter 10001 --status "Done"
 ```
@@ -163,16 +163,11 @@ When reviewing ticket status against codebase:
 3. Check if work is deployed: compare commits against release tags
 4. Transition or comment as needed
 
-### Common Transitions
+### Transitions
 
-| Current Status | Scenario | Target Status |
-|----------------|----------|---------------|
-| To Do | Starting work | In Progress |
-| In Progress | Work complete | In Review / Ready for QA |
-| In Progress | Blocked | On Hold |
-| On Hold | Unblocked | In Progress |
-| In Review | Approved | Done |
-| Ready for QA | QA passed | Done |
+Transition syntax: `acli jira workitem transition --key <KEY> --status "<target-status>"`
+
+Common workflow patterns vary by organization. Consult your team's workflow documentation for valid status transitions.
 
 ### Batch Operations
 

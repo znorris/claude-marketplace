@@ -32,12 +32,7 @@ Query for open tickets assigned to the current user using the platform's CLI.
 
 ### Step 2: Categorize Tickets
 
-Group tickets by current status:
-
-1. **In Progress** - Actively being worked on
-2. **Blocked/On Hold** - Waiting on something
-3. **To Do/Backlog** - Ready to start
-4. **In Review** - Code review, QA, etc.
+Group tickets by their current status as defined in the project's workflow. Common groupings include active work, blocked/waiting, backlog, and review states - but use the actual status names from the ticket system.
 
 ### Step 3: Analyze Each Ticket
 
@@ -108,12 +103,7 @@ Only after user approval, execute the recommended actions.
 - Blockers identified
 - Work no longer relevant
 
-**Transition Status** - When ticket should move to a different state:
-
-- Work complete -> Ready for Review/QA
-- Blocked -> On Hold
-- Unblocked -> In Progress
-- Shipped -> Done/Closed
+**Transition Status** - When ticket should move to a different state based on the project's workflow. Use the actual status names available in the ticket system.
 
 **Close** - When work is complete and deployed
 
