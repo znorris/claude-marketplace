@@ -1,4 +1,4 @@
-# claude-skills
+# claude-marketplace
 
 A Claude Code plugin marketplace with developer workflow skills.
 
@@ -6,7 +6,7 @@ A Claude Code plugin marketplace with developer workflow skills.
 
 ```bash
 # Add the marketplace
-/plugin marketplace add znorris/claude-skills
+/plugin marketplace add znorris/claude-marketplace
 
 # Install plugins
 /plugin install git-workflows@znorris-skills
