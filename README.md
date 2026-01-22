@@ -13,6 +13,7 @@ A Claude Code plugin marketplace with developer workflow skills.
 /plugin install issue-management@znorris/claude-marketplace
 /plugin install gitlab-tools@znorris/claude-marketplace
 /plugin install jira-tools@znorris/claude-marketplace
+/plugin install scorevision@znorris/claude-marketplace
 ```
 
 ## Plugins
@@ -31,11 +32,10 @@ Git workflow skills for version control operations.
 
 Platform-agnostic issue and ticket management.
 
-| Skill             | Description                                             |
-| ----------------- | ------------------------------------------------------- |
-| `/create-issue`   | Investigate and document a bug or feature request       |
-| `/plan-work`      | Create a detailed implementation plan for an issue      |
-| `/review-tickets` | Review and sync tickets with codebase state             |
+| Skill           | Description                                       |
+| --------------- | ------------------------------------------------- |
+| `/create-issue` | Investigate and document a bug or feature request |
+| `/plan-work`    | Create a detailed implementation plan for an issue |
 
 ### gitlab-tools
 
@@ -52,6 +52,15 @@ Atlassian CLI (acli) reference - auto-loaded when working with Jira.
 | Skill       | Description                                                 |
 | ----------- | ----------------------------------------------------------- |
 | `/jira-cli` | Command reference for JQL, transitions, comments, workflows |
+
+### scorevision
+
+ScoreVision-specific Jira workflows and conventions.
+
+| Skill              | Description                                          |
+| ------------------ | ---------------------------------------------------- |
+| `/ticket-workflow` | ScoreVision Jira workflow states and transitions     |
+| `/review-tickets`  | Review and sync ScoreVision tickets with codebase    |
 
 ## References
 

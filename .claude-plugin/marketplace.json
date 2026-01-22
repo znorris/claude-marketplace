@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Developer workflow skills for git, issue management, and platform-specific tooling",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -25,8 +25,8 @@
     {
       "name": "issue-management",
       "source": "./plugins/issue-management",
-      "description": "Issue and ticket management skills for creating issues, planning work, and reviewing ticket status",
-      "version": "1.0.0",
+      "description": "Issue and ticket management skills for creating issues and planning work",
+      "version": "2.0.0",
       "keywords": [
         "issues",
         "tickets",
@@ -53,7 +53,7 @@
       "name": "jira-tools",
       "source": "./plugins/jira-tools",
       "description": "Atlassian CLI (acli) command reference for Jira operations",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "keywords": [
         "jira",
         "atlassian",
@@ -61,6 +61,18 @@
         "cli",
         "tickets",
         "workflow"
+      ]
+    },
+    {
+      "name": "scorevision",
+      "source": "./plugins/scorevision",
+      "description": "ScoreVision-specific Jira workflows and conventions",
+      "version": "1.0.0",
+      "keywords": [
+        "scorevision",
+        "jira",
+        "workflow",
+        "tickets"
       ]
     }
   ]
