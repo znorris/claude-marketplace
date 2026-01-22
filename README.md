@@ -9,10 +9,10 @@ A Claude Code plugin marketplace with developer workflow skills.
 /plugin marketplace add znorris/claude-marketplace
 
 # Install plugins
-/plugin install git-workflows@znorris-skills
-/plugin install issue-management@znorris-skills
-/plugin install gitlab-tools@znorris-skills
-/plugin install jira-tools@znorris-skills
+/plugin install git-workflows@znorris/claude-marketplace
+/plugin install issue-management@znorris/claude-marketplace
+/plugin install gitlab-tools@znorris/claude-marketplace
+/plugin install jira-tools@znorris/claude-marketplace
 ```
 
 ## Plugins
