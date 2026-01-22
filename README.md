@@ -1,4 +1,4 @@
-# znorris-skills
+# claude-skills
 
 A Claude Code plugin marketplace with developer workflow skills.
 
