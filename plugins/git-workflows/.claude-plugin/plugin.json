@@ -1,0 +1,5 @@
+{
+  "name": "git-workflows",
+  "description": "Git workflow skills for commit messages, merge requests, and release preparation",
+  "version": "1.0.0"
+}

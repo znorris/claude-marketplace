@@ -1,0 +1,67 @@
+{
+  "name": "znorris-skills",
+  "owner": {
+    "name": "znorris"
+  },
+  "metadata": {
+    "description": "Developer workflow skills for git, issue management, and platform-specific tooling",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "git-workflows",
+      "source": "./plugins/git-workflows",
+      "description": "Git workflow skills for commit messages, merge requests, and release preparation",
+      "version": "1.0.0",
+      "keywords": [
+        "git",
+        "commit",
+        "merge-request",
+        "pull-request",
+        "release",
+        "semver"
+      ]
+    },
+    {
+      "name": "issue-management",
+      "source": "./plugins/issue-management",
+      "description": "Issue and ticket management skills for creating issues, planning work, and reviewing ticket status",
+      "version": "1.0.0",
+      "keywords": [
+        "issues",
+        "tickets",
+        "planning",
+        "workflow",
+        "backlog"
+      ]
+    },
+    {
+      "name": "gitlab-tools",
+      "source": "./plugins/gitlab-tools",
+      "description": "GitLab CLI (glab) command reference and workflow patterns",
+      "version": "1.0.0",
+      "keywords": [
+        "gitlab",
+        "glab",
+        "cli",
+        "merge-request",
+        "pipeline",
+        "ci-cd"
+      ]
+    },
+    {
+      "name": "jira-tools",
+      "source": "./plugins/jira-tools",
+      "description": "Atlassian CLI (acli) command reference for Jira operations",
+      "version": "1.0.0",
+      "keywords": [
+        "jira",
+        "atlassian",
+        "acli",
+        "cli",
+        "tickets",
+        "workflow"
+      ]
+    }
+  ]
+}

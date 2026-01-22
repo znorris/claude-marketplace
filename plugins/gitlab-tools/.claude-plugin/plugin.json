@@ -1,0 +1,5 @@
+{
+  "name": "gitlab-tools",
+  "description": "GitLab CLI (glab) command reference and workflow patterns",
+  "version": "1.0.0"
+}

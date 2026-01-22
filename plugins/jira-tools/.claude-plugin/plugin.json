@@ -1,0 +1,5 @@
+{
+  "name": "jira-tools",
+  "description": "Atlassian CLI (acli) command reference for Jira operations",
+  "version": "1.0.0"
+}
