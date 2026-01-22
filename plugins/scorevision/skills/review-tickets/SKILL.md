@@ -1,38 +1,30 @@
 ---
 name: review-tickets
-description: Review and update tickets/issues based on current codebase state. Use when the user wants to sync their tickets with reality, asks "what's the status of my tickets?", or wants to clean up their issue backlog.
+description: Review and update ScoreVision Jira tickets based on current codebase state. Use when the user wants to sync their tickets with reality, asks "what's the status of my tickets?", or wants to clean up their issue backlog.
 ---
 
-# Review Tickets
+# Review ScoreVision Tickets
 
-Review and update tickets/issues based on the current codebase state. This workflow is platform-agnostic - use the appropriate CLI tool for the user's platform (gh for GitHub, glab for GitLab, acli for Jira, etc.).
+Review and update Jira tickets based on the current codebase state.
 
-## Prerequisites
+## References
 
-Detect and use the appropriate CLI tool:
-
-- **GitHub**: `gh` CLI
-- **GitLab**: `glab` CLI
-- **Jira**: `acli` CLI
-- **Linear**: `linear` CLI
-
-If a platform-specific CLI skill is available (e.g., `jira-cli`, `gitlab-cli`), reference it for command syntax.
+- For **workflow states and valid transitions**, reference the `ticket-workflow` skill
+- For **acli command syntax**, reference the `jira-cli` skill
 
 ## Workflow
 
 ### Step 1: Gather Open Tickets
 
-Query for open tickets assigned to the current user using the platform's CLI.
+Query for open tickets assigned to the current user:
 
-**Examples by platform:**
-
-- GitHub: `gh issue list --assignee @me --state open`
-- GitLab: `glab issue list --assignee=@me --state=opened`
-- Jira: `acli jira workitem search --jql "assignee = currentUser() AND resolution = Unresolved"`
+```bash
+acli jira workitem search --jql "assignee = currentUser() AND resolution = Unresolved" --fields "key,status,summary"
+```
 
 ### Step 2: Categorize Tickets
 
-Group tickets by their current status as defined in the project's workflow. Common groupings include active work, blocked/waiting, backlog, and review states - but use the actual status names from the ticket system.
+Group tickets by their current status. Reference the `ticket-workflow` skill for ScoreVision's workflow states and status categories.
 
 ### Step 3: Analyze Each Ticket
 
@@ -43,13 +35,12 @@ For each ticket, correlate with codebase state to determine appropriate action.
 1. **Search for related code:**
    - Look for file paths mentioned in ticket description
    - Search for keywords from ticket summary
-   - Check recent git commits for ticket key (e.g., `#123`, `PROJ-456`)
+   - Check recent git commits for ticket key
 
 2. **Check git history:**
 
    ```bash
    git log --oneline --grep="<ticket-id>"
-   git log --oneline --all --since="2024-01-01" | grep -i "<keyword>"
    ```
 
 3. **Check recent releases:**
@@ -85,7 +76,7 @@ For each ticket that needs modification:
 <Why this action is appropriate based on evidence>
 
 ### Command to Execute
-<Platform-specific command>
+<acli command - reference jira-cli skill for syntax>
 ```
 
 Wait for user approval before executing commands.
@@ -103,7 +94,7 @@ Only after user approval, execute the recommended actions.
 - Blockers identified
 - Work no longer relevant
 
-**Transition Status** - When ticket should move to a different state based on the project's workflow. Use the actual status names available in the ticket system.
+**Transition Status** - When ticket should move to a different state. Reference `ticket-workflow` for valid transitions.
 
 **Close** - When work is complete and deployed
 
