@@ -1,6 +1,6 @@
 ---
 name: review-tickets
-description: Review and update ScoreVision Jira tickets based on current codebase state. Use when the user wants to sync their tickets with reality, asks "what's the status of my tickets?", or wants to clean up their issue backlog.
+description: Audit your ScoreVision Jira tickets against the current codebase—identify completed work, stale tickets, and status mismatches
 ---
 
 # Review ScoreVision Tickets

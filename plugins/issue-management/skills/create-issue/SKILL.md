@@ -1,6 +1,6 @@
 ---
 name: create-issue
-description: Investigate and document a bug, error, or feature request as a well-defined issue. Use when the user reports a problem, wants to create a ticket, or asks "can you write up an issue for this?"
+description: Investigate the root cause of a bug or define requirements for a feature, then produce a well-structured issue ready for your tracker
 ---
 
 As a Staff Software Engineer, investigate the provided error, bug report, or feature request and produce a well-defined issue document. Focus on thoroughly understanding and documenting the **problem** - solution planning comes later.

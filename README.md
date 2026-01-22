@@ -20,47 +20,47 @@ A Claude Code plugin marketplace with developer workflow skills.
 
 ### git-workflows
 
-Git workflow skills for version control operations.
+Automate Git workflows: generate commit messages from diffs, create PR descriptions from branch history, and determine semantic versions for releases.
 
 | Skill              | Description                                            |
 | ------------------ | ------------------------------------------------------ |
-| `/commit-msg`      | Generate a concise commit message for staged changes   |
-| `/merge-request`   | Generate MR/PR title and description for branch changes|
-| `/prepare-release` | Analyze repo and recommend semver version bump         |
+| `/commit-msg`      | Analyze staged changes and generate a conventional commit message that accurately describes the what and why of your changes |
+| `/merge-request`   | Analyze all commits on your branch since diverging from main, then generate a PR/MR title and description summarizing the complete changeset |
+| `/prepare-release` | Examine commits since the last tag, categorize changes by type (breaking/feature/fix), and recommend the appropriate semantic version bump |
 
 ### issue-management
 
-Platform-agnostic issue and ticket management.
+Turn bugs into actionable tickets and break down features into implementation plans—works with any issue tracker.
 
 | Skill           | Description                                       |
 | --------------- | ------------------------------------------------- |
-| `/create-issue` | Investigate and document a bug or feature request |
-| `/plan-work`    | Create a detailed implementation plan for an issue |
+| `/create-issue` | Investigate the root cause of a bug or define requirements for a feature, then produce a well-structured issue ready for your tracker |
+| `/plan-work`    | Break down an issue or task into concrete implementation steps with file locations, code changes, and acceptance criteria |
 
 ### gitlab-tools
 
-GitLab CLI (glab) reference - auto-loaded when working with GitLab.
+Quick reference for GitLab CLI (glab) commands—issues, merge requests, pipelines, and CI/CD operations.
 
 | Skill         | Description                                            |
 | ------------- | ------------------------------------------------------ |
-| `/gitlab-cli` | Command reference for issues, MRs, pipelines, releases |
+| `/gitlab-cli` | Reference guide for glab commands covering issues, merge requests, pipelines, releases, and CI/CD—includes common workflows and syntax examples |
 
 ### jira-tools
 
-Atlassian CLI (acli) reference - auto-loaded when working with Jira.
+Quick reference for Atlassian CLI (acli) commands—JQL queries, ticket transitions, comments, and workflow operations.
 
 | Skill       | Description                                                 |
 | ----------- | ----------------------------------------------------------- |
-| `/jira-cli` | Command reference for JQL, transitions, comments, workflows |
+| `/jira-cli` | Reference guide for acli commands covering JQL queries, ticket transitions, comments, and workflow operations—includes common patterns and syntax |
 
 ### scorevision
 
-ScoreVision-specific Jira workflows and conventions.
+ScoreVision team conventions for Jira workflows, ticket states, and development processes.
 
 | Skill              | Description                                          |
 | ------------------ | ---------------------------------------------------- |
-| `/ticket-workflow` | ScoreVision Jira workflow states and transitions     |
-| `/review-tickets`  | Review and sync ScoreVision tickets with codebase    |
+| `/ticket-workflow` | ScoreVision's Jira workflow reference—ticket states, allowed transitions, and when to move tickets through the pipeline |
+| `/review-tickets`  | Audit your ScoreVision Jira tickets against the current codebase—identify completed work, stale tickets, and status mismatches |
 
 ## References
 

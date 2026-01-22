@@ -1,6 +1,6 @@
 ---
 name: jira-cli
-description: Atlassian CLI (acli) command reference for Jira operations. Use when working with Jira tickets, workflows, transitions, or JQL queries.
+description: Reference guide for acli commands covering JQL queries, ticket transitions, comments, and workflow operations—includes common patterns and syntax
 ---
 
 # Atlassian CLI (acli) - Jira Command Reference

@@ -1,5 +1,5 @@
 {
   "name": "scorevision",
-  "description": "ScoreVision-specific workflows and conventions",
+  "description": "ScoreVision team conventions for Jira workflows, ticket states, and development processes",
   "version": "1.0.0"
 }

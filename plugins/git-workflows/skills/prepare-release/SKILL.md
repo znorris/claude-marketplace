@@ -1,6 +1,6 @@
 ---
 name: prepare-release
-description: Analyze repository to prepare for a tagged release with semver recommendations. Use when the user wants to cut a release, tag a version, or asks "what version should this be?"
+description: Examine commits since the last tag, categorize changes by type (breaking/feature/fix), and recommend the appropriate semantic version bump
 disable-model-invocation: true
 ---
 

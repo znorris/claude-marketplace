@@ -11,7 +11,7 @@
     {
       "name": "git-workflows",
       "source": "./plugins/git-workflows",
-      "description": "Git workflow skills for commit messages, merge requests, and release preparation",
+      "description": "Automate Git workflows: generate commit messages from diffs, create PR descriptions from branch history, and determine semantic versions for releases",
       "version": "1.0.0",
       "keywords": [
         "git",
@@ -25,7 +25,7 @@
     {
       "name": "issue-management",
       "source": "./plugins/issue-management",
-      "description": "Issue and ticket management skills for creating issues and planning work",
+      "description": "Turn bugs into actionable tickets and break down features into implementation plans—works with any issue tracker",
       "version": "2.0.0",
       "keywords": [
         "issues",
@@ -38,7 +38,7 @@
     {
       "name": "gitlab-tools",
       "source": "./plugins/gitlab-tools",
-      "description": "GitLab CLI (glab) command reference and workflow patterns",
+      "description": "Quick reference for GitLab CLI (glab) commands—issues, merge requests, pipelines, and CI/CD operations",
       "version": "1.0.0",
       "keywords": [
         "gitlab",
@@ -52,7 +52,7 @@
     {
       "name": "jira-tools",
       "source": "./plugins/jira-tools",
-      "description": "Atlassian CLI (acli) command reference for Jira operations",
+      "description": "Quick reference for Atlassian CLI (acli) commands—JQL queries, ticket transitions, comments, and workflow operations",
       "version": "1.1.0",
       "keywords": [
         "jira",
@@ -66,7 +66,7 @@
     {
       "name": "scorevision",
       "source": "./plugins/scorevision",
-      "description": "ScoreVision-specific Jira workflows and conventions",
+      "description": "ScoreVision team conventions for Jira workflows, ticket states, and development processes",
       "version": "1.0.0",
       "keywords": [
         "scorevision",

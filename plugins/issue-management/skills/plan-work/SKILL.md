@@ -1,6 +1,6 @@
 ---
 name: plan-work
-description: Create a detailed implementation plan for a given issue or task. Use when the user wants to plan how to implement something, asks "how should I approach this?", or needs an implementation strategy.
+description: Break down an issue or task into concrete implementation steps with file locations, code changes, and acceptance criteria
 ---
 
 As a Staff Software Engineer, produce a detailed implementation plan for the given issue. Prioritize long-term correctness, maintainability, and idiomatic solutions over quick fixes.

@@ -1,5 +1,5 @@
 {
   "name": "jira-tools",
-  "description": "Atlassian CLI (acli) command reference for Jira operations",
+  "description": "Quick reference for Atlassian CLI (acli) commands—JQL queries, ticket transitions, comments, and workflow operations",
   "version": "1.1.0"
 }
