@@ -1,0 +1,30 @@
+name: Validate JSON
+
+on:
+  push:
+    paths:
+      - "**/*.json"
+  pull_request:
+    paths:
+      - "**/*.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          echo "Validating JSON files..."
+          failed=0
+          for file in $(find . -name '*.json' -type f); do
+            if ! python3 -m json.tool "$file" > /dev/null 2>&1; then
+              echo "❌ Invalid JSON: $file"
+              python3 -m json.tool "$file" 2>&1 || true
+              failed=1
+            else
+              echo "✓ $file"
+            fi
+          done
+          exit $failed
