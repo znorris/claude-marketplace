@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.3.0] - 2026-03-02
+
+### Added
+- review-cycle plugin: multi-stage code review agent team (review, adjudicate, plan, execute)
+
 ## [1.2.0] - 2026-03-02
 
 ### Added
