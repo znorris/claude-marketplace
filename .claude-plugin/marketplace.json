@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Developer workflow skills for git, issue management, and platform-specific tooling",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "git-workflows",
       "source": "./plugins/git-workflows",
       "description": "Automate Git workflows: generate commit messages from diffs, create PR descriptions from branch history, and determine semantic versions for releases",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "keywords": [
         "git",
         "commit",
