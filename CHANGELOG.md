@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - review-cycle plugin: multi-stage code review agent team (review, adjudicate, plan, execute)
 
+### Fixed
+- Register review-cycle plugin in marketplace.json so the plugin system discovers it
+
 ## [1.2.0] - 2026-03-02
 
 ### Added
