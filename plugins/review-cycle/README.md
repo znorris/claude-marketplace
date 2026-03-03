@@ -17,10 +17,10 @@ Each stage boundary is a context clear. Each stage lead starts fresh, reading in
 │                                DEVELOPER (human)                                     │
 │  Invokes /review-cycle. Interacts with Team Lead and Stage Leads directly.           │
 │  Switches between teammates as needed at review checkpoints.                         │
-└───────┬──────────────────┬──────────────────┬──────────────────┬─────────────────────┘
-        │                  │                  │                  │
-        │ starts           │ switches to      │ approves plan    │ verifies results
-        ▼                  ▼                  ▼                  ▼
+└───────┬──────────────────────────────┬──────────────────┬────────────────────────────┘
+        │                              │                  │
+        │ starts / verifies results    │ discusses        │ approves plan
+        ▼                              ▼                  ▼
 ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐
 │  TEAM LEAD    │  │ REVIEW LEAD   │  │ ADJUDICATION  │  │ PLANNING LEAD │  │ EXECUTION     │
 │  (orchestr.)  │  │ (teammate)    │  │ LEAD          │  │ (teammate)    │  │ LEAD          │
@@ -155,7 +155,7 @@ This workflow uses **one agent team** for the entire pipeline. The team lead orc
     - Each item includes: the original finding, adjudication reasoning (as approved/modified by the developer), and any developer notes on what the fix should accomplish.
     - Adjudication Lead goes idle; Team Lead is automatically notified.
 
-> **Human interaction:** Steps 8–9. This is the primary human checkpoint. The developer actively shapes the final list through conversation with the Adjudication Lead. This stage does not end until the developer is satisfied.
+> **Human interaction:** Stage 2, steps 6-7. This is the primary human checkpoint. The developer actively shapes the final list through conversation with the Adjudication Lead. This stage does not end until the developer is satisfied.
 
 ---
 
@@ -183,7 +183,7 @@ This workflow uses **one agent team** for the entire pipeline. The team lead orc
     - Each fix item includes a status field (`[ ] pending`) for progress tracking in Stage 4.
     - Planning Lead goes idle; Team Lead is automatically notified.
 
-> **Human interaction:** Step 14. The developer approves the plan before any code changes are made.
+> **Human interaction:** Stage 3, step 4. The developer approves the plan before any code changes are made.
 
 ---
 
@@ -218,9 +218,9 @@ This workflow uses **one agent team** for the entire pipeline. The team lead orc
 | Artifact | Produced after | Produced by | Consumed by | Contents |
 | -------- | -------------- | ----------- | ----------- | -------- |
 | `review-findings.md` | Stage 1, step 3 | Review Lead | Adjudication Lead (Stage 2) | Structured findings: ID, location, severity, explanation |
-| `adjudication-report.md` | Stage 2, step 7 | Adjudication Lead | Developer (in-session with Adjudication Lead) | Findings with investigation reasoning and recommendations |
-| `approved-findings.md` | Stage 2, step 10 | Developer + Adjudication Lead | Planning Lead (Stage 3) | Developer-approved findings with reasoning and developer notes |
-| `fix-plan.md` | Stage 3, step 15 | Planning Lead | Execution Lead (Stage 4) | Execution plan with status tracking per item |
+| `adjudication-report.md` | Stage 2, step 4 | Adjudication Lead | Developer (in-session with Adjudication Lead) | Findings with investigation reasoning and recommendations |
+| `approved-findings.md` | Stage 2, step 7 | Developer + Adjudication Lead | Planning Lead (Stage 3) | Developer-approved findings with reasoning and developer notes |
+| `fix-plan.md` | Stage 3, step 5 | Planning Lead | Execution Lead (Stage 4) | Execution plan with status tracking per item |
 
 All artifacts are written to disk:
 

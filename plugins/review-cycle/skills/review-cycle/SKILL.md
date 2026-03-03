@@ -82,9 +82,8 @@ The Adjudication Lead will spawn investigator sub-agents, compile results into
 
 When the adjudication report is ready, tell the developer what to do next:
 
-> "The adjudication report is ready. Use **Shift+Down** to switch to the
-> Adjudication Lead and walk through each finding. Come back to me when you're
-> done."
+> "The adjudication report is ready. Switch to the Adjudication Lead and walk
+> through each finding. Come back to me when you're done."
 
 The developer and Adjudication Lead will discuss findings conversationally.
 When the developer is satisfied, the Adjudication Lead produces
@@ -102,8 +101,8 @@ Pass to the **Planning Lead**:
 The Planning Lead will produce `.review-cycle/fix-plan.md`. When it goes idle,
 tell the developer what to do next:
 
-> "The fix plan is ready. Use **Shift+Down** to switch to the Planning Lead to
-> review the plan. Come back to me when you've approved it."
+> "The fix plan is ready. Switch to the Planning Lead to review the plan.
+> Come back to me when you've approved it."
 
 The developer reviews and approves the plan. Once approved, the Planning Lead
 goes idle.

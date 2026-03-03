@@ -14,6 +14,7 @@ A Claude Code plugin marketplace with developer workflow skills.
 /plugin install gitlab-tools@znorris/claude-marketplace
 /plugin install jira-tools@znorris/claude-marketplace
 /plugin install scorevision@znorris/claude-marketplace
+/plugin install review-cycle@znorris/claude-marketplace
 ```
 
 ## Plugins
@@ -61,6 +62,14 @@ ScoreVision team conventions for Jira workflows, ticket states, and development 
 | ------------------ | ---------------------------------------------------- |
 | `/ticket-workflow` | ScoreVision's Jira workflow reference—ticket states, allowed transitions, and when to move tickets through the pipeline |
 | `/review-tickets`  | Audit your ScoreVision Jira tickets against the current codebase—identify completed work, stale tickets, and status mismatches |
+
+### review-cycle
+
+Multi-stage code review agent team: review, adjudicate, plan, execute. Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS enabled in settings.
+
+| Skill           | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| `/review-cycle` | Launch a multi-stage code review pipeline that reviews changes, adjudicates findings with you, plans fixes, and executes them via an agent team |
 
 ## References
 

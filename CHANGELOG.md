@@ -8,9 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Added
 - review-cycle plugin: multi-stage code review agent team (review, adjudicate, plan, execute)
+- review-cycle install command and plugin section in marketplace README
 
-### Fixed
-- Register review-cycle plugin in marketplace.json so the plugin system discovers it
+### Changed
+- review-cycle: fix cross-reference numbering and architecture diagram arrows in README
+- review-cycle: add explicit tools fields to adjudication-lead and execution-lead agent frontmatter
+- review-cycle: remove hardcoded Shift+Down UI navigation from SKILL.md
+- review-cycle: replace non-standard `[!]` checkbox marker with standard `[x]` plus notes
+- review-cycle: add trailing newlines to plugin.json and marketplace.json
 
 ## [1.2.0] - 2026-03-02
 
