@@ -1,0 +1,5 @@
+{
+  "name": "atlassian-tools",
+  "description": "Quick reference for Atlassian CLI (acli) commands covering JQL queries, ticket transitions, comments, and workflow operations",
+  "version": "1.1.0"
+}
