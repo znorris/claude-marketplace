@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Developer workflow skills for the full development lifecycle: define, plan, implement, review, commit, and release",
-    "version": "2.0.0"
+    "version": "2.1.0"
   },
   "plugins": [
     {
@@ -72,6 +72,19 @@
         "merge-request",
         "pipeline",
         "ci-cd"
+      ]
+    },
+    {
+      "name": "meetings",
+      "source": "./plugins/meetings",
+      "description": "Transform meeting transcripts into structured, citable summaries with iterative refinement",
+      "version": "1.0.0",
+      "keywords": [
+        "meetings",
+        "transcript",
+        "summary",
+        "notes",
+        "huddle"
       ]
     },
     {
