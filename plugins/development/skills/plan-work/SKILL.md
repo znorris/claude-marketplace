@@ -1,6 +1,6 @@
 ---
 name: plan-work
-description: Break down an issue or task into concrete implementation steps with file locations, code changes, and acceptance criteria
+description: Break down an issue or task into concrete implementation steps with file locations, code changes, and acceptance criteria. Use when the user asks to "plan the implementation", "break down this task", "create an implementation plan", or needs a structured plan before coding.
 ---
 
 Enter plan mode using the `EnterPlanMode` tool, then produce a detailed implementation plan for the given issue. Plan mode enforces read-only access during investigation and gives the developer a structured approval flow before any changes are made.

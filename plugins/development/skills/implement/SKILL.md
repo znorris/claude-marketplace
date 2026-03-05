@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Execute an implementation plan step by step with verification checkpoints and progress tracking
+description: Execute an implementation plan step by step with verification checkpoints and progress tracking. Use when the user asks to "implement the plan", "execute the steps", "start implementing", or has an approved plan ready to implement.
 ---
 
 Execute a structured implementation plan. Work through each step with developer oversight.

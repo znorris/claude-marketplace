@@ -1,5 +1,5 @@
 {
   "name": "gitlab-tools",
-  "description": "Quick reference for GitLab CLI (glab) commands—issues, merge requests, pipelines, and CI/CD operations",
-  "version": "1.0.0"
+  "description": "Quick reference for GitLab CLI (glab) commands covering issues, merge requests, pipelines, and CI/CD operations",
+  "version": "1.1.0"
 }

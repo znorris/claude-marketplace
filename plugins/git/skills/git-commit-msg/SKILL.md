@@ -1,6 +1,6 @@
 ---
-name: commit-msg
-description: Analyze staged changes and generate a conventional commit message that accurately describes the what and why of your changes
+name: git-commit-msg
+description: Analyze staged git changes and generate a conventional commit message. Use when the user asks to "commit", "write a commit message", "stage and commit", or needs a conventional commit for staged changes.
 ---
 
 Provide a commit message for the staged changes. Follow these rules:

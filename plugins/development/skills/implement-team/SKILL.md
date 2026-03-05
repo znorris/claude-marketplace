@@ -1,6 +1,6 @@
 ---
 name: implement-team
-description: Execute an implementation plan using parallel sub-agents for independent steps. Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS enabled.
+description: Execute an implementation plan using parallel sub-agents for independent steps. Use when the user asks to "implement in parallel", "use a team to implement", or wants faster plan execution via agent team. Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS enabled.
 disable-model-invocation: true
 ---
 

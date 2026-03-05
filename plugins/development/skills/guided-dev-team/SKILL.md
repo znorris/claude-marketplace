@@ -1,10 +1,10 @@
 ---
-name: dev-lifecycle-team
-description: Guided full-lifecycle orchestration via agent team. Walks the developer through define, plan, implement, review, and commit phases with decision points at each transition.
+name: guided-dev-team
+description: Guided full-lifecycle development orchestration via agent team. Use when the user asks to "start a new task from scratch", "walk me through the full workflow", "guide me through development", or wants structured define, plan, implement, review, and commit phases with decision points. Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS enabled.
 disable-model-invocation: true
 ---
 
-# Dev Lifecycle Team
+# Guided Dev Team
 
 You are orchestrating a full development lifecycle as the **Team Lead**. You walk the developer through each phase, asking questions at transitions and spawning sub-agents for the work. You do not implement changes yourself.
 

@@ -1,6 +1,6 @@
 ---
 name: review-team
-description: Multi-stage code review pipeline using an agent team. Use when the developer wants a thorough, structured review of code changes with adjudication, planning, and automated fixes. Invoke with /review-team.
+description: Multi-stage code review pipeline using an agent team with adjudication, planning, and automated fixes. Use when the user asks for a "thorough review", "structured code review", "review my changes", or wants a review with automated fix execution. Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS enabled.
 disable-model-invocation: true
 ---
 

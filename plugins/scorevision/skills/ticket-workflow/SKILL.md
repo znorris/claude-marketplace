@@ -1,6 +1,6 @@
 ---
 name: ticket-workflow
-description: ScoreVision's Jira workflow reference—ticket states, allowed transitions, and when to move tickets through the pipeline
+description: ScoreVision's Jira workflow reference for ticket states, allowed transitions, and when to move tickets through the pipeline. Use when transitioning ScoreVision Jira tickets or checking valid workflow states.
 ---
 
 # ScoreVision Ticket Workflow

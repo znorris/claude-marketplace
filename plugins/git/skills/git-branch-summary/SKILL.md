@@ -1,6 +1,6 @@
 ---
-name: branch-summary
-description: Analyze all commits on your branch since diverging from main, then generate a title and description summarizing the complete changeset
+name: git-branch-summary
+description: Summarize all git commits on your branch since diverging from main into a title and description. Use when the user asks to "summarize the branch", "write a PR description", "write an MR description", or needs a summary of branch changes for a pull request or merge request.
 ---
 
 Provide a branch summary title and body that concisely summarizes the branch changes as they have diverged from master/main. Follow these rules:

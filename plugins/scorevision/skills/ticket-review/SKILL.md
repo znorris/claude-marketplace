@@ -1,6 +1,6 @@
 ---
-name: review-tickets
-description: Audit your ScoreVision Jira tickets against the current codebase—identify completed work, stale tickets, and status mismatches
+name: ticket-review
+description: Audit ScoreVision Jira tickets against the current codebase to identify completed work, stale tickets, and status mismatches. Use when the user asks to "review my tickets", "check ticket status", "audit Jira tickets", or needs to reconcile ticket state with code.
 ---
 
 # Review ScoreVision Tickets

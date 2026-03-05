@@ -1,6 +1,6 @@
 ---
 name: release-notes
-description: Generate user-facing release notes from commits since the last tag, written for end users rather than developers
+description: Generate user-facing release notes from git commits since the last tag, written for end users rather than developers. Use when the user asks to "write release notes", "draft release notes", or needs user-facing release documentation.
 ---
 
 Generate release notes for an audience outside the development team. Different from a changelog: less technical, no commit hashes, focused on user benefit.

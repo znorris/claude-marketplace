@@ -1,6 +1,6 @@
 ---
 name: gitlab-cli
-description: Reference guide for glab commands covering issues, merge requests, pipelines, releases, and CI/CD—includes common workflows and syntax examples
+description: Reference guide for GitLab CLI (glab) commands. Use when running glab commands for issues, merge requests, pipelines, releases, or CI/CD operations, or when the user asks about GitLab CLI syntax.
 ---
 
 # GitLab CLI (glab) Assistant

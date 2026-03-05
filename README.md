@@ -34,9 +34,9 @@ Define -> Plan -> Implement -> Review -> Commit -> Release
 | Commit | git | Generate conventional commit messages and branch summaries |
 | Release | release | Generate changelogs and user-facing release notes |
 
-**Typical flow:** `/create-issue` to define the work, `/plan-work` to break it down, `/implement` to execute, `/review-team` to verify, `/commit-msg` to commit, then `/changelog` and `/release-notes` when ready to ship.
+**Typical flow:** `/issue-create` to define the work, `/plan-work` to break it down, `/implement` to execute, `/review-team` to verify, `/git-commit-msg` to commit, then `/changelog` and `/release-notes` when ready to ship.
 
-For the full guided experience, use `/dev-lifecycle-team` to walk through each phase with decision points.
+For the full guided experience, use `/guided-dev-team` to walk through each phase with decision points.
 
 Vendor-specific plugins (`atlassian-tools`, `gitlab-tools`) and team-specific plugins (`scorevision`) are opt-in and integrate with the core workflow where relevant.
 
@@ -48,21 +48,21 @@ Full development lifecycle: define issues, plan work, implement changes, review 
 
 | Skill | Description |
 | --- | --- |
-| `/create-issue` | Investigate the root cause of a bug or define requirements for a feature, then produce a well-structured issue ready for your tracker |
+| `/issue-create` | Investigate a bug or define requirements for a feature, then produce a structured issue document |
 | `/plan-work` | Break down an issue or task into concrete implementation steps with file locations, code changes, and acceptance criteria |
 | `/implement` | Execute an implementation plan step by step with verification checkpoints and progress tracking |
 | `/implement-team` | Execute an implementation plan using parallel sub-agents for independent steps. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
-| `/review-team` | Launch a multi-stage code review pipeline that reviews changes, adjudicates findings with you, plans fixes, and executes them via an agent team. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
-| `/dev-lifecycle-team` | Guided full-lifecycle orchestration: define, plan, implement, review, and commit with decision points at each phase. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
+| `/review-team` | Multi-stage code review pipeline with adjudication, planning, and automated fixes. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
+| `/guided-dev-team` | Guided full-lifecycle orchestration: define, plan, implement, review, and commit with decision points at each phase. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
 
 ### git
 
-Generate conventional commit messages and branch summaries from git history.
+Git workflow skills for conventional commit messages and branch summaries.
 
 | Skill | Description |
 | --- | --- |
-| `/commit-msg` | Analyze staged changes and generate a conventional commit message that accurately describes the what and why of your changes |
-| `/branch-summary` | Analyze all commits on your branch since diverging from main, then generate a title and description summarizing the complete changeset |
+| `/git-commit-msg` | Analyze staged git changes and generate a conventional commit message |
+| `/git-branch-summary` | Summarize all git commits on your branch since diverging from main into a title and description |
 
 ### release
 
@@ -70,12 +70,12 @@ Generate changelogs and user-facing release notes from git history.
 
 | Skill | Description |
 | --- | --- |
-| `/changelog` | Generate or update CHANGELOG.md with an entry for commits since the last tag or a specified range |
-| `/release-notes` | Generate user-facing release notes from commits since the last tag, written for end users rather than developers |
+| `/changelog` | Generate or update CHANGELOG.md from git commits since the last tag |
+| `/release-notes` | Generate user-facing release notes from git commits since the last tag, written for end users rather than developers |
 
 ### atlassian-tools
 
-Quick reference for Atlassian CLI (acli) commands covering JQL queries, ticket transitions, comments, and workflow operations.
+Reference for Atlassian CLI (acli) commands covering JQL queries, ticket transitions, comments, and workflow operations.
 
 | Skill | Description |
 | --- | --- |
@@ -95,8 +95,8 @@ ScoreVision team conventions for Jira workflows, ticket states, and development 
 
 | Skill | Description |
 | --- | --- |
-| `/ticket-workflow` | ScoreVision's Jira workflow reference -- ticket states, allowed transitions, and when to move tickets through the pipeline |
-| `/review-tickets` | Audit your ScoreVision Jira tickets against the current codebase -- identify completed work, stale tickets, and status mismatches |
+| `/ticket-workflow` | ScoreVision's Jira workflow reference for ticket states, allowed transitions, and when to move tickets through the pipeline |
+| `/ticket-review` | Audit ScoreVision Jira tickets against the current codebase to identify completed work, stale tickets, and status mismatches |
 
 ## References
 

@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Developer workflow skills for the full development lifecycle: define, plan, implement, review, commit, and release",
-    "version": "2.1.0"
+    "version": "3.0.0"
   },
   "plugins": [
     {
       "name": "development",
       "source": "./plugins/development",
       "description": "Full development lifecycle: define issues, plan work, implement changes, review code, and orchestrate the entire flow with agent teams",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "keywords": [
         "issues",
         "planning",
@@ -25,8 +25,8 @@
     {
       "name": "git",
       "source": "./plugins/git",
-      "description": "Generate conventional commit messages and branch summaries from git history",
-      "version": "1.1.0",
+      "description": "Git workflow skills for conventional commit messages and branch summaries",
+      "version": "1.2.0",
       "keywords": [
         "git",
         "commit",
@@ -49,8 +49,8 @@
     {
       "name": "atlassian-tools",
       "source": "./plugins/atlassian-tools",
-      "description": "Quick reference for Atlassian CLI (acli) commands covering JQL queries, ticket transitions, comments, and workflow operations",
-      "version": "1.1.0",
+      "description": "Reference for Atlassian CLI (acli) commands covering JQL queries, ticket transitions, comments, and workflow operations",
+      "version": "1.2.0",
       "keywords": [
         "jira",
         "atlassian",
@@ -64,7 +64,7 @@
       "name": "gitlab-tools",
       "source": "./plugins/gitlab-tools",
       "description": "Quick reference for GitLab CLI (glab) commands covering issues, merge requests, pipelines, and CI/CD operations",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "keywords": [
         "gitlab",
         "glab",
@@ -91,7 +91,7 @@
       "name": "scorevision",
       "source": "./plugins/scorevision",
       "description": "ScoreVision team conventions for Jira workflows, ticket states, and development processes",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "keywords": [
         "scorevision",
         "jira",

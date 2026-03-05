@@ -6,12 +6,12 @@ Skills for the full development lifecycle: define issues, plan work, implement c
 
 | Skill | Description |
 | --- | --- |
-| `/create-issue` | Investigate a bug or define a feature, then produce a well-structured issue |
+| `/issue-create` | Investigate a bug or define a feature, then produce a well-structured issue |
 | `/plan-work` | Break down an issue into concrete implementation steps using plan mode |
 | `/implement` | Execute an implementation plan step by step with verification checkpoints |
 | `/implement-team` | Execute a plan using parallel sub-agents for independent steps |
 | `/review-team` | Multi-stage code review pipeline with adjudication, planning, and automated fixes |
-| `/dev-lifecycle-team` | Guided full-lifecycle orchestration: define, plan, implement, review, commit |
+| `/guided-dev-team` | Guided full-lifecycle orchestration: define, plan, implement, review, commit |
 
 Skills with the `-team` suffix require `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled.
 

@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.0.0] - 2026-03-05
+
+### Changed
+- Renamed skills for better autocomplete discoverability (prefix-grouping by noun)
+  - `/commit-msg` to `/git-commit-msg` (found by typing `/git`)
+  - `/branch-summary` to `/git-branch-summary` (found by typing `/git`)
+  - `/create-issue` to `/issue-create` (found by typing `/issue`)
+  - `/review-tickets` to `/ticket-review` (found by typing `/ticket`, groups with `/ticket-workflow`)
+  - `/dev-lifecycle-team` to `/guided-dev-team` (clearer intent)
+- Added "Use when" trigger phrases to all skill descriptions following official plugin patterns
+- Fixed em dashes in plugin and skill descriptions (gitlab-tools, atlassian-tools, scorevision)
+- Replaced blanket "no personas" rule with targeted guidance: use personas where the role shapes output quality
+- Bumped all edited plugin versions
+
 ## [2.1.0] - 2026-03-05
 
 ### Added

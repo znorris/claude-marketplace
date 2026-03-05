@@ -25,7 +25,20 @@ plugins/<name>/
 
 - Skills that spawn agent teams use the `-team` suffix (e.g., `/implement-team`, `/review-team`).
 - Plugin names: lowercase, hyphenated.
-- Skill names: lowercase, hyphenated, action-oriented.
+- Skill names: lowercase, hyphenated.
+- Prefix-group related skills by noun so they cluster in autocomplete (e.g., `git-commit-msg` and `git-branch-summary` both appear when typing `/git`).
+- Name by what the developer would search for, not internal terminology. Prefer `issue-create` over `create-issue` when `/issue` is a more likely search than `/create`.
+- Keep names short but specific enough to distinguish from similar skills.
+
+## Skill Descriptions
+
+Descriptions serve double duty: they are documentation AND a search surface for autocomplete. Skill names are the primary match; descriptions are secondary.
+
+- Follow the pattern: `[Action statement]. Use when the user asks to "[phrase 1]", "[phrase 2]", or [scenario].`
+- Include natural-language trigger phrases that a developer would actually type or say.
+- Include searchable keywords that relate to the skill's domain (e.g., "git" in commit/branch skill descriptions).
+- Reference skills like `gitlab-cli` and `jira-cli` should say "Use when running [tool] commands" so Claude consults them proactively.
+- Do not use em dashes or en dashes in descriptions.
 
 ## Compartmentalization
 
@@ -38,7 +51,7 @@ plugins/<name>/
 - Write in first person as the developer.
 - Never use "we".
 - Avoid en dashes, em dashes, and other non-standard characters.
-- No personas (e.g., "As a Staff Engineer...").
+- Use personas only where the role meaningfully shapes output quality (e.g., investigation, planning, review skills). Do not add personas to simple action skills like commit message generators or reference guides.
 
 ## Constraints Pattern
 

@@ -1,6 +1,6 @@
 ---
 name: changelog
-description: Generate or update CHANGELOG.md with an entry for commits since the last tag or a specified range
+description: Generate or update CHANGELOG.md from git commits since the last tag. Use when the user asks to "update the changelog", "write a changelog entry", "document changes", or needs to record changes for a release.
 ---
 
 Generate a changelog entry from git history and update CHANGELOG.md.
