@@ -69,3 +69,18 @@ Descriptions serve double duty: they are documentation AND a search surface for 
 
 - Always update CHANGELOG.md before committing changes.
 - Bump the marketplace version and any edited plugin versions before committing.
+- Renaming a skill is a breaking change (major version bump on both the marketplace and the affected plugin).
+
+## Pre-Commit Checklist
+
+Before committing changes to this repo, verify every item:
+
+1. **SKILL.md frontmatter** -- `name` matches the directory name and `description` includes "Use when" trigger phrases.
+2. **plugin.json** -- `version` is bumped for any plugin whose skills, agents, or config changed.
+3. **marketplace.json** -- `version` bumped, and every plugin entry's `version` matches its `plugin.json`. New plugins are listed here.
+4. **README.md** -- New or renamed skills appear in the correct plugin table. Install commands include any new plugins.
+5. **Plugin README.md** -- If the plugin has one, skill names and descriptions are current.
+6. **CHANGELOG.md** -- Entry added for the current version describing what changed.
+7. **No em dashes or en dashes** -- Descriptions, skill bodies, and commit messages use only standard characters.
+8. **Cross-references** -- Non-team skills do not name sibling skills. Team skills may reference others.
+9. **Descriptions are searchable** -- Skill names prefix-group by noun for autocomplete. Descriptions contain keywords a developer would search for.

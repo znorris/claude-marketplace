@@ -1,6 +1,6 @@
 ---
 name: summarize-meeting
-description: Transform a raw meeting transcript into a structured summary with citations, then walk through iterative refinement to correct transcription errors and validate ambiguities
+description: Transform a raw meeting transcript into a structured summary with citations and iterative refinement. Use when the user asks to "summarize a meeting", "summarize this transcript", "write meeting notes", or has a meeting recording or transcript to process.
 ---
 
 Transform a raw meeting transcript into a structured, citable summary document. Walk the developer through an iterative refinement loop to catch transcription errors and validate ambiguous content.

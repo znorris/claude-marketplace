@@ -14,6 +14,7 @@ A Claude Code plugin marketplace with developer workflow skills organized by dev
 /plugin install release@znorris/claude-marketplace
 /plugin install atlassian-tools@znorris/claude-marketplace
 /plugin install gitlab-tools@znorris/claude-marketplace
+/plugin install meetings@znorris/claude-marketplace
 /plugin install scorevision@znorris/claude-marketplace
 ```
 
@@ -72,6 +73,14 @@ Generate changelogs and user-facing release notes from git history.
 | --- | --- |
 | `/changelog` | Generate or update CHANGELOG.md from git commits since the last tag |
 | `/release-notes` | Generate user-facing release notes from git commits since the last tag, written for end users rather than developers |
+
+### meetings
+
+Transform meeting transcripts into structured, citable summaries with iterative refinement.
+
+| Skill | Description |
+| --- | --- |
+| `/summarize-meeting` | Transform a raw meeting transcript into a structured summary with citations and iterative refinement |
 
 ### atlassian-tools
 
