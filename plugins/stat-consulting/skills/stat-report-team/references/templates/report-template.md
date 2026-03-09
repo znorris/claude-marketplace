@@ -72,7 +72,7 @@ For technical register, include formulas and assumptions.]
 [Structure depends on the research question type:]
 
 **For estimation studies:**
-- Present the aggregate estimate with CI and tier
+- Present the aggregate estimate with confidence interval and tier
 - Break down by stratification variable(s) with per-stratum estimates
 
 **For comparative studies:**
@@ -176,7 +176,9 @@ the final results were affected]
 [Key transformations applied]
 
 ### E. Glossary of Statistical Terms
-[For executive and professional registers: define CI, stratum, sensitivity analysis, etc.]
+[For executive and professional registers: define confidence interval, stratum, sensitivity
+analysis, margin of error, and other terms used in the report. The report body should use full
+terms on first use; abbreviations may be used after the first expansion.]
 ```
 
 ---

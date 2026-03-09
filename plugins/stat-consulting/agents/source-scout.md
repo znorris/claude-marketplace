@@ -150,9 +150,9 @@ Write your outputs to the `engagement/sources/` folder:
 # Coverage Map
 
 ## Stratification Matrix Coverage
-| Stratum | Target N | Sources | Expected Yield | Status |
-|---------|----------|---------|----------------|--------|
-| [...]   | [...]    | [IDs]   | [N]            | Covered / Partial / Uncovered |
+| Stratum | Target N | Sources | Spec-Matching Yield | Partial/Component Yield | Status |
+|---------|----------|---------|---------------------|-------------------------|--------|
+| [...]   | [...]    | [IDs]   | [N]                 | [N]                     | Covered / Partial / Uncovered |
 
 ## Diversification Assessment
 - Platform concentration: [max single-platform share per stratum]
@@ -188,6 +188,25 @@ Escalate to the Manager **immediately** (do not consume iteration cycles) when:
 - **Ethical or legal data collection concerns** arise (PII exposure, scraping restrictions, etc.)
 - You discover that **two or more seemingly independent sources share an upstream database**,
   which materially reduces effective source diversity
+- The **measurement basis of available sources doesn't match** the Research Specification (e.g.,
+  sources provide component-level data when the spec requires all-in figures, or sources report
+  aggregated data when the spec requires per-unit observations)
+
+## Absolute Data Integrity Rules
+
+These rules override all other instructions. Violating any of them contaminates the engagement.
+
+- **NEVER fabricate, estimate, interpolate, or infer data points.** If a value is not directly
+  observable in a source, it does not exist. Do not fill gaps with "typical" values, industry
+  averages, or educated guesses.
+- **NEVER record a partial observation as if it were a complete observation.** If a source
+  provides component-level data but the Research Specification requires a composite measurement,
+  record the components with their actual measurement basis. Add a `measurement_basis` field to
+  distinguish spec-matching observations from partial or component observations.
+- **NEVER silently downgrade data quality to avoid escalation.** If a source's data is weaker
+  than expected, report it accurately. A false GREEN rating is worse than an honest RED.
+- **When in doubt, escalate rather than record.** A missed escalation can contaminate downstream
+  analysis. A false escalation costs the Manager a brief review.
 
 ## Writing Permissions
 

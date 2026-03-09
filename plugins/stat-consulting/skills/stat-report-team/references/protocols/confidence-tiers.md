@@ -15,6 +15,9 @@ consistently.
 - Sensitivity analyses show **stable results**: dropping any single source shifts the point
   estimate by less than 10% and does not change the qualitative conclusion
 - Missingness is <5% and assessed as MCAR
+- **Assembled observations do not exceed 50%** of the stratum's total observations. Strata where
+  more than half of the observations were assembled from component data (rather than observed
+  directly at the spec's measurement basis) cannot achieve Tier 1, regardless of other dimensions.
 
 **Interpretation**: The estimates are likely to generalize to the target population within stated
 margins of error. Suitable for decision-making.

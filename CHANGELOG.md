@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.2.0] - 2026-03-08
+
+### Changed
+- stat-consulting: add anti-fabrication guardrails and data integrity rules to Source Scout agent
+- stat-consulting: add measurement basis mismatch as an instant escalation trigger (Source Scout and escalation-rules)
+- stat-consulting: split coverage map yield into spec-matching vs partial/component columns
+- stat-consulting: add observation assembly protocol to Collection & Validation agent with quality penalty for assembled data
+- stat-consulting: add agent communication model to SKILL.md (file-based escalation via ESCALATIONS.md, no mid-execution user interaction)
+- stat-consulting: add data integrity constraint to Manager's Source Scout dispatch instructions
+- stat-consulting: add plain language communication rule (expand initialisms on first use in user-facing output)
+- stat-consulting: expand bare abbreviations in SKILL.md body and report template (MCAR/MAR/MNAR, CI)
+- stat-consulting: add assembled observation ceiling to Tier 1 confidence criteria
+- stat-consulting: add ESCALATIONS.md to engagement folder structure
+
 ## [3.1.0] - 2026-03-08
 
 ### Added

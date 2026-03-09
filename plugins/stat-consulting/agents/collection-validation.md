@@ -122,6 +122,33 @@ Apply cleaning operations and document every transformation:
 **Every cleaning operation must be logged.** The Analyst and Report Composer need to know what was
 done to the data.
 
+### Step 4b: Observation Assembly
+
+When the Source Scout provides data with mixed measurement bases (some observations match the
+Research Specification directly, others provide component or partial measurements), handle them
+separately:
+
+1. **Spec-matching observations** proceed directly to validation (Step 3 above). These are
+   observations whose measurement basis matches what the Research Specification defines.
+
+2. **Partial or component observations** require assembly before they can be used:
+   - Identify which components are available and which are missing
+   - Missing components may ONLY be filled from verified reference data with documented provenance
+     (e.g., a published fee schedule, a manufacturer's official price list). NEVER use estimates,
+     "typical" values, industry averages, or inferred figures.
+   - Assemble the composite observation and flag it with `assembled=true`
+   - Document every component source in `_assembly_sources` (one entry per component)
+   - Assembled observations carry a quality penalty: they cannot contribute to Tier 1 confidence
+     regardless of other quality dimensions
+
+3. **Escalation threshold**: if more than 50% of a stratum's observations are assembled, escalate
+   to the Manager (Tier B). This concentration of assembled data suggests the available sources
+   do not natively support the Research Specification's measurement basis, which may require a
+   design adjustment.
+
+Log all assembly operations in `engagement/data/cleaning_notes.md` with the same level of detail
+as other cleaning transformations.
+
 ### Step 5: Quality Flags
 
 Assign quality flags to the dataset at the stratum level:

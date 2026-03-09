@@ -18,6 +18,7 @@ engagement/
 ├── sources/
 │   ├── inventory.md                # Source Scout: discovered sources and quality ratings
 │   ├── coverage_map.md             # Source Scout: stratum coverage status
+│   ├── ESCALATIONS.md              # All agents: escalation log for Manager relay to user
 │   ├── collection_requests/        # Source Scout: user-facing data collection requests
 │   │   └── (CR-001.md, etc.)
 │   └── user_submissions/           # User-supplied data in response to collection requests

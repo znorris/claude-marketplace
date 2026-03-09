@@ -141,8 +141,14 @@ sampling design. Critical principles:
 When the Source Scout identifies gaps that cannot be filled through automated collection, it
 produces a **Collection Request** for the user. Read
 `references/protocols/collection-request-format.md` for the required format. The Source Scout
-manages the user interaction for data collection, receiving submissions, validating against
-requirements, and providing troubleshooting assistance.
+writes Collection Requests and escalations to `engagement/sources/`; the Manager relays these
+to the user and routes user-supplied data back to the Source Scout for validation.
+
+**Critical Constraint**: When dispatching the Source Scout, the Manager must emphasize that the
+job is to find REAL, observable data, not to fill every cell in the coverage map. Gaps are
+expected and acceptable. An honest gap is always preferable to a fabricated or imputed data
+point. The Source Scout should report what exists and escalate what does not, rather than
+stretching partial data to appear complete.
 
 ### Phase 4: Data Cleaning and Validation
 
@@ -157,7 +163,8 @@ Key validation checks:
 - Completeness: are required fields populated?
 - Consistency: do values fall within expected ranges?
 - Duplication: are observations unique?
-- Missingness assessment: is missing data MCAR, MAR, or MNAR?
+- Missingness assessment: is missing data missing completely at random (MCAR), missing at random
+  (MAR), or missing not at random (MNAR)?
 
 ### Phase 5: Analysis and Sensitivity Testing
 
@@ -196,6 +203,7 @@ engagement/
 ├── decision_log.md
 ├── sampling/
 ├── sources/
+│   ├── ESCALATIONS.md
 │   └── collection_requests/
 ├── data/
 │   └── datasets/
@@ -206,11 +214,34 @@ engagement/
 
 ## Communication Rules
 
+### Agent Communication Model
+
+Agents run autonomously as subprocesses and cannot interact with the user mid-execution. All
+agent-to-user communication is mediated by the Manager through file-based handoffs:
+
+- **Escalations**: agents write escalations to `engagement/sources/ESCALATIONS.md` using the
+  format defined in `references/protocols/escalation-rules.md`. The Manager reads this file
+  after each agent completes, presents unresolved escalations to the user, and records decisions.
+- **Status flags**: when an agent is blocked on a stratum or task, it sets a status flag in its
+  output files (e.g., "BLOCKED -- see ESCALATIONS.md") and continues work on non-blocked items.
+  Agents never wait for user input; they complete all achievable work and flag what remains.
+- **Collection Requests**: the Source Scout writes requests to
+  `engagement/sources/collection_requests/`. The Manager presents these to the user and routes
+  submissions back.
+- **Follow-up dispatch**: after the user resolves an escalation, the Manager dispatches a
+  follow-up agent invocation with updated context. Agents do not resume; they are re-invoked
+  fresh against the updated engagement files.
+
 ### User-Facing Communication (Manager responsibility)
 - All status updates and deliverables go through the Manager
 - Translate technical constraints into user decisions
 - Present stratification and methodology using consequence framing
 - Adapt language to the user's assessed sophistication level
+- Prefer full terms over initialisms and shorthand in all user-facing communication. Write
+  "confidence interval" not "CI", "margin of error" not "MOE", "missing completely at random"
+  not "MCAR". If an abbreviation is needed for repeated use, introduce the full term first.
+  Agent-to-agent communication (agent definitions, lateral notifications) may use standard
+  abbreviations since specialists share vocabulary.
 - Never allow a specialist to communicate directly with the user without Manager awareness
 
 ### Lateral Communication (specialist-to-specialist)

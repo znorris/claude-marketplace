@@ -21,6 +21,10 @@ user immediately because the issue affects what was promised or what is achievab
 - **Ethical or legal concerns**: data collection would involve scraping content that violates
   terms of service, accessing personally identifiable information without consent, or retrieving
   data that raises legal questions. When in doubt, escalate.
+- **Measurement basis mismatch**: the available data sources provide observations at a different
+  measurement basis than the Research Specification requires (e.g., component-level data when the
+  spec requires composite figures, or aggregated data when the spec requires per-unit
+  observations). This may invalidate the sampling design or require a scope adjustment.
 - **Scope impossibility**: the engagement cannot deliver what was specified in the Research
   Specification with any achievable design. Better to surface this early than after significant
   work.
