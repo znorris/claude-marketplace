@@ -16,6 +16,7 @@ A Claude Code plugin marketplace with developer workflow skills organized by dev
 /plugin install gitlab-tools@znorris/claude-marketplace
 /plugin install meetings@znorris/claude-marketplace
 /plugin install scorevision@znorris/claude-marketplace
+/plugin install stat-consulting@znorris/claude-marketplace
 ```
 
 ## Workflow
@@ -106,6 +107,14 @@ ScoreVision team conventions for Jira workflows, ticket states, and development 
 | --- | --- |
 | `/ticket-workflow` | ScoreVision's Jira workflow reference for ticket states, allowed transitions, and when to move tickets through the pipeline |
 | `/ticket-review` | Audit ScoreVision Jira tickets against the current codebase to identify completed work, stale tickets, and status mismatches |
+
+### stat-consulting
+
+Statistical data research consulting engagement system with multi-agent sampling, collection, analysis, and reporting.
+
+| Skill | Description |
+| --- | --- |
+| `/stat-report-team` | Run a structured statistical consulting engagement with sampling design, data acquisition, analysis, and confidence-tiered reporting |
 
 ## References
 

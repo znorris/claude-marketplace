@@ -5,7 +5,11 @@
 ```text
 plugins/<name>/
   .claude-plugin/plugin.json    # name, description, version
-  skills/<skill>/SKILL.md       # frontmatter: name, description
+  skills/<skill>/
+    SKILL.md                    # frontmatter: name, description (required)
+    references/                 # supporting docs, loaded as needed
+    assets/                     # output files (templates, images), not loaded
+    scripts/                    # executable code, may run without loading
   agents/<agent>.md             # frontmatter: name, description, model, tools
   README.md                     # optional, for complex plugins
 ```
@@ -13,6 +17,41 @@ plugins/<name>/
 - Every plugin must have a `plugin.json` with `name`, `description`, `version`.
 - Every skill must have a `SKILL.md` with frontmatter: `name`, `description`.
 - Team/orchestrator skills add `disable-model-invocation: true` to frontmatter.
+
+## Supporting Files
+
+Skills can include files alongside SKILL.md. Reference them from SKILL.md so Claude knows they exist and when to load them. Keep SKILL.md under 500 lines; move detailed content to supporting files.
+
+Convention from Anthropic's skill-development guide for organizing supporting files:
+
+- `references/` - Documentation loaded into context as needed (schemas, API docs, domain knowledge). Information should live in either SKILL.md or references, not both. For large files (>10k words), include grep search patterns in SKILL.md.
+- `assets/` - Files used in output, not loaded into context (templates, images, boilerplate). Claude copies or modifies these rather than reading them.
+- `scripts/` - Executable code for deterministic/repetitive tasks. May be executed without loading into context.
+
+Only create directories the skill actually needs.
+
+### Referencing Supporting Files
+
+SKILL.md must explicitly list supporting files so Claude knows they exist. Use relative paths from the skill directory:
+
+```markdown
+## Additional Resources
+- **`references/patterns.md`** - Common patterns and examples
+- **`assets/report-template.html`** - Report output template
+```
+
+### Path Variables
+
+- `${CLAUDE_SKILL_DIR}` - Resolves to the directory containing the skill's SKILL.md. Use in bash injection commands to reference bundled scripts or files regardless of the current working directory.
+- `${CLAUDE_PLUGIN_ROOT}` - Resolves to the plugin root directory. Use in hooks and MCP server configurations (hooks.json, .mcp.json), not in SKILL.md.
+
+### Progressive Disclosure
+
+Skills use a three-level loading system:
+
+1. **Metadata** (name + description) - Always in context
+2. **SKILL.md body** - Loaded when the skill triggers
+3. **Supporting files** - Loaded as needed by Claude
 
 ## Cross-Reference Rules
 
@@ -32,9 +71,10 @@ plugins/<name>/
 
 ## Skill Descriptions
 
-Descriptions serve double duty: they are documentation AND a search surface for autocomplete. Skill names are the primary match; descriptions are secondary.
+Descriptions serve double duty: they are documentation AND a search surface for autocomplete. Skill names are the primary match; descriptions are secondary. Claude uses the description to decide when to load the skill automatically.
 
-- Follow the pattern: `[Action statement]. Use when the user asks to "[phrase 1]", "[phrase 2]", or [scenario].`
+- Include concrete trigger phrases: `[Action statement]. Use when the user asks to "[phrase 1]", "[phrase 2]", or [scenario].`
+- Anthropic's skill-development guide recommends third-person: `This skill should be used when the user asks to "..."`.
 - Include natural-language trigger phrases that a developer would actually type or say.
 - Include searchable keywords that relate to the skill's domain (e.g., "git" in commit/branch skill descriptions).
 - Reference skills like `gitlab-cli` and `jira-cli` should say "Use when running [tool] commands" so Claude consults them proactively.
@@ -46,9 +86,15 @@ Descriptions serve double duty: they are documentation AND a search surface for 
 - Skills must not overlap in ownership. Only one skill should own a given decision (e.g., version bumps belong to `prepare-release`, not `changelog`).
 - Plugins group skills by lifecycle phase, not by implementation complexity.
 
+## SKILL.md Writing Style
+
+- Write the SKILL.md body in imperative/infinitive form (verb-first instructions), not second person.
+- Use objective, instructional language: "To accomplish X, do Y" not "You should do X".
+- Frontmatter descriptions use third person: "This skill should be used when..."
+
 ## Voice and Tone
 
-- Write in first person as the developer.
+- Write commit messages, PRs, and team-facing content in first person as the developer.
 - Never use "we".
 - Avoid en dashes, em dashes, and other non-standard characters.
 - Use personas only where the role meaningfully shapes output quality (e.g., investigation, planning, review skills). Do not add personas to simple action skills like commit message generators or reference guides.

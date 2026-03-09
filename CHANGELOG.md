@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.1.0] - 2026-03-08
+
+### Added
+- stat-consulting plugin: `/stat-report-team` skill for structured statistical consulting engagements with multi-agent sampling design, data acquisition, analysis, and confidence-tiered reporting
+
 ## [3.0.0] - 2026-03-05
 
 ### Changed
