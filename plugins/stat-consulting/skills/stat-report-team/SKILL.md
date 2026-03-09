@@ -286,6 +286,19 @@ engagement/
 └── archive/
 ```
 
+## Document Authoring Rules
+
+All engagement artifacts (specs, designs, inventories, analysis files) follow these rules:
+
+**Current state only.** Documents reflect the latest agreed-upon state. Do not mention what was removed, replaced, or considered and rejected. The decision log is the sole record of how a document evolved. Every other artifact reads as if the current version is the only version that ever existed.
+
+**No manual line breaks within paragraphs.** Write each paragraph as a single unwrapped line in markdown. Renderers and editors handle word wrap. Only use line breaks for list items, headings, code blocks, and intentional vertical separation.
+
+**Prescriptive vs. descriptive separation.** Design documents (Research Specification, Sampling Design, power analysis) are prescriptive: they describe what will be done and how decisions are made. Investigation reports (domain briefs, recon reports, source inventories) are descriptive: they describe what was found. Do not mix the two. Specifically:
+- No proper nouns in design documents unless they are a confirmed methodological dependency (e.g., a platform the discovery strategy is built on). Candidate sources, example platforms, and recon-discovered entities belong in the investigation reports that justify the design, not in the design itself.
+- Every quantitative claim in a design document that is not derived from the power analysis formula or sampling methodology must be labeled as an assumption or estimate. If it has not been measured, prefix it with "assumed" or "estimated."
+- Design documents may reference investigation reports for justification but must not inline their conclusions. This keeps the design portable: if investigation findings change, the design does not need a line-by-line revision.
+
 ## Communication Rules
 
 ### Agent Communication Model
@@ -403,8 +416,21 @@ This system is designed for context efficiency:
 - Agents read only their relevant sections of the engagement folder
 - Sub-agents (extraction, domain research) handle raw content so parent team agents stay clean
 - The engagement folder is the source of truth, not conversation history
-- After rollbacks, send updated context to affected team agents via SendMessage or assign new
-  tasks via TaskCreate
+### Agent Context Reset
+
+A team agent's context window accumulates everything it has seen: prior drafts, rejected approaches, stale data, invalidated designs. When the accumulated context would mislead the agent or waste tokens on obsolete material, the Manager should kill the agent and spawn a fresh replacement on the same team.
+
+**When to reset:**
+- A rollback invalidates a substantial portion of the agent's prior work (Level 2 rollbacks almost always warrant a reset; Level 1 rollbacks use judgment)
+- Multiple revision cycles during document approval have filled the agent's context with superseded drafts
+- The agent's phase is complete and it will only be needed later for narrow follow-up (reset defers context cost until actually needed)
+
+**When not to reset:**
+- Minor revisions where the agent's existing context is still mostly valid
+- The agent is mid-task and a reset would lose in-progress work that has not yet been written to the engagement folder
+- Lateral communication where the agent needs its conversation history to answer questions about its own decisions
+
+**How to reset:** Kill the agent, spawn a new instance on the same team, and send it the engagement folder paths and a brief of the current state. The new agent reads current-state artifacts from the engagement folder. It does not inherit conversation history and does not need to.
 
 When assigning work to an agent, provide:
 1. The engagement folder paths they need to read

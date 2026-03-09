@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Developer workflow skills for the full development lifecycle: define, plan, implement, review, commit, and release",
-    "version": "3.7.0"
+    "version": "3.8.0"
   },
   "plugins": [
     {
@@ -103,7 +103,7 @@
       "name": "stat-consulting",
       "source": "./plugins/stat-consulting",
       "description": "Statistical data research consulting engagement system with multi-agent sampling, collection, analysis, and reporting",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "keywords": [
         "statistics",
         "research",

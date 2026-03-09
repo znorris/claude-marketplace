@@ -4,12 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
-## [3.7.0] - 2026-03-09
+## [3.8.0] - 2026-03-09
 
 ### Added
 - stat-consulting: add Document Approval Protocol separating file-write permission from content approval at all gates
 - stat-consulting: explicit 5-step sequence (draft notification, write, present for review, user review, resolution) prevents file-write prompts from being mistaken as content sign-off
 - stat-consulting: require Manager executive summary at each gate covering purpose, overview, attention points, and review guidance tailored to document type and user sophistication
+- stat-consulting: add Document Authoring Rules requiring current-state-only artifacts (no revision history outside the decision log), no manual line breaks within markdown paragraphs, and prescriptive/descriptive separation (no inlined recon findings or unqualified assumptions in design documents)
+- stat-consulting: add Agent Context Reset guidelines for killing and respawning team agents when context is polluted by stale work, rollbacks, or multiple revision cycles
+
+### Changed
+- stat-consulting: update rollback protocol Step 5 to explicitly require agent reset (kill and respawn) instead of ambiguous "re-invoke"
 
 ## [3.6.0] - 2026-03-09
 

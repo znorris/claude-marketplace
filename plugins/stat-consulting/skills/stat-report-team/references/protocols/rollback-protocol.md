@@ -125,17 +125,15 @@ All Level 1 targets, plus:
 - Manager to User: "A constraint has been encountered that requires adjusting the approach. Here
   are the options..." (Manager handles the user communication)
 
-### Step 5: Re-Invoke Downstream Agents Fresh
+### Step 5: Reset Downstream Agents
 
 **This is the critical context hygiene step.**
 
-Agents downstream of the rollback point must be re-invoked by reading the **current state of the
-engagement folder**, not by continuing from their prior conversation context. The engagement folder
-has been updated in Steps 2 and 3 to reflect the corrected state. The agent sees only current truth.
+Downstream agents whose prior work was invalidated must get a clean context. The Manager kills the affected team agent(s) and spawns fresh replacements on the same team. The new agent reads the current state of the engagement folder, which has been updated in Steps 2 and 3 to reflect the corrected state. It does not inherit the prior agent's conversation history.
 
-The decision log preserves the full history (including the rollback) for the Manager and for the
-final report's limitations section. But working agents do not carry the history of the invalidated
-path; they see a clean slate for the affected files.
+For Level 2 rollbacks, always reset affected agents. For Level 1 rollbacks, use judgment: if the rollback invalidates a small, isolated piece of the agent's work, a SendMessage with corrected instructions may suffice. If in doubt, reset.
+
+The decision log preserves the full history (including the rollback) for the Manager and the final report's limitations section. Working agents see only current truth.
 
 ### Step 6: Record Resolution
 
