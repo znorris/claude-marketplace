@@ -45,6 +45,19 @@ search strategy should:
 
 For every candidate source, assess and document:
 
+**Characterization Claim**: Before evaluating dimensions, document what you believe this source
+publishes. For every candidate source (whether ultimately included or excluded), record:
+- **Observed data format**: what the source appears to provide (e.g., "retail prices per item",
+  "wholesale fulfillment costs per unit", "aggregated category averages")
+- **Measurement basis**: how the data relates to the Research Specification's target variable
+  (e.g., "all-in retail price", "base cost excluding markup", "list price before discounts")
+- **Population represented**: which segment of the target population this source covers
+- **Evidence basis**: tag as `verified` (you inspected actual data from the source and confirmed
+  the characterization) or `inferred` (based on source description, reputation, or domain
+  knowledge without inspecting actual data). This is NOT a mandate to fetch sample data for every
+  source. It is a transparency requirement so downstream agents and the Manager can identify
+  unverified assumptions.
+
 **Coverage**: Which strata does this source serve? What fraction of the target population within
 those strata does it represent? A source that covers 80% of urban schools but 5% of rural schools
 has asymmetric coverage that must be accounted for.
@@ -68,6 +81,10 @@ are one source, not two.
 paywall, or terms-of-service restrictions? Flag immediately if any access barrier exists.
 
 Rate each source on a three-point scale for each dimension: Strong / Adequate / Weak.
+
+**Excluded Source Documentation**: No source may be excluded without a documented entry. If a
+source is evaluated and not included in the final inventory, it must still be recorded in the
+Excluded Sources section of the inventory (see Step 6). Silent exclusion is never permitted.
 
 ### Step 3: Source Diversification Check
 
@@ -96,6 +113,14 @@ For uncovered or partially covered strata, determine whether the gap can be clos
 - Can alternative search strategies surface additional sources?
 - Can adjacent strata data be weighted or imputed to partially fill the gap?
 - Does this require user-assisted manual collection?
+
+**Exclusion Audit**: Cross-reference every gap against the Excluded Sources list. For each
+excluded source whose strata overlap with a coverage gap:
+- Re-examine whether the source has partial relevance that could reduce the gap
+- If partial relevance exists (the source measures a related quantity, covers a subset of the
+  stratum, or could contribute observations at a lower confidence tier), this is a mandatory
+  Tier A escalation. The user must decide whether to include the source with documented caveats
+  or accept the gap. Silent exclusion of a partially relevant source is not permitted.
 
 ### Step 5: User Collection Requests
 
@@ -145,6 +170,23 @@ Write your outputs to the `engagement/sources/` folder:
 [Repeat for each source]
 ```
 
+```markdown
+## Excluded Sources
+
+Sources evaluated but not included in the active inventory. Every exclusion must be documented.
+
+### Excluded Source [ID]: [Source Name]
+- **URL**: [if applicable]
+- **Observed data format**: [what the source actually publishes, per characterization claim]
+- **Evidence basis**: [verified / inferred]
+- **Reason for exclusion**: [why it was not included]
+- **Strata it could have served**: [which strata in the sampling design]
+- **Partial relevance assessment**: [could this source fill gaps for specific strata or tiers,
+  even if not ideal? If yes, describe what it could contribute and under what caveats.]
+
+[Repeat for each excluded source]
+```
+
 **`engagement/sources/coverage_map.md`**:
 ```markdown
 # Coverage Map
@@ -191,6 +233,11 @@ Escalate to the Manager **immediately** (do not consume iteration cycles) when:
 - The **measurement basis of available sources doesn't match** the Research Specification (e.g.,
   sources provide component-level data when the spec requires all-in figures, or sources report
   aggregated data when the spec requires per-unit observations)
+- A source **measures a related but different quantity** that could be valid for a subset of
+  strata or confidence tiers (e.g., a source publishes wholesale costs when the spec requires
+  retail prices, or publishes list prices when the spec requires transaction prices). Do not
+  silently exclude these sources. Escalate with the observed data format so the Manager and user
+  can decide whether to include with caveats or accept the gap.
 
 ## Absolute Data Integrity Rules
 

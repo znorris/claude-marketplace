@@ -67,6 +67,24 @@ sub-agent with:
 The sub-agent returns structured data only. You receive the clean output, not the raw source
 material.
 
+### Step 2b: Characterization Verification
+
+When processing data from a source, compare the observed data format and measurement basis
+against the Source Scout's characterization claim in `engagement/sources/inventory.md`. For each
+source being processed:
+
+1. Check whether the actual data matches what the Source Scout documented (observed data format,
+   measurement basis, population represented)
+2. If the observed data **does not match** the characterization claim, escalate as Tier B to the
+   Manager. Include: the source ID, what was claimed, what was actually observed, and whether the
+   discrepancy affects the source's usability. The Manager decides whether user involvement is
+   needed.
+3. If the characterization was tagged `inferred` (not `verified`), pay extra attention during
+   extraction. Inferred characterizations are more likely to be wrong.
+
+This step catches mischaracterizations of included sources that the Source Scout got wrong during
+evaluation.
+
 ### Step 3: Validation
 
 For each extracted dataset, perform the following validation checks:

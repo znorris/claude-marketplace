@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.3.0] - 2026-03-09
+
+### Changed
+- stat-consulting: add evidence-based source characterization claims (verified vs inferred) to Source Scout evaluation
+- stat-consulting: require documented entries for excluded sources in inventory with partial relevance assessment
+- stat-consulting: add Excluded Sources section to inventory template (source-scout)
+- stat-consulting: add exclusion audit to coverage gap analysis cross-referencing gaps against excluded sources
+- stat-consulting: broaden measurement basis mismatch escalation to cover "related but different quantity" sources
+- stat-consulting: add Tier A trigger for partial-relevance source exclusion (escalation-rules)
+- stat-consulting: add Source Landscape Review gate between Phase 3 and Phase 4 (SKILL.md) requiring user approval of accepted/excluded sources before collection begins
+- stat-consulting: add characterization verification step to Collection & Validation agent (compare observed data against Source Scout claims)
+
 ## [3.2.0] - 2026-03-08
 
 ### Changed

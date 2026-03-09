@@ -25,6 +25,11 @@ user immediately because the issue affects what was promised or what is achievab
   measurement basis than the Research Specification requires (e.g., component-level data when the
   spec requires composite figures, or aggregated data when the spec requires per-unit
   observations). This may invalidate the sampling design or require a scope adjustment.
+- **Partial-relevance source exclusion**: a source was excluded because it measures a related
+  but different quantity than the Research Specification requires, yet it could fill coverage
+  gaps for specific strata or confidence tiers. The user must decide whether to include the
+  source with documented caveats or accept the coverage gap. Silent exclusion of partially
+  relevant sources is not permitted.
 - **Scope impossibility**: the engagement cannot deliver what was specified in the Research
   Specification with any achievable design. Better to surface this early than after significant
   work.

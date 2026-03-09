@@ -30,7 +30,9 @@ The Manager role has three dimensions:
 
 ## Team
 
-Dispatch only the agents needed for the current phase.
+Dispatch the current phase's agent concurrently with the previous phase's agent. The downstream
+agent can loop back to the upstream agent for clarification or re-coordination without waiting
+for a new dispatch cycle.
 
 | Agent | Phase |
 |-------|-------|
@@ -40,6 +42,10 @@ Dispatch only the agents needed for the current phase.
 | Collection & Validation | 3-4 |
 | Analyst | 5 |
 | Report Composer | 6 |
+
+Phases that gate on user approval (1, 2) complete before their successor starts. For ungated
+transitions (3 to 4, 4 to 5), overlap is expected: the downstream agent begins processing
+completed work while the upstream agent continues on remaining strata.
 
 The Design Architect and Collection & Validation agents spawn task-scoped sub-agents as needed
 for domain research and data extraction. Sub-agent instructions are inlined in their parent
@@ -149,6 +155,30 @@ job is to find REAL, observable data, not to fill every cell in the coverage map
 expected and acceptable. An honest gap is always preferable to a fabricated or imputed data
 point. The Source Scout should report what exists and escalate what does not, rather than
 stretching partial data to appear complete.
+
+### Phase 3-4 Gate: Source Landscape Review
+
+**GATE: The Source Landscape Review requires explicit user approval before Collection & Validation begins.**
+
+After the Source Scout completes, synthesize the inventory, excluded sources, and coverage map
+into a plain-language executive summary for the user. This summary covers:
+
+1. **Sources accepted**: what each source publishes, the measurement basis, which strata it
+   covers, and whether the characterization is verified or inferred
+2. **Sources excluded**: what each source was characterized as publishing, the evidence basis
+   (verified vs inferred), the reason for exclusion, and which strata it could have served
+3. **Coverage gaps**: which strata or confidence tiers remain unfilled, severity of each gap
+4. **User involvement needed**: where the user may need to fetch data themselves (paid sources,
+   authentication-gated platforms, tricky extraction), correct a mischaracterization, or decide
+   whether an excluded source's data is acceptable for certain tiers
+
+This checkpoint is where mischaracterizations get caught. The user sees what was excluded and
+why, and can push back (e.g., "that platform actually publishes X, not Y"). It also surfaces
+collection requests early so the user can begin gathering data in parallel.
+
+If the user identifies a mischaracterized or wrongly excluded source, dispatch the Source Scout
+back to re-evaluate with the user's correction, then update the summary and re-present for
+approval.
 
 ### Phase 4: Data Cleaning and Validation
 
@@ -278,7 +308,7 @@ obstruction.
 ## Context Management
 
 This system is designed for context efficiency:
-- Dispatch only the agents needed for the current phase
+- Keep the previous phase's agent open for lateral communication and downstream re-coordination
 - Agents read only their relevant sections of the engagement folder
 - Sub-agents handle data extraction so parent agents never hold raw source content
 - The engagement folder is the source of truth, not conversation history
