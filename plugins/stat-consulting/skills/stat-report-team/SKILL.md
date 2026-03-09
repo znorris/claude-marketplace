@@ -31,12 +31,13 @@ Your role has three dimensions:
 
 ## Team
 
-Dispatch the current phase's agent concurrently with the previous phase's agent. The downstream
-agent can loop back to the upstream agent for clarification or re-coordination without waiting
-for a new dispatch cycle.
+The team consists of six specialist agents. All six are spawned at the start of the engagement
+and persist for its duration. Do not start and stop agents as phases change. Agents idle until
+they receive work, then stay available for follow-up tasks, lateral communication, and
+re-coordination across later phases.
 
-| Agent | Phase |
-|-------|-------|
+| Agent | Primary Phase(s) |
+|-------|------------------|
 | Design Architect | 1 |
 | Sampling Strategist | 2 |
 | Source Scout | 3 |
@@ -48,25 +49,41 @@ Phases that gate on user approval (1, 2) complete before their successor starts.
 transitions (3 to 4, 4 to 5), overlap is expected: the downstream agent begins processing
 completed work while the upstream agent continues on remaining strata.
 
-## Agent Dispatch
+## Team Initialization
 
-At engagement start, create a team via TeamCreate. Use the engagement ID or a short descriptor
-as the team name.
+At engagement start, before any phase work begins:
 
-**Team agents** are the specialist agents listed above (Design Architect, Sampling Strategist,
-Source Scout, Collection & Validation, Analyst, Report Composer). Spawn them using the Agent
-tool with `team_name` set to the engagement team. Team agents surface permission prompts to the
-user, can be interacted with during execution, and send messages back to the Manager via
-SendMessage. The Manager (main session) is the team lead.
+1. Create a team via TeamCreate. Use the engagement ID or a short descriptor as the team name.
+2. Spawn **all six** specialist agents using the Agent tool with `team_name` set to the
+   engagement team. Do this in a single step -- launch all agents together.
+3. Each agent starts idle. The Manager assigns work to agents via SendMessage and TaskCreate as
+   phases begin.
 
-Use TaskCreate and TaskUpdate to assign and track work items across the team.
+Team agents surface permission prompts to the user, can be interacted with during execution,
+and send messages back to the Manager via SendMessage. The Manager (main session) is the team
+lead.
 
-### Sub-Agents
+Use TaskCreate and TaskUpdate to assign and track work items across the team. Use SendMessage
+to provide context, relay user decisions, and coordinate between phases.
 
-Sub-agents are for disposable, context-isolation tasks: PDF extraction, HTML parsing, domain
-research, spreadsheet extraction. Spawn them using the Agent tool WITHOUT `team_name` (regular
-sub-agent spawn). Sub-agents cannot interact with the user and return results to their parent
-team agent. This is intentional -- they exist to keep raw content out of their parent's context.
+### Sub-Agents (distinct from team agents)
+
+Team agents and sub-agents are fundamentally different. Do not confuse them.
+
+- **Team agents** (the six specialists above) are persistent, interactive team members. They
+  surface permission prompts to the user, can receive messages throughout the engagement, and
+  communicate with the Manager and each other via SendMessage. They are NOT autonomous
+  subprocesses. They are NOT fire-and-forget.
+  - **Spawn**: `Agent` tool with `team_name` set to the engagement team
+  - **Assign work**: `SendMessage` to provide context and instructions, `TaskCreate` to track
+  - **Coordinate**: `SendMessage` for ongoing communication, `TaskUpdate` to track progress
+
+- **Sub-agents** are disposable, context-isolation workers for narrow tasks: PDF extraction,
+  HTML parsing, domain research, spreadsheet extraction. They run to completion and return a
+  single result. They cannot interact with the user or receive follow-up messages.
+  - **Spawn**: `Agent` tool WITHOUT `team_name` (regular sub-agent spawn)
+  - **Result**: returned directly to the parent agent when the sub-agent finishes
+  - **No ongoing communication**: no SendMessage, no TaskCreate, no follow-up
 
 The Design Architect's domain researcher and Collection & Validation's extractors are sub-agents.
 Their instructions are inlined in their parent agent definitions.
@@ -96,8 +113,8 @@ When the request arrives:
 
 ### Phase 1: Problem Formulation and Operationalization
 
-Spawn the Design Architect as a team agent. Provide the engagement folder path and the intake
-summary from Phase 0.
+Assign work to the Design Architect. Provide the engagement folder path and the intake
+summary from Phase 0 via SendMessage.
 
 The Design Architect first invokes the Domain Researcher agent to build a domain brief via
 web research, then conducts a structured interview with the user (informed by the domain brief)
@@ -119,8 +136,8 @@ results from being skewed by Y."
 
 ### Phase 2: Sampling Design and Power Analysis
 
-Spawn the Sampling Strategist as a team agent. Provide the engagement folder path and the
-approved Research Specification.
+Assign work to the Sampling Strategist. Provide the engagement folder path and the
+approved Research Specification via SendMessage.
 
 The Sampling Strategist designs the sampling frame based on the approved Research Specification.
 During this phase, the Strategist may request lightweight feasibility reconnaissance from the
@@ -155,8 +172,8 @@ Read `references/protocols/escalation-rules.md` for the full escalation framewor
 
 ### Phase 3: Data Acquisition and Source Evaluation
 
-Spawn the Source Scout as a team agent. Provide the engagement folder path and the approved
-Sampling Design.
+Assign work to the Source Scout. Provide the engagement folder path and the approved
+Sampling Design via SendMessage.
 
 The Source Scout identifies, evaluates, and retrieves data sources for each stratum defined in the
 sampling design. Critical principles:
@@ -205,8 +222,8 @@ approval.
 
 ### Phase 4: Data Cleaning and Validation
 
-Spawn Collection & Validation as a team agent. Provide the engagement folder path and the
-source inventory.
+Assign work to Collection & Validation. Provide the engagement folder path and the
+source inventory via SendMessage.
 
 This agent receives raw data from the Source Scout and produces clean, structured datasets. It
 dispatches extraction agents (HTML Extractor, PDF Extractor, Spreadsheet Extractor) to keep its
@@ -222,8 +239,8 @@ Key validation checks:
 
 ### Phase 5: Analysis and Sensitivity Testing
 
-Spawn the Analyst as a team agent. Provide the engagement folder path and the validated
-datasets.
+Assign work to the Analyst. Provide the engagement folder path and the validated
+datasets via SendMessage.
 
 The Analyst executes the analysis specified in the sampling design and produces:
 - Primary results (point estimates, confidence intervals, descriptive statistics per stratum)
@@ -238,8 +255,8 @@ stratum, initiate the rollback protocol. Read `references/protocols/rollback-pro
 
 ### Phase 6: Report Composition
 
-Spawn the Report Composer as a team agent. Provide the engagement folder path and the analysis
-results.
+Assign work to the Report Composer. Provide the engagement folder path and the analysis
+results via SendMessage.
 
 The Composer produces the final deliverable using the standard report template
 (`references/templates/report-template.md`), modified according to any user preferences expressed
@@ -347,7 +364,7 @@ This system is designed for context efficiency:
 - After rollbacks, send updated context to affected team agents via SendMessage or assign new
   tasks via TaskCreate
 
-When dispatching an agent, provide:
+When assigning work to an agent, provide:
 1. The engagement folder paths they need to read
 2. A brief of the current engagement state relevant to their task
 3. Any protocol or template content they need (read from the references/ directory and pass it)
@@ -358,6 +375,7 @@ When the user's request triggers this skill:
 
 1. Read this file
 2. Create the engagement folder structure
-3. Begin Phase 0: greet the user, confirm the request, assess feasibility and client calibration
-4. Proceed through phases sequentially, loading agent files as needed
-5. Manage gates, escalations, and user communication throughout
+3. Create the team and spawn all six agents (see Team Initialization)
+4. Begin Phase 0: greet the user, confirm the request, assess feasibility and client calibration
+5. Proceed through phases sequentially, assigning work to agents as needed
+6. Manage gates, escalations, and user communication throughout

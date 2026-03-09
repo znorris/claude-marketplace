@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.6.0] - 2026-03-09
+
+### Changed
+- stat-consulting: spawn all six team agents at engagement start instead of per-phase dispatch
+- stat-consulting: replace per-phase "Spawn the X" with "Assign work to" language throughout lifecycle
+- stat-consulting: add explicit team agent vs sub-agent distinction with tool-level differences (Agent with team_name, SendMessage, TaskCreate vs plain Agent spawn)
+- stat-consulting: update Getting Started to include team initialization before Phase 0
+
 ## [3.5.0] - 2026-03-09
 
 ### Changed
