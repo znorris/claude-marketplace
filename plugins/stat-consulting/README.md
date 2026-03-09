@@ -16,7 +16,7 @@ The plugin follows a six-phase consulting engagement lifecycle, modeled on profe
 
 **Phase 2: Sampling Design.** The Sampling Strategist agent designs the sampling frame: strategy, strata, required sample sizes from power analysis, and a data requirements manifest. The Strategist collaborates with the Source Scout for lightweight feasibility checks before finalizing. The user approves the design.
 
-**Phase 3: Data Acquisition.** The Source Scout agent identifies, evaluates, and retrieves data sources for each stratum. It enforces source diversification (no single platform dominates), assesses source independence and quality, and maps coverage gaps. When automated collection cannot fill a gap, it produces structured collection requests with specific URLs, field definitions, return formats, and acceptance criteria for the user to fulfill.
+**Phase 3: Data Acquisition.** The Source Scout agent identifies, evaluates, and retrieves data sources for each stratum. It enforces source diversification (no single platform dominates), assesses source independence and quality, and maps coverage gaps. Before data collection proceeds, the Source Scout presents a Source Landscape Review -- a source inventory, excluded sources documentation, and a coverage map -- for Manager review and user approval. When automated collection cannot fill a gap, it produces structured collection requests with specific URLs, field definitions, return formats, and acceptance criteria for the user to fulfill.
 
 **Phase 4: Data Cleaning and Validation.** The Collection & Validation agent processes raw data through format-specific extractor agents (HTML, PDF, spreadsheet), validates against the data requirements manifest, checks for duplication and missingness, and assigns quality flags per stratum.
 
@@ -30,14 +30,16 @@ The plugin uses six agents plus a manager:
 
 **Manager** (the skill itself): orchestrates phases, manages user communication, enforces quality gates, handles escalations and rollbacks.
 
-**Team members**: six agents that own phases of work, have persistent engagement folder access, and can communicate laterally on implementation details:
+**Team members**: all six agents are spawned at engagement start and persist for the full engagement, idle between phases rather than started and stopped per phase. They communicate with the Manager via SendMessage; the engagement folder is the durable coordination substrate. Agents do not communicate with each other directly.
 
-- Design Architect (Phase 1): spawns sub-agents for domain research
+- Design Architect (Phase 1): spawns disposable sub-agents for domain research
 - Sampling Strategist (Phase 2)
-- Source Scout (Phase 3)
-- Collection & Validation (Phases 3-4): spawns sub-agents for HTML, PDF, and spreadsheet extraction
+- Source Scout (Phase 3): delegates all web fetching and parsing to disposable sub-agents to keep its own context clean for coordination and quality assessment
+- Collection & Validation (Phases 3-4): spawns disposable sub-agents for HTML, PDF, and spreadsheet extraction
 - Analyst (Phase 5)
 - Report Composer (Phase 6)
+
+**Sub-agents** are disposable context-isolation workers -- spawned for a single web fetch, extraction, or research task and discarded. They are distinct from the persistent team agents above.
 
 ## Key Protocols
 
@@ -45,7 +47,11 @@ The plugin uses six agents plus a manager:
 
 **Escalation Rules.** Three tiers of escalation define when issues route to the manager and user (Tier A, instant: zero-source strata, access barriers, model misspecification), when the manager decides on user involvement (Tier B: underpowered strata, sensitivity instability, loop exhaustion), and when agents handle issues laterally (Tier C: routine implementation coordination). See `skills/stat-report-team/references/protocols/escalation-rules.md`.
 
-**Rollback Protocol.** When the Analyst discovers a contaminated data source or a design-level problem, the manager executes a structured rollback: document the trigger, archive contaminated files, update the active engagement folder, notify affected agents with rollback briefs, and re-invoke downstream agents fresh against the corrected state. See `skills/stat-report-team/references/protocols/rollback-protocol.md`.
+**Document Approval Protocol.** Drafts are written to the engagement folder first, then presented to the user with an executive summary and an explicit approval request before any phase proceeds. File-write permission and content approval are separate steps.
+
+**Agent Context Reset.** When a rollback invalidates substantial prior work, or a phase completes and an agent's context is cluttered with stale history, the Manager kills and respawns that agent on the same team. The fresh instance reads only current-state artifacts from the engagement folder.
+
+**Rollback Protocol.** Two severity levels govern rollbacks. A data-level rollback addresses a single bad source and is scoped to the Scout, Validation, and Analyst agents. A design-level rollback forces a change to the sampling design or research scope, cascades to the Strategist and Architect, and always involves the user. In both cases, context reset is a formal step in rollback execution. See `skills/stat-report-team/references/protocols/rollback-protocol.md`.
 
 **Collection Requests.** When automated data acquisition cannot fill a coverage gap, the Source Scout produces a structured request specifying what is needed, why it matters, specific URLs to check, exact fields to collect, a return format template, acceptance criteria, and troubleshooting guidance. See `skills/stat-report-team/references/protocols/collection-request-format.md`.
 
