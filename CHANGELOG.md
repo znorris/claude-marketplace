@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.7.0] - 2026-03-09
+
+### Added
+- stat-consulting: add Document Approval Protocol separating file-write permission from content approval at all gates
+- stat-consulting: explicit 5-step sequence (draft notification, write, present for review, user review, resolution) prevents file-write prompts from being mistaken as content sign-off
+- stat-consulting: require Manager executive summary at each gate covering purpose, overview, attention points, and review guidance tailored to document type and user sophistication
+
 ## [3.6.0] - 2026-03-09
 
 ### Changed
