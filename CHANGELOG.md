@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.5.0] - 2026-03-09
+
+### Changed
+- stat-consulting: replace subprocess dispatch model with TeamCreate + team agents for specialist agents
+- stat-consulting: rewrite Agent Communication Model to use SendMessage with file-based coordination as the substrate
+- stat-consulting: add Sub-Agents section distinguishing disposable context-isolation tasks from persistent team agents
+- stat-consulting: update Context Management for team-aware agent persistence and messaging
+
 ## [3.4.0] - 2026-03-09
 
 ### Changed

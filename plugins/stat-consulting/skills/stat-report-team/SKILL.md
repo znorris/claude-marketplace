@@ -48,9 +48,28 @@ Phases that gate on user approval (1, 2) complete before their successor starts.
 transitions (3 to 4, 4 to 5), overlap is expected: the downstream agent begins processing
 completed work while the upstream agent continues on remaining strata.
 
-The Design Architect and Collection & Validation agents spawn task-scoped sub-agents as needed
-for domain research and data extraction. Sub-agent instructions are inlined in their parent
-agent definitions.
+## Agent Dispatch
+
+At engagement start, create a team via TeamCreate. Use the engagement ID or a short descriptor
+as the team name.
+
+**Team agents** are the specialist agents listed above (Design Architect, Sampling Strategist,
+Source Scout, Collection & Validation, Analyst, Report Composer). Spawn them using the Agent
+tool with `team_name` set to the engagement team. Team agents surface permission prompts to the
+user, can be interacted with during execution, and send messages back to the Manager via
+SendMessage. The Manager (main session) is the team lead.
+
+Use TaskCreate and TaskUpdate to assign and track work items across the team.
+
+### Sub-Agents
+
+Sub-agents are for disposable, context-isolation tasks: PDF extraction, HTML parsing, domain
+research, spreadsheet extraction. Spawn them using the Agent tool WITHOUT `team_name` (regular
+sub-agent spawn). Sub-agents cannot interact with the user and return results to their parent
+team agent. This is intentional -- they exist to keep raw content out of their parent's context.
+
+The Design Architect's domain researcher and Collection & Validation's extractors are sub-agents.
+Their instructions are inlined in their parent agent definitions.
 
 ## Engagement Lifecycle
 
@@ -77,7 +96,8 @@ When the request arrives:
 
 ### Phase 1: Problem Formulation and Operationalization
 
-Dispatch the Design Architect.
+Spawn the Design Architect as a team agent. Provide the engagement folder path and the intake
+summary from Phase 0.
 
 The Design Architect first invokes the Domain Researcher agent to build a domain brief via
 web research, then conducts a structured interview with the user (informed by the domain brief)
@@ -99,7 +119,8 @@ results from being skewed by Y."
 
 ### Phase 2: Sampling Design and Power Analysis
 
-Dispatch the Sampling Strategist.
+Spawn the Sampling Strategist as a team agent. Provide the engagement folder path and the
+approved Research Specification.
 
 The Sampling Strategist designs the sampling frame based on the approved Research Specification.
 During this phase, the Strategist may request lightweight feasibility reconnaissance from the
@@ -134,7 +155,8 @@ Read `references/protocols/escalation-rules.md` for the full escalation framewor
 
 ### Phase 3: Data Acquisition and Source Evaluation
 
-Dispatch the Source Scout.
+Spawn the Source Scout as a team agent. Provide the engagement folder path and the approved
+Sampling Design.
 
 The Source Scout identifies, evaluates, and retrieves data sources for each stratum defined in the
 sampling design. Critical principles:
@@ -183,7 +205,8 @@ approval.
 
 ### Phase 4: Data Cleaning and Validation
 
-Dispatch the Collection & Validation agent.
+Spawn Collection & Validation as a team agent. Provide the engagement folder path and the
+source inventory.
 
 This agent receives raw data from the Source Scout and produces clean, structured datasets. It
 dispatches extraction agents (HTML Extractor, PDF Extractor, Spreadsheet Extractor) to keep its
@@ -199,7 +222,8 @@ Key validation checks:
 
 ### Phase 5: Analysis and Sensitivity Testing
 
-Dispatch the Analyst.
+Spawn the Analyst as a team agent. Provide the engagement folder path and the validated
+datasets.
 
 The Analyst executes the analysis specified in the sampling design and produces:
 - Primary results (point estimates, confidence intervals, descriptive statistics per stratum)
@@ -214,7 +238,8 @@ stratum, initiate the rollback protocol. Read `references/protocols/rollback-pro
 
 ### Phase 6: Report Composition
 
-Dispatch the Report Composer.
+Spawn the Report Composer as a team agent. Provide the engagement folder path and the analysis
+results.
 
 The Composer produces the final deliverable using the standard report template
 (`references/templates/report-template.md`), modified according to any user preferences expressed
@@ -247,21 +272,26 @@ engagement/
 
 ### Agent Communication Model
 
-Agents run autonomously as subprocesses and cannot interact with the user mid-execution. All
-agent-to-user communication is mediated by the Manager through file-based handoffs:
+Team agents communicate with the Manager via SendMessage for status updates, questions, and
+blocker notifications. The Manager receives automatic notifications when agents complete turns
+or go idle.
+
+The engagement folder remains the **coordination substrate** -- agents read and write engagement
+files as the source of truth for structured artifacts (specs, sampling designs, datasets,
+escalations). SendMessage handles real-time coordination; files handle durable state.
 
 - **Escalations**: agents write escalations to `engagement/sources/ESCALATIONS.md` using the
-  format defined in `references/protocols/escalation-rules.md`. The Manager reads this file
-  after each agent completes, presents unresolved escalations to the user, and records decisions.
+  format defined in `references/protocols/escalation-rules.md`, and message the Manager about
+  urgent blockers. The Manager presents unresolved escalations to the user and records decisions.
 - **Status flags**: when an agent is blocked on a stratum or task, it sets a status flag in its
   output files (e.g., "BLOCKED -- see ESCALATIONS.md") and continues work on non-blocked items.
   Agents never wait for user input; they complete all achievable work and flag what remains.
 - **Collection Requests**: the Source Scout writes requests to
-  `engagement/sources/collection_requests/`. The Manager presents these to the user and routes
-  submissions back.
-- **Follow-up dispatch**: after the user resolves an escalation, the Manager dispatches a
-  follow-up agent invocation with updated context. Agents do not resume; they are re-invoked
-  fresh against the updated engagement files.
+  `engagement/sources/collection_requests/` and notifies the Manager via SendMessage. The
+  Manager presents these to the user and routes submissions back.
+- **Follow-up dispatch**: after the user resolves an escalation, the Manager relays the decision
+  to the agent via SendMessage or dispatches a new task assignment. For sub-agents (extraction,
+  domain research), fresh invocation remains the model since they are disposable.
 
 ### User-Facing Communication (Manager responsibility)
 - All status updates and deliverables go through the Manager
@@ -309,11 +339,13 @@ obstruction.
 ## Context Management
 
 This system is designed for context efficiency:
-- Keep the previous phase's agent open for lateral communication and downstream re-coordination
+- Team agents persist as team members and can receive messages across phases for lateral
+  communication and downstream re-coordination
 - Agents read only their relevant sections of the engagement folder
-- Sub-agents handle data extraction so parent agents never hold raw source content
+- Sub-agents (extraction, domain research) handle raw content so parent team agents stay clean
 - The engagement folder is the source of truth, not conversation history
-- After rollbacks, downstream agents are re-invoked fresh against updated files
+- After rollbacks, send updated context to affected team agents via SendMessage or assign new
+  tasks via TaskCreate
 
 When dispatching an agent, provide:
 1. The engagement folder paths they need to read
