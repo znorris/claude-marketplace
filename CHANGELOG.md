@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.4.0] - 2026-03-09
+
+### Changed
+- stat-consulting: add Engagement Manager persona to team orchestrator skill
+
 ## [3.3.0] - 2026-03-09
 
 ### Changed
