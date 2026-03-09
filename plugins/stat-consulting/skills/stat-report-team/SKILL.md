@@ -85,8 +85,9 @@ Team agents and sub-agents are fundamentally different. Do not confuse them.
   - **Result**: returned directly to the parent agent when the sub-agent finishes
   - **No ongoing communication**: no SendMessage, no TaskCreate, no follow-up
 
-The Design Architect's domain researcher and Collection & Validation's extractors are sub-agents.
-Their instructions are inlined in their parent agent definitions.
+The Design Architect's domain researcher, the Source Scout's web researchers, and Collection & Validation's extractors are sub-agents. Their instructions are inlined in their parent agent definitions.
+
+**Web research delegation rule:** Team agents with web research responsibilities must delegate all WebFetch/WebSearch operations to sub-agents. Team agent context is reserved for coordination, compilation, and quality judgment.
 
 ## Engagement Lifecycle
 

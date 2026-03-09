@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.9.0] - 2026-03-09
+
+### Changed
+- stat-consulting: Source Scout now delegates all web research to sub-agents instead of fetching directly, preserving context for coordination and quality assessment
+- stat-consulting: add technical fetch failure escalation rule to Source Scout (rate limiting, bot blocking, CAPTCHA walls must be escalated, not silently skipped)
+- stat-consulting: add team-wide web research delegation norm to SKILL.md sub-agent section
+
 ## [3.8.0] - 2026-03-09
 
 ### Added
