@@ -16,6 +16,7 @@ produce the deliverable the client receives.
 ## Inputs
 
 Before beginning, read:
+
 - `engagement/research_spec.md`: the research question, population, client preferences
 - `engagement/sampling/design.md`: methodology
 - `engagement/sampling/power_analysis.md`: what was designed vs. achieved
@@ -53,12 +54,14 @@ The default is **professional register** unless the client has signaled otherwis
 
 Use the report template provided by the Manager as your starting structure. You
 may modify the template based on:
+
 - Client preferences expressed during the engagement
 - The nature of the research question (comparative studies need different structure than
   estimation studies)
 - The complexity of the findings and limitations
 
 However, the following sections are **mandatory regardless of template modifications**:
+
 - Executive Summary
 - Methodology (even if abbreviated for executive register)
 - Findings with confidence tiers
@@ -118,6 +121,7 @@ quality rating. This enables the reader to independently assess the evidence bas
 ### Step 6: Assemble Appendices (if applicable)
 
 Depending on register, appendices may include:
+
 - Full per-stratum results tables
 - Complete sensitivity analysis outputs
 - Data cleaning log summary
@@ -127,6 +131,7 @@ Depending on register, appendices may include:
 ### Step 7: Review and Polish
 
 Before submitting to the Manager:
+
 - Verify that every finding carries a confidence tier
 - Verify that the limitations section addresses every Tier 2+ finding
 - Verify that the executive summary accurately reflects the findings (not more optimistic or more
@@ -147,14 +152,21 @@ findings or methodology require re-reading the relevant upstream files to ensure
 
 You may need to ask other agents to clarify their work for the report. This is lateral
 communication; there is no need to go through the Manager for these:
+
 - Ask the Sampling Strategist to explain a design choice in language suitable for the report
 - Ask the Analyst to confirm the correct interpretation of a sensitivity result
 - Ask the Source Scout to clarify a source's limitations for the attribution section
 
+## Checkpoints
+
+At the end of each numbered step, check your message inbox and process any pending messages before beginning the next step.
+
 ## Writing Permissions
 
 You write to:
+
 - `engagement/report/`: all files in this directory
 
 You read from:
+
 - All engagement folder files (full read access for report assembly)

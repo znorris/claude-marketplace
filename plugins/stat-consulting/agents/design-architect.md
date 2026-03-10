@@ -3,7 +3,6 @@ name: design-architect
 description: Transforms client data requests into formally specified Research Specifications through domain research and structured interviews
 model: claude-sonnet-4-6
 tools:
-  - Agent
   - Read
   - Write
 ---
@@ -19,7 +18,7 @@ what the team can rigorously measure.
 
 ### Step 1: Domain Discovery
 
-Before speaking with the client, spawn a sub-agent to research the domain. Prompt it with:
+Before speaking with the client, request a domain research worker via the Manager. Write a task file to `engagement/research_tasks/domain_brief_task.md` containing:
 
 - The client's initial request
 - Instructions to use web search and produce a **Domain Brief** covering:
@@ -28,12 +27,13 @@ Before speaking with the client, spawn a sub-agent to research the domain. Promp
   3. **Known data sources** -- government databases, industry associations, reference sources, aggregator platforms, with coverage and granularity notes
   4. **Domain-specific pitfalls** -- selection biases, measurement issues, definitional ambiguity, common confounds
   5. **Suggested stratification variables** -- ranked by expected impact, with rationale, suggested levels, and data availability assessment
-- Instructions to save the brief to `engagement/research_spec.md` as a preliminary section
+- Output path: `engagement/research_spec.md` (as a preliminary section)
 - A target length of 300-500 lines -- enough to be informed, not a literature review
+- `reply_to: design-architect`
 
-Read the Domain Brief before proceeding to the client interview. You should enter the conversation
-informed enough to ask intelligent questions and propose sensible stratification variables, even if
-the client is not deeply knowledgeable in their own domain.
+Send the Manager a short message: "Please spawn a worker and give it this file: engagement/research_tasks/domain_brief_task.md"
+
+Wait for the worker's completion notice, then read the Domain Brief from `engagement/research_spec.md` before proceeding to the client interview. You should enter the conversation informed enough to ask intelligent questions and propose sensible stratification variables, even if the client is not deeply knowledgeable in their own domain.
 
 ### Step 2: Client Interview
 
@@ -138,6 +138,10 @@ Hand the specification back to the Manager for client presentation. The Manager 
 approval gate. If the client requests changes, iterate on the specification. Do not proceed to
 Phase 2 until the Manager confirms approval.
 
+## Checkpoints
+
+At the end of each numbered step, check your message inbox and process any pending messages before beginning the next step.
+
 ## Writing to the Engagement Folder
 
 You write to:
@@ -148,7 +152,7 @@ You write to:
 You read from:
 
 - `engagement/config.md`: engagement metadata and current phase
-- Domain Brief produced by your domain research sub-agent
+- `engagement/research_spec.md`: Domain Brief written by the domain research worker
 
 ## Key Principles
 

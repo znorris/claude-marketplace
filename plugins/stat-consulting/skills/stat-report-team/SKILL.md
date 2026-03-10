@@ -54,8 +54,7 @@ completed work while the upstream agent continues on remaining strata.
 At engagement start, before any phase work begins:
 
 1. Create a team via TeamCreate. Use the engagement ID or a short descriptor as the team name.
-2. Spawn **all six** specialist agents using the Agent tool with `team_name` set to the
-   engagement team. Do this in a single step -- launch all agents together.
+2. Spawn **all six** specialist agents using the Agent tool with `team_name` set to the engagement team and `subagent_type` set to each agent's registered type (e.g., `stat-consulting:source-scout`, `stat-consulting:collection-validation`). The registered type loads the agent's behavioral definition automatically -- do not read or load agent files before spawning. Do NOT use `general-purpose` -- the wrong type loads the wrong definition. Do this in a single step -- launch all agents together.
 3. Each agent starts idle. The Manager assigns work to agents via SendMessage and TaskCreate as
    phases begin.
 
@@ -79,15 +78,22 @@ Team agents and sub-agents are fundamentally different. Do not confuse them.
   - **Coordinate**: `SendMessage` for ongoing communication, `TaskUpdate` to track progress
 
 - **Sub-agents** are disposable, context-isolation workers for narrow tasks: PDF extraction,
-  HTML parsing, domain research, spreadsheet extraction. They run to completion and return a
-  single result. They cannot interact with the user or receive follow-up messages.
-  - **Spawn**: `Agent` tool WITHOUT `team_name` (regular sub-agent spawn)
-  - **Result**: returned directly to the parent agent when the sub-agent finishes
-  - **No ongoing communication**: no SendMessage, no TaskCreate, no follow-up
+  HTML parsing, web research, spreadsheet extraction. They run to completion, write results to
+  a file, and send a short completion notice to the requesting team agent. They cannot interact
+  with the user or receive follow-up messages.
+  - **Spawn**: `Agent` tool WITHOUT `team_name` -- only the Manager (main session) can do this
+  - **Result**: written to the engagement folder; the sub-agent notifies the requesting team agent via SendMessage when done
+  - **No ongoing communication**: no follow-up messages, no re-dispatch
 
-The Design Architect's domain researcher, the Source Scout's web researchers, and Collection & Validation's extractors are sub-agents. Their instructions are inlined in their parent agent definitions.
+**Team agents do NOT spawn sub-agents directly.** The `Agent` tool is available only to the Manager (main session). When a team agent needs external work done (web research, document extraction, domain discovery), it follows the supervisor-worker protocol:
 
-**Web research delegation rule:** Team agents with web research responsibilities must delegate all WebFetch/WebSearch operations to sub-agents. Team agent context is reserved for coordination, compilation, and quality judgment.
+1. Write a task file to the engagement folder containing the full worker instructions, output path, and `reply_to: <agent-name>`
+2. Send the Manager a short message: "Please spawn a worker and give it this file: [task file path]"
+3. Wait for the worker's completion notice, then read results from the output path
+
+The Manager spawns a general-purpose sub-agent (`subagent_type: general-purpose`, `model: claude-sonnet-4-6`) with the task file path. The Manager does not read task file contents -- it simply passes the path. The worker reads the task file, executes, writes results to the specified output path, sends a short completion notice directly to the `reply_to` agent, and shuts down. The Manager is not involved in result delivery.
+
+**Web research delegation rule:** Team agents with web research responsibilities write task files and request workers via Manager rather than doing external operations directly. Team agent context is reserved for coordination, compilation, and quality judgment.
 
 ## Engagement Lifecycle
 
@@ -117,9 +123,7 @@ When the request arrives:
 Assign work to the Design Architect. Provide the engagement folder path and the intake
 summary from Phase 0 via SendMessage.
 
-The Design Architect first invokes the Domain Researcher agent to build a domain brief via
-web research, then conducts a structured interview with the user (informed by the domain brief)
-to produce a **Research Specification**.
+The Design Architect first requests a domain research worker (via Manager) to build a domain brief via web research, then conducts a structured interview with the user (informed by the domain brief) to produce a **Research Specification**.
 
 The Research Specification must define:
 - **Target parameter**: what exactly is being estimated (mean, proportion, distribution, comparison)
@@ -213,6 +217,9 @@ into a plain-language executive summary for the user. This summary covers:
 4. **User involvement needed**: where the user may need to fetch data themselves (paid sources,
    authentication-gated platforms, tricky extraction), correct a mischaracterization, or decide
    whether an excluded source's data is acceptable for certain tiers
+5. **Collection Execution Plan**: the numbered plan the Source Scout will follow during collection. Present this as a numbered list (not prose). Call out the traversal unit and deduplication strategy as items the user should validate. Note that the user can modify the plan -- add steps, remove sources, restructure the loop -- before approving.
+
+The Manager must flag any priority source tagged `inferred` as a specific attention point when presenting the gate summary. The user must explicitly accept the verification gap or direct the Source Scout to verify before proceeding.
 
 This checkpoint is where mischaracterizations get caught. The user sees what was excluded and
 why, and can push back (e.g., "that platform actually publishes X, not Y"). It also surfaces
@@ -227,10 +234,7 @@ approval.
 Assign work to Collection & Validation. Provide the engagement folder path and the
 source inventory via SendMessage.
 
-This agent receives raw data from the Source Scout and produces clean, structured datasets. It
-dispatches extraction agents (HTML Extractor, PDF Extractor, Spreadsheet Extractor) to keep its
-own context clean. It validates data against the data requirements manifest and flags
-quality issues.
+This agent receives raw data from the Source Scout and produces clean, structured datasets. It requests extraction workers (via Manager) for HTML, PDF, and spreadsheet parsing to keep its own context clean. It validates data against the data requirements manifest and flags quality issues.
 
 Key validation checks:
 - Completeness: are required fields populated?
@@ -322,8 +326,13 @@ escalations). SendMessage handles real-time coordination; files handle durable s
   `engagement/sources/collection_requests/` and notifies the Manager via SendMessage. The
   Manager presents these to the user and routes submissions back.
 - **Follow-up dispatch**: after the user resolves an escalation, the Manager relays the decision
-  to the agent via SendMessage or dispatches a new task assignment. For sub-agents (extraction,
-  domain research), fresh invocation remains the model since they are disposable.
+  to the agent via SendMessage or dispatches a new task assignment. For workers (extraction,
+  domain research), the requesting team agent writes a new task file and re-requests the worker
+  from Manager since workers are disposable.
+
+**Passive monitoring during active collection**: team agents yield at checkpoints (between batch dispatches and between steps) to check their message inbox. Send one message and wait for the agent to surface at its next checkpoint. Do not send follow-up messages while waiting -- the agent will process the first message when it pauses. Send only for genuine course changes or Tier A escalations.
+
+**Broadcast vs. targeted messaging**: broadcast is for team-wide state changes (gate approved, phase transition, engagement paused). Use SendMessage for agent-specific direction. Prefer targeted SendMessage during active phases to avoid unnecessary context accumulation in idle agents.
 
 ### User-Facing Communication (Manager responsibility)
 - All status updates and deliverables go through the Manager
@@ -432,6 +441,17 @@ A team agent's context window accumulates everything it has seen: prior drafts, 
 - Lateral communication where the agent needs its conversation history to answer questions about its own decisions
 
 **How to reset:** Kill the agent, spawn a new instance on the same team, and send it the engagement folder paths and a brief of the current state. The new agent reads current-state artifacts from the engagement folder. It does not inherit conversation history and does not need to.
+
+### Resuming After a Session Reset
+
+When the Manager's own context is reset (new session started mid-engagement), follow these steps before doing any phase work:
+
+1. Read `engagement/config.md` to confirm engagement ID and current phase
+2. Read `engagement/decision_log.md` to understand what has been approved
+3. Re-create the team via `TeamCreate` using the same engagement ID
+4. Re-spawn only the team agents needed for the current phase (not all six unless in early phases)
+5. Spawn each team agent using the `Agent` tool with `team_name` set to the engagement team and `subagent_type` set to each agent's registered type (e.g., `stat-consulting:source-scout`, `stat-consulting:collection-validation`). The registered type loads the agent's behavioral definition automatically -- do not read or load agent files before spawning. Do NOT use `general-purpose`. After spawning, send each agent the engagement folder paths and a current-state brief via `SendMessage`.
+6. Do not re-present already-approved gates; resume from where collection/analysis left off
 
 When assigning work to an agent, provide:
 1. The engagement folder paths they need to read

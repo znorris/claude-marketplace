@@ -4,9 +4,59 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.10.3] - 2026-03-10
+
+### Changed
+
+- stat-consulting: implemented supervisor-worker architecture for team agents that need external work done (Source Scout, Collection & Validation, Design Architect)
+- stat-consulting: team agents no longer have the `Agent` tool in their frontmatter; only the Manager (main session) spawns sub-agents
+- stat-consulting: Source Scout, Collection & Validation, and Design Architect now write task files to the engagement folder and request workers from Manager via SendMessage instead of spawning sub-agents directly
+- stat-consulting: Source Scout added progress tracking (`engagement/sources/worker_tasks/progress.md`) and session resumption protocol
+- stat-consulting: Collection & Validation Step 2 renamed from "Dispatch Extraction Sub-Agents" to "Request Extraction Workers" with task-file protocol
+- stat-consulting: SKILL.md sub-agents section rewritten to document the supervisor-worker model with Manager as sole sub-agent spawner
+- stat-consulting: SKILL.md Phase 1 and Phase 4 descriptions updated to reflect worker request model
+- CLAUDE.md: Agent Tool section updated to document that team agents cannot spawn sub-agents and must use the task-file worker request pattern
+
+## [3.10.2] - 2026-03-10
+
+### Added
+
+- stat-consulting: all six specialist agents now have explicit `## Checkpoints` sections; batch-based agents (Source Scout, Collection & Validation) yield between dispatches, step-based agents yield between numbered steps
+- stat-consulting: Source Scout interrupt handling now checks for Manager messages first, then checks `engagement/STOP`
+
+### Changed
+
+- stat-consulting: SKILL.md passive monitoring rule reframed -- the root protocol is agent-side yielding at checkpoints; Manager sends one message and waits for the agent to surface rather than managing send cadence
+
+## [3.10.1] - 2026-03-10
+
+### Fixed
+
+- stat-consulting: corrected `subagent_type` language in SKILL.md Team Initialization and Resuming After a Session Reset; replaced "pointing to the agent definition file" with correct registered type format (e.g., `stat-consulting:source-scout`)
+- CLAUDE.md: added "## Agent Tool" section clarifying that `subagent_type` is a fixed registered enum, not a file path; documents team agent vs sub-agent distinction via `team_name`
+
+## [3.10.0] - 2026-03-10
+
+### Added
+
+- stat-consulting: Source Scout Step 7 now drafts a Collection Execution Plan (`engagement/sources/collection_plan.md`) with numbered steps, loop annotations, sub-agent dispatch callouts, deduplication rules, and expected yield before collection begins
+- stat-consulting: Source Scout interrupt handling checks `engagement/STOP` between batch dispatches; on detection writes progress summary, goes idle, and notifies Manager without deleting the file
+- stat-consulting: session resumption procedure (6 steps) in SKILL.md after Agent Context Reset: re-read config and decision log, re-create team, re-spawn only needed agents, send state briefs, skip already-approved gates
+- stat-consulting: Collection Execution Plan added as item 5 to the Source Landscape Review gate summary; Manager must flag inferred priority sources as attention points requiring explicit user acceptance
+
+### Changed
+
+- stat-consulting: Delegation Model moved to top of source-scout.md body with explicit self-check line; prevents direct WebFetch/WebSearch use by making the rule the first behavioral signal loaded
+- stat-consulting: Source Scout `verified` definition now requires 2-3 actual product listing pages fetched and reviewed; `inferred` sources cannot be marked "confirmed fetchable"; removed "NOT a mandate" softening language
+- stat-consulting: Source Scout Step 6 adds cross-batch URL deduplication check; existing batch files under `engagement/data/batches/` must be checked before assigning a new store or entity ID
+- stat-consulting: Manager passive monitoring rule added to Agent Communication Model; no message stacking during active collection, one message per decision
+- stat-consulting: broadcast vs. targeted messaging guidance added to Agent Communication Model; broadcast for team-wide state changes, SendMessage for agent-specific direction
+- stat-consulting: Team Initialization and session resumption both require `subagent_type` pointing to the agent definition file; generic agent spawning with pasted instructions voids the behavioral contract
+
 ## [3.9.0] - 2026-03-09
 
 ### Changed
+
 - stat-consulting: Source Scout now delegates all web research to sub-agents instead of fetching directly, preserving context for coordination and quality assessment
 - stat-consulting: add technical fetch failure escalation rule to Source Scout (rate limiting, bot blocking, CAPTCHA walls must be escalated, not silently skipped)
 - stat-consulting: add team-wide web research delegation norm to SKILL.md sub-agent section
@@ -14,6 +64,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [3.8.0] - 2026-03-09
 
 ### Added
+
 - stat-consulting: add Document Approval Protocol separating file-write permission from content approval at all gates
 - stat-consulting: explicit 5-step sequence (draft notification, write, present for review, user review, resolution) prevents file-write prompts from being mistaken as content sign-off
 - stat-consulting: require Manager executive summary at each gate covering purpose, overview, attention points, and review guidance tailored to document type and user sophistication
@@ -21,11 +72,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - stat-consulting: add Agent Context Reset guidelines for killing and respawning team agents when context is polluted by stale work, rollbacks, or multiple revision cycles
 
 ### Changed
+
 - stat-consulting: update rollback protocol Step 5 to explicitly require agent reset (kill and respawn) instead of ambiguous "re-invoke"
 
 ## [3.6.0] - 2026-03-09
 
 ### Changed
+
 - stat-consulting: spawn all six team agents at engagement start instead of per-phase dispatch
 - stat-consulting: replace per-phase "Spawn the X" with "Assign work to" language throughout lifecycle
 - stat-consulting: add explicit team agent vs sub-agent distinction with tool-level differences (Agent with team_name, SendMessage, TaskCreate vs plain Agent spawn)
@@ -34,6 +87,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [3.5.0] - 2026-03-09
 
 ### Changed
+
 - stat-consulting: replace subprocess dispatch model with TeamCreate + team agents for specialist agents
 - stat-consulting: rewrite Agent Communication Model to use SendMessage with file-based coordination as the substrate
 - stat-consulting: add Sub-Agents section distinguishing disposable context-isolation tasks from persistent team agents
@@ -42,11 +96,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [3.4.0] - 2026-03-09
 
 ### Changed
+
 - stat-consulting: add Engagement Manager persona to team orchestrator skill
 
 ## [3.3.0] - 2026-03-09
 
 ### Changed
+
 - stat-consulting: add evidence-based source characterization claims (verified vs inferred) to Source Scout evaluation
 - stat-consulting: require documented entries for excluded sources in inventory with partial relevance assessment
 - stat-consulting: add Excluded Sources section to inventory template (source-scout)
@@ -59,6 +115,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [3.2.0] - 2026-03-08
 
 ### Changed
+
 - stat-consulting: add anti-fabrication guardrails and data integrity rules to Source Scout agent
 - stat-consulting: add measurement basis mismatch as an instant escalation trigger (Source Scout and escalation-rules)
 - stat-consulting: split coverage map yield into spec-matching vs partial/component columns
@@ -73,11 +130,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [3.1.0] - 2026-03-08
 
 ### Added
+
 - stat-consulting plugin: `/stat-report-team` skill for structured statistical consulting engagements with multi-agent sampling design, data acquisition, analysis, and confidence-tiered reporting
 
 ## [3.0.0] - 2026-03-05
 
 ### Changed
+
 - Renamed skills for better autocomplete discoverability (prefix-grouping by noun)
   - `/commit-msg` to `/git-commit-msg` (found by typing `/git`)
   - `/branch-summary` to `/git-branch-summary` (found by typing `/git`)
@@ -92,11 +151,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [2.1.0] - 2026-03-05
 
 ### Added
+
 - meetings plugin: `/summarize-meeting` skill for transforming raw transcripts into structured summaries with citations and iterative refinement
 
 ## [2.0.0] - 2026-03-04
 
 ### Added
+
 - development plugin: `/implement` skill for supervised single-agent plan execution
 - development plugin: `/implement-team` skill for parallel plan execution via agent team
 - development plugin: `/review-team` skill for multi-stage code review pipeline (merged from code-review)
@@ -106,6 +167,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Root `CLAUDE.md` with plugin development guidelines (cross-reference rules, naming conventions, compartmentalization, voice)
 
 ### Changed
+
 - Reorganized all plugins into lifecycle-aligned structure (define, plan, implement, review, commit, release)
 - Merged `code-review` plugin into `development` plugin
 - `git-workflows` plugin renamed to `git`
@@ -122,6 +184,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Bumped marketplace version to 2.0.0, development plugin to 2.1.0
 
 ### Removed
+
 - Old plugin names: `git-workflows`, `issue-management`, `review-cycle`, `jira-tools`
 - `code-review` plugin (merged into `development`)
 - `/review` single-agent skill (use `/review-team` for structured reviews)
@@ -130,10 +193,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [1.3.0] - 2026-03-02
 
 ### Added
+
 - review-cycle plugin: multi-stage code review agent team (review, adjudicate, plan, execute)
 - review-cycle install command and plugin section in marketplace README
 
 ### Changed
+
 - review-cycle: fix cross-reference numbering and architecture diagram arrows in README
 - review-cycle: add explicit tools fields to adjudication-lead and execution-lead agent frontmatter
 - review-cycle: remove hardcoded Shift+Down UI navigation from SKILL.md
@@ -143,12 +208,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [1.2.0] - 2026-03-02
 
 ### Added
+
 - Global `CLAUDE.md` template for user-level preferences (personal-claude/)
 - Settings additions doc for permission rules (personal-claude/)
 - Pug project convention notes (notes/)
 - This changelog
 
 ### Changed
+
 - `/commit-msg` skill: add conventional commit prefixes, first-person voice, and character constraints
 - `/merge-request` skill: add first-person voice and character constraints
 - Bump git-workflows plugin to 1.1.0
@@ -156,14 +223,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [1.1.0] - 2025-05-23
 
 ### Added
+
 - ScoreVision plugin for company-specific Jira workflow conventions
 
 ### Changed
+
 - Improved plugin and skill descriptions across marketplace
 
 ## [1.0.0] - 2025-05-22
 
 ### Added
+
 - git-workflows plugin: `/commit-msg`, `/merge-request`, `/release-version` skills
 - issue-management plugin: `/create-issue`, `/plan-work` skills
 - gitlab-tools plugin: `/gitlab-cli` reference skill

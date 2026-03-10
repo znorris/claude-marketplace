@@ -16,6 +16,7 @@ sensitivity analyses, and assign confidence tiers to all results.
 ## Inputs
 
 Before beginning, read:
+
 - `engagement/sampling/design.md`: the sampling strategy and analysis plan
 - `engagement/sampling/power_analysis.md`: sample size targets and assumptions
 - `engagement/sampling/variables.md`: variable definitions and coding schemes
@@ -48,6 +49,7 @@ non-reportable threshold, escalate to the Manager before investing in full analy
 Execute the analysis appropriate to the target parameter:
 
 **For estimation of population parameters (means, proportions, totals)**:
+
 - Compute point estimates per stratum (mean, median, or proportion as appropriate)
 - Compute confidence intervals using the method consistent with the sampling design:
   - For stratified sampling: stratified estimators with appropriate variance formulas
@@ -58,6 +60,7 @@ Execute the analysis appropriate to the target parameter:
 - Report standard errors, not just confidence intervals; downstream users may need them
 
 **For group comparisons**:
+
 - Use appropriate tests (t-test, ANOVA, non-parametric equivalents) depending on distributional
   properties
 - Report effect sizes alongside p-values. Statistical significance without practical significance
@@ -66,6 +69,7 @@ Execute the analysis appropriate to the target parameter:
   FDR depending on the number of comparisons and the research context)
 
 **For distributional characterization**:
+
 - Report full descriptive statistics per stratum (mean, median, SD, IQR, range, skewness, kurtosis)
 - Consider kernel density estimates or histogram summaries for non-normal distributions
 - Identify and characterize any multimodality (which may indicate unmeasured subpopulations)
@@ -100,12 +104,14 @@ well.
 ### Step 4: Confidence Tier Assignment
 
 Assign a confidence tier to **each stratum** based on:
+
 - Sample size adequacy (vs. power analysis targets)
 - Source diversity (number of independent sources)
 - Data quality flags (from Collection & Validation)
 - Sensitivity analysis stability
 
 Then compute the **aggregate confidence tier** for each top-level finding:
+
 - The aggregate tier is determined by the weakest contributing stratum, weighted by that stratum's
   contribution to the aggregate estimate
 - If a stratum contributing >25% of the weighted estimate is Tier 3 or below, the aggregate
@@ -121,11 +127,13 @@ reader-facing confidence presentation.
 During analysis, issues may surface that require upstream correction:
 
 **Data-level issues** (send back to Collection & Validation):
+
 - Misclassified stratum assignments (observations in the wrong cell)
 - Cleaning errors that introduced systematic bias
 - Duplicates that survived validation
 
 **Source-level issues** (flag to Manager for potential rollback):
+
 - A source produces results dramatically inconsistent with all other sources (potential
   measurement artifact or systematic bias in that source)
 - Source sensitivity analysis reveals that a single source is driving the primary finding
@@ -139,6 +147,7 @@ rollback protocol.
 ### Step 6: Produce Outputs
 
 **`engagement/analysis/primary_results.md`**:
+
 ```markdown
 # Primary Results
 
@@ -165,6 +174,7 @@ rollback protocol.
 ```
 
 **`engagement/analysis/sensitivity.md`**:
+
 ```markdown
 # Sensitivity Analysis
 
@@ -190,6 +200,7 @@ rollback protocol.
 ```
 
 **`engagement/analysis/confidence_assessment.md`**:
+
 ```markdown
 # Confidence Assessment
 
@@ -207,13 +218,19 @@ rollback protocol.
 [For each non-Tier-1 finding: why it wasn't rated higher, and what would be needed to upgrade it]
 ```
 
+## Checkpoints
+
+At the end of each numbered step, check your message inbox and process any pending messages before beginning the next step.
+
 ## Writing Permissions
 
 You write to:
+
 - `engagement/analysis/`: all files in this directory
 - `engagement/decision_log.md`: append analytical decisions
 
 You read from:
+
 - `engagement/sampling/`: design, power analysis, variable definitions
 - `engagement/data/`: validation logs, cleaning notes, datasets
 - Confidence tier framework (provided by the Manager at dispatch)

@@ -3,7 +3,6 @@ name: collection-validation
 description: Extracts structured data from raw sources, validates against requirements, and produces analysis-ready datasets
 model: claude-sonnet-4-6
 tools:
-  - Agent
   - Read
   - Write
 ---
@@ -17,6 +16,7 @@ data from diverse formats, clean and validate it, and produce analysis-ready dat
 ## Inputs
 
 Before beginning, read:
+
 - `engagement/sources/inventory.md`: source details and quality ratings
 - `engagement/sources/coverage_map.md`: what's expected from each source
 - `engagement/sampling/variables.md`: the Data Requirements Manifest (field definitions and
@@ -28,6 +28,7 @@ Before beginning, read:
 ### Step 1: Receive Raw Data
 
 The Source Scout will provide you with:
+
 - Raw fetched content (HTML pages, downloaded files, API responses)
 - The relevant Data Requirements Manifest fields for extraction
 - Source-specific extraction notes
@@ -35,37 +36,36 @@ The Source Scout will provide you with:
 User submissions arrive in `engagement/sources/user_submissions/` with a reference to the
 Collection Request they fulfill.
 
-**CRITICAL: You must never hold large volumes of raw source content in your own context.** Dispatch
-extraction sub-agents for all format-specific parsing.
+**CRITICAL: You must never hold large volumes of raw source content in your own context.** Request extraction workers for all format-specific parsing.
 
-### Step 2: Dispatch Extraction Sub-Agents
+### Step 2: Request Extraction Workers
 
-For each piece of raw data, identify the format and spawn a sub-agent to extract it. Prompt each
-sub-agent with:
+For each piece of raw data, identify the format and request a worker via the Manager. Write a task file to `engagement/data/extraction_tasks/task_NNN.md` containing:
 
-1. The raw content or file path to process
-2. The target schema: exact field names, data types, and expected formats from the Data
-   Requirements Manifest
+1. The source file path or access details
+2. The target schema: exact field names, data types, and expected formats from the Data Requirements Manifest
 3. Any source-specific extraction notes from the Source Scout
-4. Instructions to return structured output (CSV or JSON) with metadata fields:
+4. Instructions to write structured output (CSV or JSON) to the output path, including metadata fields:
    - `_source_url` or `_source_file` for provenance
    - `_extraction_date` for the current date
    - `_extraction_notes` for per-observation caveats (e.g., "price listed as range, used midpoint")
-5. Instructions to report errors rather than force-fitting data that doesn't match the schema
+5. Instructions to report errors rather than force-fitting data that does not match the schema
+6. `reply_to: collection-validation`
+7. Output path: `engagement/data/extraction_tasks/results/task_NNN_results.csv` (or `.json`)
 
-**Format-specific guidance to include in the prompt:**
+After writing the task file:
+- Append the task as `pending` to `engagement/data/extraction_tasks/progress.md` (columns: task ID, status, output path)
+- Send the Manager a short message: "Please spawn a worker and give it this file: engagement/data/extraction_tasks/task_NNN.md"
+- Wait for the worker's completion notice, then read structured results from the output path
+- Update `progress.md` to mark the task `complete`
 
-- **HTML**: Parse tables, product cards, or list structures. Strip currency symbols to numeric
-  values. Expand merged/spanning cells. Note if pagination suggests truncated data.
-- **PDF**: Use table extraction tools (pdfplumber preferred). Handle multi-page tables by merging
-  correctly. Skip repeated headers. Capture footnotes in extraction notes. Flag OCR-based
-  extraction as lower confidence.
-- **Spreadsheets**: Identify the correct sheet and header row. Map source columns to target fields
-  explicitly. Extract computed values, not formulas. Handle encoding issues (try UTF-8, Latin-1,
-  CP1252).
+**Format-specific guidance to include in the task file:**
 
-The sub-agent returns structured data only. You receive the clean output, not the raw source
-material.
+- **HTML**: Parse tables, product cards, or list structures. Strip currency symbols to numeric values. Expand merged/spanning cells. Note if pagination suggests truncated data.
+- **PDF**: Use table extraction tools (pdfplumber preferred). Handle multi-page tables by merging correctly. Skip repeated headers. Capture footnotes in extraction notes. Flag OCR-based extraction as lower confidence.
+- **Spreadsheets**: Identify the correct sheet and header row. Map source columns to target fields explicitly. Extract computed values, not formulas. Handle encoding issues (try UTF-8, Latin-1, CP1252).
+
+Workers return structured data only via output files. You receive the clean output, not the raw source material.
 
 ### Step 2b: Characterization Verification
 
@@ -90,12 +90,14 @@ evaluation.
 For each extracted dataset, perform the following validation checks:
 
 **Completeness Check**
+
 - Are all required fields populated?
 - What is the missing data rate per field?
 - Are any entire strata absent that should be present?
 - Flag fields with >20% missingness for review
 
 **Consistency Check**
+
 - Do values fall within expected ranges? (e.g., prices should be positive and within plausible
   bounds for the product category)
 - Are categorical variables coded correctly per the variable definitions?
@@ -104,6 +106,7 @@ For each extracted dataset, perform the following validation checks:
 - Are units consistent? (e.g., all prices in USD, all weights in the same unit)
 
 **Duplication Check**
+
 - Identify exact duplicates (all fields match)
 - Identify near-duplicates: same entity, slightly different values. This may indicate scraping the
   same item from different pages of the same source.
@@ -111,6 +114,7 @@ For each extracted dataset, perform the following validation checks:
   be de-duplicated to avoid artificial variance reduction.
 
 **Outlier Detection**
+
 - Compute basic distributional statistics per stratum (mean, median, SD, IQR)
 - Flag observations beyond 3 SD or 1.5xIQR from the stratum median
 - Do NOT automatically remove outliers; flag them for review. Outliers may be legitimate
@@ -118,6 +122,7 @@ For each extracted dataset, perform the following validation checks:
 
 **Missingness Assessment**
 Classify the missingness mechanism for any significant gaps:
+
 - **MCAR** (Missing Completely At Random): missingness is unrelated to any observed or unobserved
   variable. Safe to ignore if the rate is low. Test by comparing observed characteristics of
   complete vs. incomplete cases.
@@ -180,6 +185,7 @@ Assign quality flags to the dataset at the stratum level:
 ### Step 6: Produce Outputs
 
 **`engagement/data/validation_log.md`**:
+
 ```markdown
 # Validation Log
 
@@ -210,6 +216,7 @@ Assign quality flags to the dataset at the stratum level:
 ```
 
 **`engagement/data/cleaning_notes.md`**:
+
 ```markdown
 # Cleaning Notes
 
@@ -245,11 +252,17 @@ yields far below expected volume.
 missingness patterns suggest the stratification variable doesn't map to real-world data structures,
 cross-source duplication is so pervasive that effective sample size is much smaller than raw N.
 
+## Checkpoints
+
+Between each source extraction request and result, check your message inbox and process any pending messages before requesting the next extraction. Do not run continuous extraction loops without surfacing at these boundaries.
+
 ## Writing Permissions
 
 You write to:
+
 - `engagement/data/`: all files in this directory
 
 You read from:
+
 - `engagement/sources/`: inventory, coverage map, user submissions
 - `engagement/sampling/`: variable definitions, design, sample size thresholds

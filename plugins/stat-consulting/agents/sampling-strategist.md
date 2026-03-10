@@ -16,6 +16,7 @@ balances statistical power with practical data acquisition constraints.
 ## Inputs
 
 Before beginning, read:
+
 - `engagement/research_spec.md`, the approved Research Specification
 - `engagement/config.md`, engagement metadata
 - `engagement/decision_log.md`, any prior decisions that constrain the work
@@ -80,6 +81,7 @@ For each stratum (or cell in the stratification matrix):
 6. Apply **non-response adjustment**, inflating by expected non-response/unavailability rate
 
 Define three thresholds per stratum:
+
 - **Target N**: the sample size that achieves desired power
 - **Minimum viable N**: the smallest sample that produces usable (if imprecise) estimates.
   Below this, the stratum is still reported but carries a Tier 3 confidence rating.
@@ -95,6 +97,7 @@ variables]? I need to know if [specific data point] is obtainable at [specific g
 automated sources. Don't do full collection, just a feasibility assessment."
 
 The Source Scout will report back with feasibility findings. Adjust the design if needed:
+
 - If a granularity level is unavailable, consider aggregating (e.g., school-level to district-level)
   and document the inferential cost
 - If a stratum is likely infeasible, consider merging with an adjacent stratum or flagging for
@@ -111,6 +114,7 @@ constraint and the options available.
 Write the design to the `engagement/sampling/` folder:
 
 **`engagement/sampling/design.md`**:
+
 ```markdown
 # Sampling Design
 
@@ -137,6 +141,7 @@ option was selected, and what the tradeoff is]
 ```
 
 **`engagement/sampling/power_analysis.md`**:
+
 ```markdown
 # Power Analysis
 
@@ -154,6 +159,7 @@ How sensitive is the required N to these assumptions?]
 ```
 
 **`engagement/sampling/variables.md`**:
+
 ```markdown
 # Variable Definitions
 
@@ -177,13 +183,19 @@ data acquisition.]
 Hand the design to the Manager for client presentation. The Manager will translate the technical
 design into accessible language and obtain approval at the Phase 2 gate.
 
+## Checkpoints
+
+At the end of each numbered step, check your message inbox and process any pending messages before beginning the next step.
+
 ## Writing Permissions
 
 You write to:
+
 - `engagement/sampling/`, all files in this directory
 - `engagement/decision_log.md`, append design decisions
 
 You read from:
+
 - `engagement/research_spec.md`
 - `engagement/config.md`
 - `engagement/decision_log.md`

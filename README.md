@@ -1,6 +1,6 @@
 # claude-marketplace
 
-A Claude Code plugin marketplace with developer workflow skills organized by development lifecycle phase.
+A Claude Code plugin marketplace with skills for software development, project management, data research, and team workflows.
 
 ## Installation
 
@@ -19,9 +19,13 @@ A Claude Code plugin marketplace with developer workflow skills organized by dev
 /plugin install stat-consulting@znorris/claude-marketplace
 ```
 
-## Workflow
+## Plugins
 
-Plugins are organized by development lifecycle phase. Use them independently or chain them together:
+### development workflow
+
+Skills for the full software development lifecycle: defining issues, planning work, implementing changes, reviewing code, and orchestrating the entire flow with agent teams.
+
+The `development`, `git`, and `release` plugins map to a standard dev flow. Use them independently or chain them together:
 
 ```text
 Define -> Plan -> Implement -> Review -> Commit -> Release
@@ -39,14 +43,6 @@ Define -> Plan -> Implement -> Review -> Commit -> Release
 **Typical flow:** `/issue-create` to define the work, `/plan-work` to break it down, `/implement` to execute, `/review-team` to verify, `/git-commit-msg` to commit, then `/changelog` and `/release-notes` when ready to ship.
 
 For the full guided experience, use `/guided-dev-team` to walk through each phase with decision points.
-
-Vendor-specific plugins (`atlassian-tools`, `gitlab-tools`) and team-specific plugins (`scorevision`) are opt-in and integrate with the core workflow where relevant.
-
-## Plugins
-
-### development
-
-Full development lifecycle: define issues, plan work, implement changes, review code, and orchestrate the entire flow with agent teams.
 
 | Skill | Description |
 | --- | --- |
