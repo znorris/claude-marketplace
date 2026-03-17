@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.11.0] - 2026-03-17
+
+### Breaking
+
+- stat-consulting: renamed `source-scout` agent to `source-analyst` (changes `subagent_type` from `stat-consulting:source-scout` to `stat-consulting:source-analyst`)
+- stat-consulting: renamed `analyst` agent to `stat-analyst` (changes `subagent_type` from `stat-consulting:analyst` to `stat-consulting:stat-analyst`)
+- stat-consulting: bumped plugin version to 2.0.0
+
+### Added
+
+- stat-consulting: added `research-assistant` agent as a general-purpose worker for domain research, web fetching, and data extraction tasks
+- stat-consulting: added GRADE-adapted multi-dimensional confidence framework with six assessment dimensions (statistical precision, source quality, source consistency, coverage, data completeness, robustness) replacing the single-tier system
+- stat-consulting: added design effect (DEFF) estimation guidance to sampling strategist with ICC sourcing strategy, WHO DEFF=2.0 default, and sensitivity analysis across DEFF range
+- stat-consulting: added sensitivity power analysis approach to sampling strategist, determining minimum detectable effect from achievable N rather than computing required N from target effect
+- stat-consulting: added five-step missingness assessment framework for secondary data (structural vs incidental classification, Little's MCAR test, MAR plausibility via logistic regression, MNAR acknowledgment, per-variable documentation)
+- stat-consulting: added assembly validity conditions and data fusion escalation rules to collection-validation agent
+- stat-consulting: added influential outlier assessment section to stat-analyst agent with Cook's D diagnostics, pre-specified disposition criteria, and mandatory sensitivity analysis
+- stat-consulting: added reference documents for sampling, sources, analysis, domain, and manager phases
+
+### Changed
+
+- stat-consulting: SKILL.md refactored to use progressive disclosure with supporting reference files instead of inline content
+- stat-consulting: confidence tier assignment now evaluates six dimensions independently and derives overall tier by pattern matching against tier definitions, with both tier and dimension profile reported for every finding
+- stat-consulting: aggregate confidence roll-up now uses dimension-first aggregation procedure instead of mechanistic weight-based rules
+- stat-consulting: sampling strategist workflow reordered to front-load source analyst feasibility reconnaissance before power analysis
+- stat-consulting: outlier handling split between collection-validation (error outliers) and stat-analyst (plausible outlier disposition), replacing ambiguous single-stage detection
+- stat-consulting: engagement folder structure updated to include all paths agents actually use (domain/, research_tasks/, worker_tasks/, fetch_tasks/, extraction_tasks/, batches/, collection_plan.md) and removed vestigial design/ directory
+- stat-consulting: fixed design-architect reads-from section (removed incorrect domain brief annotation on research_spec.md)
+- stat-consulting: fixed stale agent names in README (Source Scout to Source Analyst, Analyst to Statistical Analyst)
+- stat-consulting: fixed broken engagement-folder.md path reference in README
+
 ## [3.10.3] - 2026-03-10
 
 ### Changed

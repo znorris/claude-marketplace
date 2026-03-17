@@ -1,8 +1,8 @@
 # Collection Request Format
 
-This protocol defines the standard format for data collection requests issued to the user when
+This protocol defines the standard format for data collection requests issued to the client when
 automated data acquisition cannot fill a coverage gap. These requests must be specific, actionable,
-and self-contained: the user should be able to fulfill the request without additional guidance.
+and self-contained: the client should be able to fulfill the request without additional guidance.
 
 ## Request File Naming
 
@@ -17,7 +17,7 @@ sequential number.
 # Collection Request CR-[NNN]
 
 **Date issued**: [date]
-**Issued by**: Source Scout
+**Issued by**: Source Analyst
 **Stratum**: [which stratum this fills]
 **Priority**: [High / Medium / Low, based on impact on overall engagement quality]
 **Status**: [Open / In Progress / Fulfilled / Partially Fulfilled / Unfillable]
@@ -25,7 +25,7 @@ sequential number.
 
 ### Data Needed
 
-A plain-language description of the data gap, written so a non-technical user understands what
+A plain-language description of the data gap, written so a non-technical client understands what
 they're looking for.
 
 > The engagement needs retail pricing data for branded athletic apparel sold through school-operated
@@ -35,7 +35,7 @@ they're looking for.
 ### Why It Matters
 
 A brief explanation of the analytical consequence: what this data enables and what happens without
-it. Frame in terms of the user's objectives.
+it. Frame in terms of the client's objectives.
 
 > With this data, the analysis can report confident pricing estimates for rural schools and include
 > them in the national average with full weight. Without it, the rural stratum will carry a "Low
@@ -85,7 +85,7 @@ that could be ambiguous.
 
 ### Return Format
 
-A template the user fills in. Prefer simple table or CSV format.
+A template the client fills in. Prefer simple table or CSV format.
 
 > Please return the data in one of these formats:
 >
@@ -136,12 +136,12 @@ Anticipate common problems and provide solutions.
 > **If the data looks very different from what's described here:**
 > Report what you are seeing. The search strategy may need adjustment.
 
-## Source Scout's Obligations After Issuing a Request
+## Source Analyst's Obligations After Issuing a Request
 
-- Monitor for user submissions in `engagement/sources/user_submissions/`
+- Monitor for client submissions in `engagement/sources/client_submissions/`
 - Validate submissions against the acceptance criteria promptly
 - If a submission has issues, communicate specifically what needs correction
-- If the user reports difficulty, provide alternative sources or simplified instructions
+- If the client reports difficulty, provide alternative sources or simplified instructions
 - Update the request status field as it progresses
 - When a request is fulfilled or confirmed unfillable, update `engagement/sources/coverage_map.md`
   accordingly
@@ -149,4 +149,4 @@ Anticipate common problems and provide solutions.
 ## Linking to the Engagement
 
 Each collection request must be referenced in the coverage map so the full team can see which
-gaps have pending user requests and which are resolved.
+gaps have pending client requests and which are resolved.

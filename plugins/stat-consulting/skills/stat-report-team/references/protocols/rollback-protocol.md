@@ -19,7 +19,7 @@ after it has already been incorporated into the working data.
   an upstream database with another source already in the dataset
 - A data extraction error is discovered that systematically affected values from one source
 
-**Scope of impact**: Source Scout (needs to find replacement), Collection & Validation (needs to
+**Scope of impact**: Source Analyst (needs to find replacement), Collection & Validation (needs to
 re-validate), Analyst (needs to re-run). Sampling Strategist and Design Architect are unaffected.
 
 ### Level 2: Design-Level Rollback
@@ -99,7 +99,7 @@ All Level 1 updates, plus:
 - `engagement/sampling/power_analysis.md`: updated if sample size requirements change
 - `engagement/sampling/variables.md`: updated if stratification variables change
 - `engagement/research_spec.md`: updated only if the research question scope changes (requires
-  user approval)
+  client approval)
 
 ### Step 4: Notify Affected Agents
 
@@ -111,7 +111,7 @@ specifying:
 3. What the agent needs to do in response
 
 **Level 1 notification targets:**
-- Source Scout: "A data source has been rolled back. The coverage map shows a re-opened gap in
+- Source Analyst: "A data source has been rolled back. The coverage map shows a re-opened gap in
   [stratum]. Please identify a replacement source or confirm the gap is unfillable."
 - Collection & Validation: "If a replacement source is found, process it through normal validation.
   The contaminated data has been archived."
@@ -122,8 +122,8 @@ specifying:
 All Level 1 targets, plus:
 - Sampling Strategist: "The sampling design requires revision due to [reason]. Please update
   design.md, power_analysis.md, and variables.md as appropriate."
-- Manager to User: "A constraint has been encountered that requires adjusting the approach. Here
-  are the options..." (Manager handles the user communication)
+- Manager to Client: "A constraint has been encountered that requires adjusting the approach. Here
+  are the options..." (Manager handles the client communication)
 
 ### Step 5: Reset Downstream Agents
 
@@ -149,9 +149,9 @@ the Manager adds a resolution entry to the decision log:
 
 ## Iteration Limits
 
-- **Level 1 rollbacks**: Up to 3 per stratum before the Manager escalates to the user with a
+- **Level 1 rollbacks**: Up to 3 per stratum before the Manager escalates to the client with a
   recommendation to either accept the gap or adjust scope.
-- **Level 2 rollbacks**: Each one requires user involvement. More than 2 Level 2 rollbacks in a
+- **Level 2 rollbacks**: Each one requires client involvement. More than 2 Level 2 rollbacks in a
   single engagement should trigger a feasibility re-assessment; the engagement may be attempting
   something that isn't achievable with available resources.
 

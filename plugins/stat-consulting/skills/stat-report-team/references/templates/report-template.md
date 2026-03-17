@@ -13,8 +13,8 @@ modifications.
 **Prepared by**: Statistical Consulting Engagement System
 **Engagement ID**: [ID]
 **Date**: [date]
-**Confidence Summary**: [Overall tier, e.g., "Tier 1 (High Confidence) for primary findings;
-see per-finding detail below"]
+**Confidence Summary**: [Overall tier with key dimension notes, e.g., "Tier 1 (High Confidence)
+for primary findings; dimension profiles in Confidence Assessment section"]
 
 ---
 
@@ -97,19 +97,22 @@ in pricing, suggesting a less standardized market." Always tie observations to e
 ### Tier Summary
 [Table mapping each finding/stratum to its confidence tier with brief rationale]
 
-| Finding / Stratum | Confidence Tier | Key Factors |
-|-------------------|----------------|-------------|
-| [Overall finding] | [Tier X]       | [Brief explanation] |
-| [Stratum A]       | [Tier X]       | [Brief explanation] |
-| [Stratum B]       | [Tier X]       | [Brief explanation] |
+| Finding / Stratum | Overall Tier | Precision | Source Quality | Consistency | Coverage | Completeness | Robustness | Notes |
+|-------------------|-------------|-----------|---------------|-------------|----------|-------------|------------|-------|
+| [Overall finding] | [Tier X]    | [concern] | [concern]     | [concern]   | [concern]| [concern]   | [concern]  | [key limiting dimensions] |
+| [Stratum A]       | [Tier X]    | [concern] | [concern]     | [concern]   | [concern]| [concern]   | [concern]  | [key limiting dimensions] |
+| [Stratum B]       | [Tier X]    | [concern] | [concern]     | [concern]   | [concern]| [concern]   | [concern]  | [key limiting dimensions] |
 
 ### Tier Definitions
-[Include the tier definitions so the reader knows what each tier means. Adapt language to
-register.]
+[Include the tier definitions and dimension descriptions so the reader knows what each tier
+and concern level means. Adapt language to register. For executive register, describe
+dimensions in plain language. For technical register, include the formal concern anchors.]
 
 ### What Would Strengthen These Findings
-[For any non-Tier-1 finding: what additional data or methodological steps would increase
-confidence. This gives the client an actionable path forward if they want higher certainty.]
+[For any non-Tier-1 finding: what additional data or methodological steps would reduce
+concern on the limiting dimensions. Reference specific dimensions (e.g., "improving source
+consistency by adding a second independent source for the rural stratum"). This gives the
+client an actionable path forward if they want higher certainty.]
 
 ---
 

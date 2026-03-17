@@ -1,121 +1,134 @@
 # Confidence Tier Framework
 
-This protocol defines the system for assessing, assigning, and communicating statistical confidence
-in engagement findings. All agents involved in analysis and reporting must use this framework
-consistently.
+This protocol defines the system for assessing, assigning, and communicating confidence in engagement findings. The framework evaluates six quality dimensions independently, then derives an overall confidence tier from their combination. All agents involved in analysis and reporting must use this framework consistently.
 
-## Tier Definitions
+The framework is adapted from GRADE (Grading of Recommendations, Assessment, Development and Evaluations) and the Navigation Guide for use with secondary data analysis, where data is collected from existing public sources rather than through primary research.
 
-### Tier 1: High Confidence
+## Assessment Dimensions
 
-**Criteria (all must be met):**
-- Sample size meets or exceeds the Target N from the power analysis
-- Data from **two or more independent sources** per stratum
-- No unresolved quality flags (GREEN status from Collection & Validation)
-- Sensitivity analyses show **stable results**: dropping any single source shifts the point
-  estimate by less than 10% and does not change the qualitative conclusion
-- Missingness is <5% and assessed as MCAR
-- **Assembled observations do not exceed 50%** of the stratum's total observations. Strata where
-  more than half of the observations were assembled from component data (rather than observed
-  directly at the spec's measurement basis) cannot achieve Tier 1, regardless of other dimensions.
+Six dimensions, each rated on a four-point concern scale: **No concern**, **Minor concern**, **Serious concern**, **Very serious concern**.
 
-**Interpretation**: The estimates are likely to generalize to the target population within stated
-margins of error. Suitable for decision-making.
+### 1. Statistical Precision
 
-### Tier 2: Moderate Confidence
+Assesses sampling variability and the adequacy of sample size relative to analytical goals.
 
-**Criteria (one or more of the following):**
-- Sample size approaches but does not fully meet Target N (at or above Minimum Viable N)
-- One or more strata rely on a **single source** (even if that source is high quality)
-- Minor quality flags present (YELLOW status) that have been assessed and judged non-critical
-- Sensitivity analyses show results are **directionally stable** but point estimates shift by
-  10 to 25% under some conditions
-- Missingness between 5 and 15%, assessed as MCAR or MAR with appropriate treatment
+Concern anchors:
 
-**Interpretation**: The estimates are informative and directionally reliable. Interpret with
-awareness of the specific documented limitations. Suitable for informed decision-making with
-caveats.
+- No concern: Achieved N meets or exceeds Target N from the feasibility assessment. Confidence intervals are narrow enough for the client's decision-making needs.
+- Minor concern: Achieved N approaches but does not fully meet Target N (at or above Minimum Viable N). Confidence intervals are wider than ideal but still informative.
+- Serious concern: Achieved N below Minimum Viable N but above Non-Reportable threshold. Estimates have limited precision.
+- Very serious concern: Achieved N below Non-Reportable threshold. No reliable estimate can be produced.
 
-### Tier 3: Low Confidence / Indicative Only
+### 2. Source Quality
 
-**Criteria (one or more of the following):**
-- Sample size below Minimum Viable N but above Non-Reportable threshold
-- Heavy reliance on a single source for the majority of observations
-- Significant quality flags (RED status) or unresolved data quality concerns
-- Sensitivity analyses reveal **instability**: results shift >25% or change direction under
-  reasonable perturbations
-- Missingness >15%, or MNAR patterns detected without adequate correction
+Assesses measurement fidelity, fitness for purpose, and data provenance. This dimension also incorporates the assembled observation modifier.
 
-**Interpretation**: The results suggest patterns or ranges but should not be used for firm
-decision-making without additional data. The findings are indicative; they tell you where to
-look, not what to conclude.
+Concern anchors:
 
-### Tier 4: Insufficient / Not Reportable
+- No concern: Data sources are purpose-compatible with the research question. Measurement basis is verified and aligns with the target variable. Provenance is documented. Assembled observations do not exceed 50% of the stratum's total.
+- Minor concern: Characterization is inferred (not verified) for some sources, or minor measurement mismatch exists. Assembled observations present but below 50%.
+- Serious concern: Significant measurement mismatch between available data and the target variable, or unknown provenance for key sources. Assembled observations exceed 50% of the stratum's total.
+- Very serious concern: Fundamental measurement validity failure. The available data does not measure what the research question asks about. No viable data sources identified after exhaustive search.
 
-**Criteria (any one is sufficient):**
-- Sample size below the Non-Reportable threshold
-- Data quality so compromised that any estimate would be misleading
-- No viable data sources identified for the stratum after exhaustive search and user collection
-  attempts
-- Fundamental measurement validity concerns (e.g., the available data doesn't actually measure
-  what the research question asks about)
+### 3. Source Consistency
 
-**Interpretation**: No reliable estimate can be produced. The report should explicitly state that
-this stratum or parameter could not be estimated and explain what data would be needed to achieve
-reportable results. Producing a number here would be worse than producing no number.
+Assesses agreement and convergence across independent data sources.
 
-## Assignment Procedure
+Concern anchors:
 
-### Stratum-Level Assignment
+- No concern: Two or more independent sources per stratum. Dropping any single source shifts the point estimate by less than 10% and does not change the qualitative conclusion.
+- Minor concern: Single source of adequate quality, or multiple sources with minor inconsistencies (10-15% shift when one is dropped, but no direction change).
+- Serious concern: Heavy reliance on a single source for the majority of observations, or dropping one source shifts estimates by more than 15%, or directional conflict exists across sources.
+- Very serious concern: No independent verification possible. All data derives from a single upstream source with no corroboration.
 
-The Analyst assigns tiers at the stratum level by evaluating each criterion dimension:
+### 4. Coverage
 
-| Dimension | Assessment Method |
-|-----------|------------------|
-| Sample adequacy | Compare achieved N to power analysis thresholds |
-| Source diversity | Count independent sources; check for shared upstream |
-| Data quality | Review Collection & Validation quality flags |
-| Sensitivity stability | Run source-drop and perturbation analyses |
-| Missingness | Review validation log missingness assessment |
+Assesses how well the available data represents the target population, time period, and conceptual scope.
 
-The tier is determined by the **most limiting dimension**. A stratum that meets Tier 1 on four
-dimensions but Tier 3 on one dimension is rated Tier 3, with the limiting factor documented.
+Concern anchors:
 
-### Aggregate Roll-Up
+- No concern: Target population and period are fully covered by the source portfolio. No significant demographic, geographic, or temporal gaps.
+- Minor concern: Minor gaps in coverage that do not systematically bias results. Some segments are slightly underrepresented.
+- Serious concern: Significant demographic, geographic, or temporal gaps that affect representativeness. The covered population differs meaningfully from the target population in ways that could bias estimates.
+- Very serious concern: The covered population fundamentally differs from the target population. Results cannot generalize to the intended scope.
 
-Aggregate findings (e.g., a population-level mean computed from stratified estimates) derive
-their confidence tier from the contributing strata:
+### 5. Data Completeness
 
-1. Compute each stratum's **contribution weight** to the aggregate estimate
-2. Identify the tier of each contributing stratum
-3. Apply the roll-up rules:
-   - If all contributing strata are Tier 1 → aggregate is Tier 1
-   - If any stratum contributing **>25%** of the weighted estimate is Tier 2 → aggregate is
-     capped at Tier 1 only if remaining evidence is exceptionally strong; otherwise Tier 2
-   - If any stratum contributing **>25%** is Tier 3 → aggregate cannot exceed Tier 2
-   - If any stratum contributing **>10%** is Tier 4 → aggregate must disclose the gap explicitly
-     and cannot exceed Tier 2; if the Tier 4 stratum contributes **>25%**, aggregate is Tier 3
-   - If **>50%** of contributing weight is Tier 3 or below → aggregate is Tier 3
+Assesses the rate and mechanism of missing data.
 
-4. Document the roll-up logic for the Report Composer
+Concern anchors:
 
-### Edge Cases
+- No concern: Missingness is less than 5% on key variables and is plausibly Missing Completely At Random (MCAR).
+- Minor concern: Missingness between 5% and 15%. Mechanism is plausibly Missing At Random (MAR) with appropriate treatment applied (imputation or weighting).
+- Serious concern: Missingness exceeds 15%, or Missing Not At Random (MNAR) patterns are suspected based on domain knowledge or diagnostic analysis. Bias from missingness cannot be fully corrected.
+- Very serious concern: Pervasive missingness on key variables that compromises any analysis. Mechanism is likely MNAR with no viable correction strategy.
 
-- **Merged strata**: If two strata were merged during design adjustment, the confidence tier of
-  the merged stratum reflects the weaker of the two components, unless the merge was pre-planned
-  and the power analysis accounts for the combined cell.
-- **User-supplied data**: Data collected by the user is not inherently lower-tier, but it should
-  be assessed for the same quality dimensions. User data from a single source with no independent
-  verification carries source diversity risk.
-- **Proxy variables**: If a stratification variable was proxied (e.g., using ZIP-code median income
-  instead of school-level economic data), note this as a methodological limitation that may prevent
-  Tier 1 assignment for affected strata.
+### 6. Robustness
+
+Assesses the stability of results across sensitivity analyses and alternative analytical choices.
+
+Concern anchors:
+
+- No concern: Results are stable under all sensitivity tests. Dropping any single source, changing imputation method, including or excluding outliers, and varying stratum boundaries all produce shifts of less than 10% with no direction change.
+- Minor concern: Results are directionally stable but show moderate sensitivity (10-25% shift) under some conditions. The qualitative conclusion holds.
+- Serious concern: Results shift by more than 25% or change direction under reasonable perturbations. The finding depends materially on specific analytical choices.
+- Very serious concern: Results are unstable under most perturbations. No robust estimate can be derived from the available data.
+
+## Starting Level
+
+For secondary observational data (publicly available sources, administrative records, scraped data), the starting confidence level is **Moderate**. This follows the Navigation Guide's rationale: GRADE's default of Low for all observational studies is overly conservative when the data sources are well-characterized and the analysis is transparently conducted. Starting at Moderate acknowledges that secondary data analysis lacks the control of experimental design while recognizing that rigorous source evaluation, sensitivity testing, and transparent documentation can support meaningful findings.
+
+## Tier Derivation
+
+The overall confidence tier is determined by matching the dimension profile against the tier definitions below. For secondary observational data, the default expectation is Moderate (Tier 2); achieving Tier 1 requires demonstrating that all dimensions have been rigorously assessed and found to have no or only minor concerns.
+
+### Tier Definitions
+
+**Tier 1: High Confidence**
+All dimensions at no concern or minor concern. No dimension at serious or very serious concern. For secondary data, this tier represents the ceiling: it requires multiple independent sources, adequate samples, verified measurement, full coverage, low missingness, and stable sensitivity results. Estimates are likely to generalize to the target population within stated margins of error. Suitable for decision-making.
+
+**Tier 2: Moderate Confidence**
+No dimension at very serious concern, and no more than two dimensions at serious concern. This is the expected tier for well-conducted secondary data analysis where some limitations are present but contained. Estimates are informative and directionally reliable. Suitable for informed decision-making with awareness of the specific documented limitations.
+
+**Tier 3: Low Confidence / Indicative Only**
+Any dimension at very serious concern, or three or more dimensions at serious concern. Results suggest patterns or ranges but should not be used for firm decision-making without additional data. The findings are indicative; they tell you where to look, not what to conclude.
+
+**Tier 4: Insufficient / Not Reportable**
+Statistical Precision at very serious concern (N below Non-Reportable threshold), OR Source Quality at very serious concern with no viable data sources, OR two or more dimensions at very serious concern. No reliable estimate can be produced. The report should explicitly state that this stratum or parameter could not be estimated and explain what data would be needed.
+
+## Dimension Profile Reporting
+
+Both the overall tier and the individual dimension ratings are reported for every finding. This allows readers to distinguish qualitatively different confidence profiles. For example:
+
+- "Tier 2 due to source consistency (serious: single source)" conveys a different risk than "Tier 2 due to data completeness (serious: 18% MNAR missingness)"
+- The dimension profile enables targeted follow-up: improving source diversity is a different remediation than improving data completeness
+
+The statistical analyst documents the full dimension profile in `engagement/analysis/confidence_assessment.md`. The report composer presents both the tier and the most material dimension concerns in a register-appropriate format.
+
+## Aggregate Roll-Up
+
+Aggregate findings (e.g., a population-level mean computed from stratified estimates) derive their confidence assessment from the contributing strata using a dimension-first aggregation procedure:
+
+1. For each of the six dimensions, compute the weighted concern level across contributing strata using the stratum weights from the sampling design.
+2. If any stratum contributing more than 25% of the weighted estimate has **serious concern** on a dimension, the aggregate inherits at least **minor concern** on that dimension.
+3. If any stratum contributing more than 25% has **very serious concern** on a dimension, the aggregate inherits **serious concern** on that dimension.
+4. If any stratum contributing more than 10% of the weighted estimate is Tier 4, the aggregate must disclose the gap explicitly on every dimension that stratum affects.
+5. If more than 50% of contributing weight comes from strata at Tier 3 or below, the aggregate is Tier 3.
+6. Derive the overall aggregate tier by matching the aggregated dimension ratings against the tier definitions, using the same rules as stratum-level assessment.
+
+Document the per-stratum contributions and how they determine each aggregate dimension rating.
+
+## Edge Cases
+
+- **Merged strata**: If two strata were merged during design adjustment, each dimension for the merged stratum reflects the weaker of the two component ratings, unless the merge was pre-planned and the feasibility assessment accounts for the combined cell.
+- **Client-supplied data**: Data collected by the client is assessed on the same six dimensions. Client data from a single source with no independent verification carries source consistency risk. Client data collected without documented methodology carries source quality risk.
+- **Proxy variables**: If a stratification variable was proxied (e.g., using ZIP-code median income instead of school-level economic data), this is recorded as a coverage concern (conceptual indirectness between the proxy and the intended construct) and may also affect source quality if the proxy's measurement fidelity is uncertain.
 
 ## Presentation in Reports
 
-The Report Composer translates tiers into reader-appropriate language. See the Report Composer
-reference file for register-specific examples. The key requirements are:
-- Every quantitative finding carries its tier visibly
-- Tier 2+ findings include a brief explanation of the limiting factor
-- The limitations section provides the full traceability chain for each non-Tier-1 finding
-- Aggregate tiers include a breakdown showing per-stratum contributions
+The report composer translates the dimension profile and overall tier into reader-appropriate language. The key requirements are:
+
+- Every quantitative finding carries its overall tier and the most material dimension concerns.
+- Findings with serious or very serious concern on any dimension include an explanation of the affected dimensions and their impact.
+- The limitations section provides the full dimension profile for each non-Tier-1 finding, tracing each concern to its source in the engagement.
+- Aggregate tiers include a breakdown showing per-stratum contributions and per-dimension aggregation.
