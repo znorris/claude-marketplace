@@ -112,6 +112,7 @@ Statistical data research consulting engagement system with multi-agent sampling
 | Skill | Description |
 | --- | --- |
 | `/stat-report-team` | Run a structured statistical consulting engagement with sampling design, data acquisition, analysis, and confidence-tiered reporting |
+| `/engagement-qa` | Answer follow-up questions about a completed engagement using only the engagement's data and findings |
 
 ### meeseeks
 

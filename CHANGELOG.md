@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.13.0] - 2026-03-18
+
+### Added
+
+- stat-consulting: `/engagement-qa` skill for answering follow-up questions about completed engagements using only the engagement's data and findings
+- stat-consulting: bumped plugin version to 2.1.0
+
 ## [3.11.0] - 2026-03-17
 
 ### Breaking

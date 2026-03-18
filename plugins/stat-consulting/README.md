@@ -8,6 +8,8 @@ The plugin treats every data request as a consulting engagement, scoping the res
 
 The `stat-report-team` skill activates when the user asks for work that requires statistically representative data rather than anecdotal answers. Pricing studies, market research, competitive benchmarking, survey-based analysis, cross-segment comparisons: anything where sampling design, source diversity, and confidence quantification matter.
 
+The `engagement-qa` skill activates when the user has follow-up questions about a completed engagement. It reads the engagement artifacts and answers from the findings, citing confidence tiers and limitations. It does not re-analyze raw data or modify engagement files.
+
 ## How It Works
 
 The plugin follows a six-phase consulting engagement lifecycle, modeled on professional statistical consulting practice.
