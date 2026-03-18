@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Developer workflow skills for the full development lifecycle: define, plan, implement, review, commit, and release",
-    "version": "3.11.0"
+    "version": "3.12.0"
   },
   "plugins": [
     {
@@ -112,6 +112,16 @@
         "sampling",
         "consulting",
         "report"
+      ]
+    },
+    {
+      "name": "meeseeks",
+      "source": "./plugins/meeseeks",
+      "description": "Press the button on the meeseeks box to spawn a helpful Mr. Meeseeks. I'm Mr. Meeseeks look at me!",
+      "version": "1.0.0",
+      "keywords": [
+        "mr. meeseeks",
+        "meeseeks"
       ]
     }
   ]

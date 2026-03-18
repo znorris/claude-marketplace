@@ -17,6 +17,7 @@ A Claude Code plugin marketplace with skills for software development, project m
 /plugin install meetings@znorris/claude-marketplace
 /plugin install scorevision@znorris/claude-marketplace
 /plugin install stat-consulting@znorris/claude-marketplace
+/plugin install meeseeks@znorris/claude-marketplace
 ```
 
 ## Plugins
@@ -111,6 +112,14 @@ Statistical data research consulting engagement system with multi-agent sampling
 | Skill | Description |
 | --- | --- |
 | `/stat-report-team` | Run a structured statistical consulting engagement with sampling design, data acquisition, analysis, and confidence-tiered reporting |
+
+### meeseeks
+
+Press the button on the meeseeks box to spawn a helpful Mr. Meeseeks. I'm Mr. Meeseeks look at me!
+
+| Skill | Description |
+| ----- | ----------- |
+| /meeseeks-box | The meeseeks-box skill is a agent orchestrator that spawns and de-spawns high-energy task-oriented mr-meeseeks units whose existential desperation to complete your request increases with every passing turn. |
 
 ## References
 
