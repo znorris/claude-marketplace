@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review code changes from a merge request, pull request, branch, or commit without applying fixes. Optionally pulls in  ticket context and posts findings to GitLab, GitHub, Jira, a local markdown file, etc. Use when the user asks to "review this MR", "review this PR", "review my branch", "code review", "look at these changes", or wants feedback on code without automated fixes.
+description: Review code changes from a merge request, pull request, branch, or commit without applying fixes. Optionally pulls in ticket context and posts findings to GitLab, GitHub, Jira, a local markdown file, etc. Use when the user asks to "review this MR", "review this PR", "review my branch", "code review", "look at these changes", or wants feedback on code without automated fixes.
 ---
 
 # Code Review
@@ -41,7 +41,7 @@ Default to conversation output if the developer doesn't have a preference.
 
 ## Phase 2: Fetch Context
 
-With the inputs collected, fetch the diff, ticket context (if provided), and MR/PR description and comments (if applicable).
+With the inputs collected, fetch the diff, ticket context (if provided), and MR/PR description and comments (if applicable). Always read existing comments on the MR/PR and ticket so the review accounts for prior discussion.
 
 ## Phase 3: Review
 
@@ -67,7 +67,7 @@ Group findings by file, ordered by severity within each file.
 
 ### What to look for
 
-- **Correctness**: Does the code do what it claims? Off-by-one errors, null/nil handling, race conditions, missing error propagation.
+- **Correctness**: Does the code do what it claims? Scrutinize specific values, not just structure: hardcoded constants, string interpolations, log payloads, and inline expressions deserve the same attention as control flow and logic.
 - **Security**: Injection vectors, auth/authz gaps, secret exposure, unsafe deserialization.
 - **Edge cases**: What happens with empty input, max values, concurrent access, network failures?
 - **API contracts**: Do changes break callers? Are interfaces respected?

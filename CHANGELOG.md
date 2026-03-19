@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.14.1] - 2026-03-19
+
+### Changed
+
+- development: `/code-review` requires reading existing MR/PR and ticket comments during context fetch
+- development: `/code-review` correctness criteria now emphasizes scrutinizing specific values (constants, interpolations, log payloads), not just structure
+- development: bumped development plugin version to 2.3.1
+
 ## [3.14.0] - 2026-03-19
 
 ### Added
