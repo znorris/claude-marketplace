@@ -10,6 +10,7 @@ Skills for the full development lifecycle: define issues, plan work, implement c
 | `/plan-work` | Break down an issue into concrete implementation steps using plan mode |
 | `/implement` | Execute an implementation plan step by step with verification checkpoints |
 | `/implement-team` | Execute a plan using parallel sub-agents for independent steps |
+| `/code-review` | Review code from an MR, PR, branch, or commit with optional ticket context and flexible output destinations |
 | `/review-team` | Multi-stage code review pipeline with adjudication, planning, and automated fixes |
 | `/guided-dev-team` | Guided full-lifecycle orchestration: define, plan, implement, review, commit |
 

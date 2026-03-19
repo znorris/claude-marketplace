@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.14.0] - 2026-03-19
+
+### Added
+
+- development: `/code-review` skill for reviewing code changes from MRs, PRs, branches, or commits without applying fixes, with optional ticket context, test impact review, and flexible output destinations
+
+### Changed
+
+- development: `/review-team` description and triggers updated to disambiguate from `/code-review` (review-and-fix vs review-only)
+- development: bumped plugin version to 2.3.0
+
 ## [3.13.0] - 2026-03-18
 
 ### Added

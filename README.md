@@ -51,6 +51,7 @@ For the full guided experience, use `/guided-dev-team` to walk through each phas
 | `/plan-work` | Break down an issue or task into concrete implementation steps with file locations, code changes, and acceptance criteria |
 | `/implement` | Execute an implementation plan step by step with verification checkpoints and progress tracking |
 | `/implement-team` | Execute an implementation plan using parallel sub-agents for independent steps. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
+| `/code-review` | Review code from an MR, PR, branch, or commit with optional ticket context and flexible output destinations |
 | `/review-team` | Multi-stage code review pipeline with adjudication, planning, and automated fixes. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
 | `/guided-dev-team` | Guided full-lifecycle orchestration: define, plan, implement, review, and commit with decision points at each phase. Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` enabled. |
 
