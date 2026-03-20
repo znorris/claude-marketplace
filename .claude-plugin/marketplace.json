@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Developer workflow skills for the full development lifecycle: define, plan, implement, review, commit, and release",
-    "version": "3.15.1"
+    "version": "3.16.0"
   },
   "plugins": [
     {
       "name": "development",
       "source": "./plugins/development",
       "description": "Full development lifecycle: define issues, plan work, implement changes, review code, and orchestrate the entire flow with agent teams",
-      "version": "2.3.2",
+      "version": "2.4.0",
       "keywords": [
         "issues",
         "planning",

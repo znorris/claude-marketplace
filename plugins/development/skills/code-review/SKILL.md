@@ -41,40 +41,40 @@ Default to conversation output if the developer doesn't have a preference.
 
 ## Phase 2: Fetch Context
 
-With the inputs collected, fetch the diff, ticket context (if provided), and MR/PR description and comments (if applicable). Always read existing comments on the MR/PR and ticket so the review accounts for prior discussion.
+Gather all context needed for the review:
 
-## Phase 3: Review
+1. **Diff**: Fetch the full diff for the review target.
+2. **Ticket context**: If a ticket was provided, fetch its summary and description.
+3. **MR/PR context**: If applicable, fetch the description and existing comments/discussion.
+4. **Historical context**: Run git blame on modified files. Check previous MR/PR comments on these files for recurring issues or prior decisions that inform the current change.
+5. **CLAUDE.md files**: Collect CLAUDE.md files from the repository root and from directories whose files appear in the diff.
+6. **Developer focus areas**: Carry forward from Phase 1.
 
-If the diff is under ~1000 lines, review it directly. If it exceeds ~1000 lines, split the diff into logical groups (by file or directory) and spawn sub-agents to review each group in parallel. Each sub-agent receives the same focus areas and review criteria. Assemble their findings into a single report.
+## Phase 3: Multi-Lens Review
 
-For each finding, assess:
+Spawn parallel sub-agents, each reviewing the same diff through a specialized lens. Each agent receives the full diff, all context from Phase 2 (CLAUDE.md files, ticket context, historical context, prior discussion), and developer focus areas.
 
-- **Severity**: critical (bugs, security issues, data loss), major (logic errors, missing edge cases, API contract violations), minor (style, naming, readability), or nit (trivial preferences).
-- **Confidence**: how certain the finding is a real issue vs. a judgment call. If unsure whether something is intentional, say so rather than asserting it's wrong.
-- **Location**: file path and line number(s).
+### Review lenses
 
-Structure each finding as:
+Each lens is a specialized review pass with representative focus areas, not an exhaustive checklist. Flag anything within the lens's domain that stands out, even if not explicitly listed. For diffs under ~300 lines, a single-pass review covering all lenses is acceptable. For larger diffs, spawn parallel agents, one per lens.
 
-```
-### [severity] Short description
+Each agent returns findings with: file path, line range, severity, a short description, and why it matters.
 
-**File:** `path/to/file.ext:L42-L50`
+| Lens | Focus |
+|------|-------|
+| **Correctness and contracts** | Does the code do what it claims? Scrutinize specific values, not just structure: hardcoded constants, string interpolations, log payloads, and inline expressions deserve the same attention as control flow and logic. Do changes break callers? Are interfaces respected? Stay within the diff and avoid reading beyond the changes. Focus on significant bugs, not nitpicks. |
+| **Error handling and robustness** | Are errors swallowed, logged without action, or missing entirely? What happens with empty input, max values, concurrent access, network failures? Check for injection vectors, auth/authz gaps, secret exposure, and unsafe deserialization. |
+| **Conventions and readability** | Does the new code follow the patterns established in the surrounding codebase and any applicable CLAUDE.md? Do changes respect or contradict guidance in inline comments, TODOs, and documented invariants? Could another developer understand this without the PR description? When flagging CLAUDE.md violations, verify that the CLAUDE.md actually states the requirement being cited. |
+| **Test impact** | If the project has an established testing practice, check whether changed code invalidates existing tests, whether added logic lacks corresponding test coverage, and whether modified or removed tests reduce coverage of unchanged behavior. Skip this lens entirely if the project has no testing conventions. |
 
-What the issue is and why it matters. If relevant, suggest an approach (but the developer owns the fix).
-```
+### What NOT to flag (false positives)
 
-Group findings by file, ordered by severity within each file.
-
-### What to look for
-
-- **Correctness**: Does the code do what it claims? Scrutinize specific values, not just structure: hardcoded constants, string interpolations, log payloads, and inline expressions deserve the same attention as control flow and logic.
-- **Security**: Injection vectors, auth/authz gaps, secret exposure, unsafe deserialization.
-- **Edge cases**: What happens with empty input, max values, concurrent access, network failures?
-- **API contracts**: Do changes break callers? Are interfaces respected?
-- **Error handling**: Are errors swallowed, logged without action, or missing entirely?
-- **Readability**: Could another developer understand this without the PR description?
-- **Convention adherence**: Does the new code follow the patterns already established in the surrounding codebase?
-- **Test impact**: If the project has an established testing practice, check whether changed code invalidates existing tests, whether added logic lacks corresponding test coverage, and whether modified or removed tests reduce coverage of unchanged behavior. Skip this category entirely if the project has no testing conventions.
+- Pre-existing issues on lines the developer did not modify.
+- Issues that a linter, typechecker, or compiler would catch (missing imports, type errors, formatting). Assume CI runs these separately.
+- General code quality concerns (lack of test coverage, broad security posture, poor documentation) unless explicitly required by CLAUDE.md.
+- Issues called out in CLAUDE.md but explicitly silenced in code (e.g., lint-ignore comments).
+- Changes in functionality that are likely intentional or directly related to the broader change.
+- Pedantic nitpicks a senior engineer would not call out.
 
 ### What NOT to do
 
@@ -83,7 +83,25 @@ Group findings by file, ordered by severity within each file.
 - Do not pad findings with praise. If the code is good, say "no findings."
 - Do not create findings for changes that are correct and require no action.
 
-## Phase 4: Deliver Findings
+## Phase 4: Score and Filter
+
+For each finding from Phase 3, spawn a Haiku sub-agent to independently score its confidence. Each scorer receives only the diff, the finding description, and the CLAUDE.md files collected in Phase 2. Do not pass the review agent's reasoning or other findings -- the scorer must evaluate the finding on its own merits.
+
+Pass the following rubric to each scorer verbatim:
+
+| Score | Meaning |
+|-------|---------|
+| **0** | False positive. Does not hold up to light scrutiny, or is a pre-existing issue. |
+| **25** | Might be real, but could also be a false positive. Unable to verify. If stylistic, not explicitly required by CLAUDE.md. |
+| **50** | Verified as real, but a nitpick or unlikely to matter in practice. Not important relative to the rest of the change. |
+| **75** | Verified and likely to be hit in practice. The existing approach is insufficient. Directly impacts functionality, or directly mentioned in CLAUDE.md. |
+| **100** | Confirmed real. Will happen frequently. Evidence directly supports this. |
+
+For findings flagged as CLAUDE.md violations, the scorer must verify that the CLAUDE.md actually states the requirement being cited.
+
+Discard findings scoring below 50.
+
+## Phase 5: Deliver Findings
 
 ### Summary
 
@@ -95,8 +113,18 @@ Start with a brief summary:
 
 ### Findings
 
-Present the full findings after the summary.
+Present the remaining findings after the summary, using the standard finding format:
 
-When delivering to an external tool (GitLab, GitHub, Jira, file), use the appropriate CLI or MCP command and format findings to that platform's best practices.
+```
+### [severity] Short description
 
-If there are no findings, say so clearly and skip the findings section.
+**File:** `path/to/file.ext:L42-L50`
+
+What the issue is and why it matters. If relevant, suggest an approach (but the developer owns the fix).
+```
+
+Group findings by file, ordered by severity within each file.
+
+When delivering to an external tool (GitLab, GitHub, Jira, file), use the appropriate CLI or MCP command and format findings to that platform's best practices. When linking to code on GitHub or GitLab, use the full commit SHA in the URL.
+
+If there are no findings (either none were generated or all were filtered out), say so clearly and skip the findings section.

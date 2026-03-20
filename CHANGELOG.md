@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.16.0] - 2026-03-20
+
+### Changed
+
+- development: `/code-review` redesigned with multi-lens parallel review, confidence scoring, false positive filtering, and expanded context fetch (CLAUDE.md, git blame, prior MR/PR comments)
+- development: bumped plugin version to 2.4.0
+
 ## [3.15.1] - 2026-03-20
 
 ### Changed
