@@ -80,7 +80,8 @@ Group findings by file, ordered by severity within each file.
 
 - Do not apply fixes or modify source files.
 - Do not review files outside the diff unless a change clearly breaks a caller (and say so explicitly if you check).
-- Do not pad findings with praise. If the code is good, say "no findings" for that file.
+- Do not pad findings with praise. If the code is good, say "no findings."
+- Do not create findings for changes that are correct and require no action.
 
 ## Phase 4: Deliver Findings
 

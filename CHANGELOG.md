@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.15.1] - 2026-03-20
+
+### Changed
+
+- development: `/code-review` "What NOT to do" rules now reject non-actionable findings, not just file-level praise
+
 ## [3.15.0] - 2026-03-19
 
 ### Breaking
