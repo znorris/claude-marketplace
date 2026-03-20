@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Developer workflow skills for the full development lifecycle: define, plan, implement, review, commit, and release",
-    "version": "3.16.0"
+    "version": "3.17.0"
   },
   "plugins": [
     {
@@ -112,6 +112,19 @@
         "sampling",
         "consulting",
         "report"
+      ]
+    },
+    {
+      "name": "slack-tools",
+      "source": "./plugins/slack-tools",
+      "description": "Reference for Slack message formatting covering mrkdwn syntax, Block Kit, mentions, emoji, dates, and canvas documents",
+      "version": "1.0.0",
+      "keywords": [
+        "slack",
+        "mrkdwn",
+        "formatting",
+        "block-kit",
+        "messages"
       ]
     },
     {

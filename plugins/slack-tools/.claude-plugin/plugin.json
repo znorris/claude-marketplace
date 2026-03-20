@@ -1,0 +1,5 @@
+{
+  "name": "slack-tools",
+  "description": "Reference for Slack message formatting covering mrkdwn syntax, Block Kit, mentions, emoji, dates, and canvas documents",
+  "version": "1.0.0"
+}

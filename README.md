@@ -17,6 +17,7 @@ A Claude Code plugin marketplace with skills for software development, project m
 /plugin install meetings@znorris/claude-marketplace
 /plugin install scorevision@znorris/claude-marketplace
 /plugin install stat-consulting@znorris/claude-marketplace
+/plugin install slack-tools@znorris/claude-marketplace
 /plugin install meeseeks@znorris/claude-marketplace
 ```
 
@@ -96,6 +97,14 @@ Quick reference for GitLab CLI (glab) commands covering issues, merge requests, 
 | Skill | Description |
 | --- | --- |
 | `/gitlab-cli` | Reference guide for glab commands covering issues, merge requests, pipelines, releases, and CI/CD |
+
+### slack-tools
+
+Reference for Slack message formatting covering mrkdwn syntax, Block Kit, mentions, emoji, dates, and canvas documents.
+
+| Skill | Description |
+| --- | --- |
+| `/slack-formatting` | Reference for Slack message formatting including mrkdwn syntax, special mentions, emoji, dates, Block Kit, and canvas documents |
 
 ### scorevision
 

@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.17.0] - 2026-03-20
+
+### Added
+
+- slack-tools: new plugin with `/slack-formatting` skill covering mrkdwn syntax, Block Kit, special mentions, emoji, date formatting, canvas documents, and message composition patterns
+- slack-tools: `references/block-kit.md` with full Block Kit block types, interactive elements, composition objects, rich text blocks, and legacy attachments
+
 ## [3.16.0] - 2026-03-20
 
 ### Changed
