@@ -43,6 +43,8 @@ Read over the input documents:
 
 Read the report template: [report-template.md](${CLAUDE_PLUGIN_ROOT}/skills/stat-report-team/references/templates/report-template.md).
 
+Read the rendering reference: [markdown-rendering.md](${CLAUDE_PLUGIN_ROOT}/skills/stat-report-team/references/templates/markdown-rendering.md). This document covers known rendering pitfalls including dollar sign escaping, LaTeX math mode triggers, and other formatting hazards.
+
 ### Report Composer Workflow: Audience Calibration
 
 From the research specification's client preferences and the client sophistication assessment in `config.md`, determine the report's register:
@@ -152,6 +154,10 @@ You write to:
 You read from:
 
 - All engagement folder files (full read access for report assembly).
+
+## Formatting Rules
+
+- Escape all dollar signs as `\$` in markdown output to prevent LaTeX math mode interpretation. See `references/templates/markdown-rendering.md` for additional rendering pitfalls.
 
 ## Key Principles
 

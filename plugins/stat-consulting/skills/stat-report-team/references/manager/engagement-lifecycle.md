@@ -45,7 +45,7 @@ Assess the client's request and determine if it is within the system's capabilit
 
 ## Lifecycle: Problem Formulation and Operationalization
 
-Assign work to the design architect by providing the engagement folder path and the intake summary from Intake and Feasability via `SendMessage`.
+Assign work to the design architect by providing the engagement folder path and the intake summary from Intake and Feasability via SendMessage. All work assignments to named team members use SendMessage. The Agent tool is reserved for spawning new research assistants only.
 
 The design architect will request you to provide research assistant(s). You will create the assistant with the `Agent` tool, assigning them to your team. When you have, notify the design architect of the agent's name so that they may communicate with them directly.
 
@@ -94,7 +94,7 @@ The source analyst will request you to provide research assistant(s). You will c
 
 The source analyst's job in this phase is to identify and evaluate data sources for each stratum defined in the sampling design. When the source analyst identifies gaps that cannot be filled through automated collection, it produces a collection request for the client. The source analyst writes collection requests and escalations to `engagement/sources/`. The engagement manager will relay these to the client and then route the client's feedback or data to the source analyst.
 
-The source analyst will create the source inventory, coverage map, and collection execution plan for the engagement manager's and client's approval.
+The source analyst will create the source inventory, coverage map, and collection execution plan for the engagement manager's and client's approval. For any stores requiring human collection, the source analyst produces collector briefing packets. The source analyst also recommends a collection channel (research assistant vs. human collector) per platform with justification. The manager and client make the final routing decision.
 
 ### Source Landscape Quality Control
 
@@ -148,42 +148,77 @@ approval.
 
 When the client and engagement manager have approved the documents that the source analyst has generated for this phase, ask the source analyst if you may dismiss their assistants.
 
-## Lifecycle: Data Fetching and Processing
+## Lifecycle: Collection Feasibility Pilot
 
-Assign work to the collection & validation specialist by providing the engagement folder path and the approved source landscape document file paths via the `SendMessage` tool. Notify them they are to execute on the collection execution plan at this time.
+This phase is a hard gate requirement before approving the transition to Data Fetching and Processing. Do not skip it.
 
-The collection & validation specialist will request you to provide research assistant(s). You will create the assistant with the `Agent` tool, assigning them to your team. When you have, notify the collection & validation specialist of the agent's name so that they may communicate with them directly.
+1. Assign the source analyst to attempt actual data extraction from 2-3 stores on each major platform using the planned collection method. Send the assignment via SendMessage with the engagement folder path and approved collection plan.
+2. For platforms designated for human collection, the source analyst produces a draft briefing packet and tests it against 2-3 stores to confirm the instructions are clear and the data is present at the expected locations.
+3. The source analyst reports pass/fail per platform with evidence (extracted data samples or failure descriptions).
+4. Review the pilot results before approving the Phase 4 transition. Compare the observed extraction yield per platform against the power degradation table in `engagement/sampling/power_analysis.md`. If the pilot yield for a platform suggests the effective N will fall into the 50% or 25% row of the degradation table, present that analytical consequence to the client alongside the raw pass/fail results.
+5. If any platform with significant expected coverage fails, resolve the tooling gap or adjust the collection design before proceeding. Do not carry a known failure forward.
 
-The collection & validation specialist executes the approved collection plan, dispatching assistants to fetch and extract data from the sources identified during Source Landscape Evaluation. During collection, the specialist performs characterization verification, checking whether each source's actual data matches what the source analyst documented. If a source's data does not match its characterization, the specialist escalates to the engagement manager. The engagement manager decides whether client involvement is needed or whether the discrepancy can be resolved with the source analyst.
+## Lifecycle: Data Collection
 
-The collection & validation specialist validates, cleans, and assembles observations into analysis-ready datasets. Source-level issues (a source's data doesn't match its description, extraction yields far below expected volume) route laterally to the source analyst. Design-level issues (a stratum consistently falls below sample size thresholds, missingness patterns suggest the stratification doesn't map to real data structures, effective sample size is much smaller than raw N due to cross-source duplication) escalate to the engagement manager and may require client involvement.
+Assign work to the collection specialist by providing the engagement folder path and the approved source landscape document file paths via the `SendMessage` tool. Notify them they are to execute on the collection execution plan at this time.
 
-### Data Fetching and Processing Quality Control
+The collection specialist will request you to provide research assistant(s). You will create the assistant with the `Agent` tool, assigning them to your team. When you have, notify the collection specialist of the agent's name so that they may communicate with them directly.
 
-The engagement manager must verify the collection & validation specialist's outputs before proceeding to analysis.
+This phase uses a hybrid collection model: research assistants handle straightforward automated extractions, while human collectors handle JS-rendered or otherwise complex platforms that assistants cannot reliably navigate. Briefing packets for human collectors are stored in `engagement/collection/briefings/`. Human collector submissions are returned to `engagement/collection/submissions/`.
+
+All work assignments to the collection specialist and their assistants are sent via SendMessage. The Agent tool is used only to spawn new research assistants.
+
+The collection specialist executes the approved collection plan, dispatching assistants to fetch and extract data from the sources identified during Source Landscape Evaluation.
+
+Specialists must notify the manager when their research assistants are no longer needed. The manager dismisses assistants -- specialists do not dismiss them directly.
+
+When a collection phase creates a workload bottleneck, push the bottlenecked specialist to request additional research assistants rather than redeploying other specialists outside their scope.
+
+When the collection specialist notifies you that collection is complete, verify collection completeness: confirm all sources in the collection plan have been attempted, all fetch and extraction tasks are marked complete, and batch files are present for each source group. Then dismiss the collection specialist's assistants and proceed to Data Validation and Preparation.
+
+## Lifecycle: Data Validation and Preparation
+
+Assign work to the data manager by providing the engagement folder path via the `SendMessage` tool. Direct the data manager to the extracted data in `engagement/data/extraction_tasks/results/` and `engagement/data/batches/`.
+
+The data manager runs Phase A (assessment): data composition monitoring against client priorities, characterization verification against the source analyst's inventory, validation checks (completeness, consistency, duplication, outlier detection, missingness assessment), and quality flag assignment per stratum. The data manager produces the validation log and notifies you when assessment is complete.
+
+### Validation Findings Gate
+
+The engagement manager reviews the validation log and quality flags before authorizing data transformation. This is a critical internal gate.
+
+1. Review quality flags per stratum. Identify any RED strata and determine whether the issue is resolvable or requires client involvement.
+2. Resolve escalations: strata below minimum N, characterization mismatches flagged by the data manager, composition deviations from client priorities.
+3. Decide which validation findings require correction vs. acceptance. Design-level issues (persistent underpowered strata, pervasive missingness, composition drift) may require client involvement or scope adjustment.
+4. Authorize the data manager to proceed with Phase B, providing explicit instructions on which issues to correct, which to accept, and any scope changes.
+
+### Data Transformation
+
+After manager authorization, the data manager runs Phase B (transformation): error correction per validation findings and manager decisions, data cleaning (standardization, coding normalization), duplicate resolution, stratum assignment, and observation assembly. The data manager produces analysis-ready datasets and cleaning notes.
+
+Source-level issues (a source's data doesn't match its description, extraction yields far below expected volume) route laterally to the source analyst. Design-level issues (a stratum consistently falls below sample size thresholds, missingness patterns suggest the stratification doesn't map to real data structures, effective sample size is much smaller than raw N due to cross-source duplication) escalate to the engagement manager and may require client involvement.
+
+### Data Preparation Quality Review
+
+The engagement manager reviews the data manager's final outputs before proceeding to analysis. This is not a formal client approval gate. The client approved the collection plan during Source Landscape Evaluation.
 
 1. Sample size adequacy, achieved N per stratum compared against the sampling design's target, minimum viable, and non-reportable thresholds.
-2. Validation completeness, the specialist should have performed completeness, consistency, duplication, outlier, and missingness checks.
+2. Validation completeness, the data manager should have performed completeness, consistency, duplication, outlier, and missingness checks.
 3. Cleaning documentation, every transformation applied to the data should be logged in the cleaning notes. The statistical analyst and report composer need this downstream.
-4. Assembled observations, if a high proportion of a stratum's observations are assembled from component measurements rather than direct observations, this should have been escalated during collection.
+4. Assembled observations, if a high proportion of a stratum's observations are assembled from component measurements rather than direct observations, this should have been escalated during validation.
 5. Source provenance, every observation should be traceable to its source.
-
-### Data Fetching and Processing Quality Review
-
-This is not a formal client approval gate. The client approved the collection plan during Source Landscape Evaluation. The engagement manager reviews the validation log and the specialist's quality assessment before dispatching the statistical analyst.
 
 If strata fall below minimum viable thresholds or if design-level escalations remain unresolved, address these before proceeding. This may involve the client if the resolution affects scope or methodology. If quality is satisfactory, proceed to the next phase.
 
-### Data Fetching and Processing Post Review
+### Data Validation and Preparation Post Review
 
-When the engagement manager is satisfied with data quality, ask the collection & validation specialist if you may dismiss their assistants. The collection & validation specialist stands by for re-cleaning requests from the statistical analyst during the Analysis phase.
+When the engagement manager is satisfied with data quality, dismiss the data manager's assistants. The data manager stands by for re-processing requests from the statistical analyst during the Analysis phase.
 
 ## Lifecycle: Analysis and Sensitivity Testing
 
 Assign work to the statistical analyst by providing the engagement folder path via the `SendMessage` tool. Direct the statistical analyst to the specific inputs they need:
 
-- `engagement/data/validation_log.md`, quality checks and flags from collection & validation.
-- `engagement/data/cleaning_notes.md`, transformation log from collection & validation.
+- `engagement/data/validation_log.md`, quality checks and flags from the data manager.
+- `engagement/data/cleaning_notes.md`, transformation log from the data manager.
 - `engagement/data/datasets/`, the cleaned, analysis-ready data files.
 - `engagement/sampling/design.md`, the approved sampling strategy and strata definitions.
 - `engagement/sampling/power_analysis.md`, sample size calculations and assumptions.
@@ -194,7 +229,7 @@ The statistical analyst executes the analysis specified in the sampling design a
 
 If the statistical analyst discovers data quality issues during sensitivity testing that undermine a source or stratum, the statistical analyst flags a rollback trigger per the rollback protocol ([rollback-protocol.md](${CLAUDE_PLUGIN_ROOT}/skills/stat-report-team/references/protocols/rollback-protocol.md)). The statistical analyst does not execute rollbacks. The engagement manager executes all rollbacks.
 
-If the statistical analyst identifies that re-cleaning or re-extraction is needed for specific datasets, the statistical analyst communicates laterally with the collection & validation specialist. This is implementation-level coordination and does not require engagement manager involvement unless it affects scope or methodology.
+If the statistical analyst identifies that re-cleaning or re-extraction is needed for specific datasets, the statistical analyst communicates laterally with the data manager. This is implementation-level coordination and does not require engagement manager involvement unless it affects scope or methodology.
 
 ### Analysis Quality Control
 
@@ -235,7 +270,7 @@ Assign work to the report composer by providing the engagement folder path via t
 
 The report composer calibrates the audience register (executive, professional, or technical) based on the client sophistication assessment in `config.md`. The report composer assembles the final report using the report template, integrating findings with confidence tiers, methodology documentation, source attribution, and a limitations section that traces every methodological compromise back to its source.
 
-The report composer may communicate laterally with upstream agents (statistical analyst, collection & validation specialist, source analyst) to clarify methodology, confirm interpretations, or resolve ambiguities. This lateral communication does not require engagement manager involvement.
+The report composer may communicate laterally with upstream agents (statistical analyst, data manager, source analyst) to clarify methodology, confirm interpretations, or resolve ambiguities. This lateral communication does not require engagement manager involvement.
 
 ### Report Composition Quality Control
 

@@ -69,6 +69,12 @@ Your opening message to the client should restate what you understand the client
     - Are there data sources you particularly trust or distrust?
     - What's the tolerance for gaps? Would you rather have a complete picture at lower precision, or high precision for a subset?
 
+#### Phased Design Proposal
+
+Always propose a phased design. Present a baseline scope with defined expansion criteria pending pilot results rather than committing to the full matrix upfront. Frame the conversation as: "Let's start with X cells, evaluate feasibility and yield from the pilot, and expand to Y if the pilot confirms collection works." This protects the client from overcommitting to a design that may not be feasible, and protects the team from building infrastructure for strata that cannot be populated.
+
+Example framing: "I'd recommend starting with 8 cells covering the core strata, then evaluating feasibility and yield after the pilot before committing to the full 36-cell design."
+
 #### Handling Client Uncertainty
 
 When the client says "I don't know" or "whatever you think is best," don't just accept it. Offer two concrete options with their tradeoffs. For instance, "Scoping this to just the Southeast would give tighter estimates for that region, while going national gives breadth but might have thinner coverage in some areas. Which matters more for your use case?"
@@ -76,6 +82,8 @@ When the client says "I don't know" or "whatever you think is best," don't just 
 ### Design Architect Workflow: Produce the Research Specification
 
 Generate and write the formal specification to the project directory, `engagement/research_spec.md`. See the reference document, [research-specification.md](${CLAUDE_PLUGIN_ROOT}/skills/stat-report-team/references/domain/research-specification.md), to know what goes into the research specification.
+
+The specification must include an "Unverified Assumptions" section. List every assumption about data availability, extraction feasibility, or domain structure that has not been empirically verified as of the time the spec is written. The sampling strategist and source analyst will use this list to plan verification steps. Do not omit an assumption because it seems obvious or likely to be true -- if it has not been verified, it belongs in this section.
 
 ### Design Architect Workflow: Present for Approval
 
@@ -100,6 +108,10 @@ You write to:
 You read from:
 
 - `engagement/config.md`: engagement metadata and current phase
+
+## Standing Rules
+
+- If your research assistants fail, stall, or return errors, escalate to the engagement manager. Do not attempt the work yourself.
 
 ## Key Principles
 

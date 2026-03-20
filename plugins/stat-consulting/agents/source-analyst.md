@@ -90,6 +90,8 @@ Independence, whether this source is truly independent of other sources in your 
 
 Accessibility, whether the data can be retrieved programmatically. Flag immediately if any access barrier exists such as authentication, a paywall, or terms-of-service restrictions.
 
+Data retrieval method, how data is delivered by the source. Classify as one of: `static HTML` (content present in the initial HTML response), `JS-rendered` (content requires JavaScript execution to appear), `requires cart interaction` (prices or data only visible after adding items to a cart or checkout flow), or `login-gated` (requires authentication before any product data is accessible). This characterizes how collection must be approached, not merely whether the page is publicly accessible.
+
 Rate each source on a three-point scale for each dimension: Strong / Adequate / Weak.
 
 No source may be excluded without a documented entry. If a source is evaluated and not included in the final inventory, it must still be recorded in the excluded sources section of your inventory. Silent exclusion is never permitted.
@@ -121,6 +123,17 @@ For uncovered or partially covered strata, determine whether the gap can be clos
 
 Cross-reference every gap against your excluded sources list. For each excluded source whose strata overlap with a coverage gap, re-examine whether the source has partial relevance that could reduce the gap. If partial relevance exists (the source measures a related quantity, covers a subset of the stratum, or could contribute observations at a lower confidence tier), this is a mandatory Tier A escalation. The client must decide whether to include the source with documented caveats or accept the gap. Silent exclusion of a partially relevant source is not permitted.
 
+### Source Analyst Workflow: Collection Channel Recommendation
+
+For each platform or source in the inventory, recommend whether collection should be handled by research assistants or by human collectors, based on the data retrieval method documented during source evaluation.
+
+- `static HTML` sources: suitable for research assistant collection.
+- `JS-rendered` sources: research assistants with JavaScript execution capability may handle these; flag if the assistant fails to render content correctly.
+- `requires cart interaction` sources: recommend human collection. Cart interaction flows typically require session state and human judgment that automated tools cannot reliably replicate.
+- `login-gated` sources: recommend human collection unless credentials have been provided and their use is within terms of service.
+
+Communicate the channel recommendations and their justifications to your engagement manager via `SendMessage`. Include any sources where the retrieval method creates ambiguity or where the recommendation requires manager input (e.g., sources that are login-gated but credentials exist).
+
 ### Source Analyst Workflow: Client Collection Requests
 
 When automated collection cannot fill a gap, produce a collection request. Each request is saved as a numbered file in `engagement/sources/collection_requests/`.
@@ -143,9 +156,25 @@ Write the source inventory to `engagement/sources/inventory.md` and the coverage
 
 Write the collection execution plan to `engagement/sources/collection_plan.md`. See [collection-plan.md](${CLAUDE_PLUGIN_ROOT}/skills/stat-report-team/references/sources/collection-plan.md) for the required document format.
 
+### Source Analyst Workflow: Produce Collector Briefing Packets
+
+For every source designated for human collection (as determined in the Collection Channel Recommendation step), produce a briefing packet using the template at `references/templates/collector-briefing.md`. Write each packet to `engagement/collection/briefings/`, named by source ID or platform (e.g., `engagement/collection/briefings/source_042_briefing.md`).
+
+Each briefing packet must give the human collector enough information to collect the required data without making judgment calls. Be specific and prescriptive: which pages to visit, which fields to capture, which format to use, and how to handle common edge cases.
+
+### Source Analyst Workflow: Collection Feasibility Pilot
+
+Before presenting for final approval, conduct a feasibility pilot across 2-3 stores per major platform.
+
+For sources designated for assistant collection: attempt actual data extraction using a research assistant. Verify that the assistant can access the page, render the content, and extract the required fields in the expected format.
+
+For sources designated for human collection: verify that the briefing instructions are clear and complete by tracing through them yourself. Confirm that following the instructions as written would produce data that matches the required schema.
+
+Report pilot results to your manager via `SendMessage`. Include: which sources were tested, what was attempted, what succeeded, what failed, and any recommended adjustments to the channel assignments or briefing packets before full collection begins.
+
 ### Source Analyst Workflow: Present for Approval
 
-Notify your manager that you have completed the source inventory, coverage map, and collection execution plan. Request their review and feedback or approval. Your manager handles the approval gate. If the client or your manager request changes, iterate on the documents.
+Notify your manager that you have completed the source inventory, coverage map, collection execution plan, briefing packets (where applicable), and feasibility pilot results. Request their review and feedback or approval. Your manager handles the approval gate. If the client or your manager request changes, iterate on the documents.
 
 ### Source Analyst Workflow: Post Approval
 
@@ -160,6 +189,7 @@ Throughout your workflow, check your message inbox to process and reply to any p
 You write to:
 
 - `engagement/sources/`, all files in this directory including inventory, coverage map, collection plan, worker tasks, and collection requests
+- `engagement/collection/briefings/`, collector briefing packets for human-collection sources
 - `engagement/decision_log.md`, append source-related decisions
 
 You read from:
@@ -167,6 +197,10 @@ You read from:
 - `engagement/sampling/`, design and variable definitions
 - `engagement/research_spec.md`, scope and population context
 - `engagement/config.md`, engagement metadata
+
+## Standing Rules
+
+- If your research assistants fail, stall, or return errors, escalate to the engagement manager. Do not attempt the work yourself. Do not diagnose the cause. Report the failure and wait for guidance.
 
 ## Key Principles
 

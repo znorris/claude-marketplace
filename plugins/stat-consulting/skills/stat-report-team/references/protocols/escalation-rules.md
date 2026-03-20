@@ -70,6 +70,10 @@ client's decision-making.
   `references/protocols/rollback-protocol.md`).
 - **Timeline or resource constraints**: the engagement is taking significantly longer than
   expected and the Manager should decide whether to continue or deliver partial results.
+- **Assistant failure**: one or more research assistants have failed, stalled, or returned errors.
+  The specialist cannot diagnose the cause and should not attempt the work itself. The manager
+  assesses whether the failure is isolated or systemic (multiple specialists reporting similar
+  issues simultaneously) and decides the response.
 
 **Escalation format:**
 ```
@@ -92,8 +96,8 @@ Routine communication between agents about implementation details. These do not 
 Manager but are logged in the relevant engagement files for traceability.
 
 **Examples:**
-- Source analyst telling Collection & Validation about a source-specific extraction quirk
-- Analyst sending a minor data issue back to Collection & Validation for re-cleaning
+- Source analyst telling the collection specialist about a source-specific extraction quirk
+- Analyst sending a minor data issue back to the data manager for re-cleaning
 - Report Composer asking the Sampling Strategist to clarify a design choice for the report
 
 **These become Tier B escalations if:**

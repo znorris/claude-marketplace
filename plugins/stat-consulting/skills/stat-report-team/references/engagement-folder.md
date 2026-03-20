@@ -28,17 +28,20 @@ engagement/
 │   └── client_submissions/         # Client-supplied data in response to collection requests
 │       └── (submission_001.csv, etc.)
 ├── data/
-│   ├── validation_log.md           # Collection & Validation: quality checks and flags
-│   ├── cleaning_notes.md           # Collection & Validation: transformation log
-│   ├── datasets/                   # Collection & Validation: cleaned data files
+│   ├── validation_log.md           # Data Manager: quality checks and flags
+│   ├── cleaning_notes.md           # Data Manager: transformation log
+│   ├── datasets/                   # Data Manager: cleaned data files
 │   │   └── (cleaned_source_001.csv, etc.)
-│   ├── fetch_tasks/                # Collection & Validation: fetch task files for assistants
+│   ├── fetch_tasks/                # Collection Specialist: fetch task files for assistants
 │   │   ├── progress.md
 │   │   └── results/
-│   ├── extraction_tasks/           # Collection & Validation: extraction task files for assistants
+│   ├── extraction_tasks/           # Collection Specialist: extraction task files for assistants
 │   │   ├── progress.md
 │   │   └── results/
-│   └── batches/                    # Collection & Validation: deduplicated batch files
+│   └── batches/                    # Collection Specialist: deduplicated batch files
+├── collection/
+│   ├── briefings/              # Source Analyst: briefing packets for human collectors
+│   └── submissions/            # Human collectors: returned work products
 ├── analysis/
 │   ├── primary_results.md          # Analyst: main findings
 │   ├── sensitivity.md              # Analyst: sensitivity/robustness analyses
@@ -46,6 +49,7 @@ engagement/
 ├── report/
 │   ├── draft.md                    # Report Composer: the final report
 │   └── limitations.md             # Report Composer: detailed limitations section
+├── process_notes.md                # Manager: lessons learned and process improvements
 └── archive/                        # Manager: rolled-back artifacts
     └── (RB-001_manifest.md, etc.)
 ```
@@ -111,11 +115,12 @@ files during their respective phases.
 
 | Agent | Writes To | Reads From |
 |-------|-----------|------------|
-| Manager | config.md, decision_log.md | Everything |
+| Manager | config.md, decision_log.md, process_notes.md | Everything |
 | Design Architect | research_spec.md, domain/, research_tasks/, decision_log.md | config.md |
 | Sampling Strategist | sampling/*, decision_log.md | research_spec.md, config.md, source analyst feasibility reports |
-| Source Analyst | sources/*, sources/worker_tasks/, sources/collection_plan.md, decision_log.md | sampling/*, research_spec.md, config.md |
-| Collection & Validation | data/*, data/fetch_tasks/, data/extraction_tasks/, data/batches/, decision_log.md | sources/*, sampling/variables.md |
+| Source Analyst | sources/*, sources/worker_tasks/, sources/collection_plan.md, collection/briefings/, decision_log.md | sampling/*, research_spec.md, config.md |
+| Collection Specialist | data/fetch_tasks/, data/extraction_tasks/, data/batches/, decision_log.md | sources/*, collection/submissions/, sampling/variables.md, sampling/design.md, config.md |
+| Data Manager | data/validation_log.md, data/datasets/, data/cleaning_notes.md, decision_log.md | data/extraction_tasks/results/, data/batches/, sources/inventory.md, sampling/variables.md, sampling/design.md, research_spec.md, config.md |
 | Statistical Analyst | analysis/*, decision_log.md | sampling/*, data/*, config.md |
 | Report Composer | report/* | Everything (read-only for report assembly) |
 | Manager (rollback) | archive/*, all files (for updates) | Everything |

@@ -26,3 +26,5 @@ option was selected, and what the tradeoff is]
 ## Feasibility Notes
 
 [Summary of source analyst reconnaissance findings and any design adjustments made]
+
+- Extraction Yield Assumption: [assumed percentage of stores from which prices can be successfully extracted; basis for assumption]

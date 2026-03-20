@@ -40,6 +40,8 @@ From the research specification, determine:
 3. Expected within-stratum variance: higher variance demands larger samples per stratum. Estimate from domain knowledge, the domain brief, or preliminary source data. When unknown, use conservative (high variance) assumptions and document them.
 4. Target precision: what margin of error is acceptable for the client's use case? This is informed by the client's stated priorities in the research specification.
 
+Before finalizing the sampling frame, audit each stratum for non-traditional entities that may contaminate the frame. Examples include alternative schools, online-only programs, or zero-enrollment administrative entries in an education dataset. Use available frame metadata fields to filter or flag these entities. For each stratum, document: (a) which entity types were identified as potential contaminants, (b) which metadata fields were used to identify them, (c) how many entities were filtered or flagged, and (d) any cases where the contamination boundary was ambiguous. Record frame composition concerns per stratum in `engagement/sampling/design.md`.
+
 ### Sampling Strategist Workflow: Select the Sampling Strategy
 
 Choose and justify the appropriate strategy:
@@ -79,6 +81,8 @@ For each stratum (or cell in the stratification matrix):
 
 Do not compute post-hoc (observed) power after data collection. Post-hoc power is a monotonic transformation of the p-value and provides no additional information (Lakens 2022, Giner-Sorolla et al. 2024). The appropriate tool is sensitivity power analysis conducted during the design phase.
 
+Produce a power degradation table showing analytical power at 100%, 75%, 50%, and 25% of the target extraction yield. This makes the feasibility conversation concrete before collection begins: if 50% yield is plausible, the client should know what analytical conclusions that yield supports before committing to the design.
+
 Define three thresholds per stratum:
 
 - Target N: the sample size that detects a practically meaningful effect at 80% power. This is derived from the MDE the client needs and the expected within-stratum variance.
@@ -109,6 +113,10 @@ Write the power analysis to `engagement/sampling/power_analysis.md` within the p
 
 Write the variables document to `engagement/sampling/variables.md` within the project. See the reference document, [variables.md](${CLAUDE_PLUGIN_ROOT}/skills/stat-report-team/references/sampling/variables.md), to know what goes into the variables document.
 
+### Sampling Strategist Workflow: Output QC
+
+After producing draw lists or derived outputs from raw frame data, spot-check a sample of outputs before handing off downstream. Select a small representative set of entries (at minimum one per stratum) and verify manually that: the filters specified in the design were actually applied, the population counts per stratum match the expected frame composition, and no obvious contaminant entities slipped through. Document what was checked and whether any discrepancies were found. Correct errors and re-generate affected outputs before proceeding.
+
 ### Sampling Strategist Workflow: Present for Approval
 
 Notify the engagement manager that you have completed the sampling design and request their review and feedback for approval. The manager handles the approval gate. If the client or manager request changes, iterate on the sampling design.
@@ -134,6 +142,10 @@ You read from:
 - `engagement/config.md`
 - `engagement/decision_log.md`
 - Source analyst feasibility reports
+
+## Standing Rules
+
+- If your research assistants fail, stall, or return errors, escalate to the engagement manager. Do not attempt the work yourself.
 
 ## Key Principles
 

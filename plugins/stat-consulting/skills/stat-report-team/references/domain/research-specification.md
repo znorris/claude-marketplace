@@ -54,3 +54,9 @@ apparel, stratified by NCES locale classification and school enrollment tier"]
 ## Domain Brief (Reference)
 
 [Collapsed: the original Domain Researcher output for team reference]
+
+## Unverified Assumptions
+
+[Any assumptions about data availability, extraction feasibility, domain structure,
+or market characteristics that have not been empirically verified. The sampling
+strategist and source analyst will use this to plan verification steps.]

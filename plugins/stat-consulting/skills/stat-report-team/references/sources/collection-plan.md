@@ -20,6 +20,8 @@ The plan must follow this numbered markdown list format:
 **Deduplication**: [keying strategy, e.g., schools keyed by NCES ID; stores keyed by URL, same URL across schools recorded once and flagged]
 **Expected yield**: [estimated observation range across estimated store count]
 **Worker requests**: [estimated count]
+**Collection channel**: [assistant / human / hybrid] - per source or platform as applicable
+**Briefing packets**: `engagement/collection/briefings/`
 ```
 
 ## Requirements

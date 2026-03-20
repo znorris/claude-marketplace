@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.15.0] - 2026-03-19
+
+### Breaking
+
+- stat-consulting: bumped plugin version to 3.0.0 (new lifecycle gate, folder structure, and agent responsibilities)
+- stat-consulting: `collection-validation` agent removed, replaced by `collection-specialist` and `data-manager` (changes `subagent_type` from `stat-consulting:collection-validation` to `stat-consulting:collection-specialist` and `stat-consulting:data-manager`)
+
+### Added
+
+- stat-consulting: validation findings gate between assessment and transformation phases, requiring manager review before data modification
+- stat-consulting: collection feasibility pilot as a hard gate before Phase 4, requiring pass/fail evidence per platform
+- stat-consulting: hybrid collection model with research assistant extraction and human collector workflows, including collector briefing packet template and `engagement/collection/` directory structure
+- stat-consulting: compaction recovery hook (`hooks/hooks.json`) and reference file injecting critical procedural rules on session resume
+- stat-consulting: dispatch rules and interruption recovery protocol in SKILL.md (SendMessage for team members, Agent tool for assistants only, broadcast-first recovery)
+- stat-consulting: data retrieval method characterization (`static HTML`, `JS-rendered`, `requires cart interaction`, `login-gated`) in source evaluation, inventory, and collection plan
+- stat-consulting: data composition monitoring in data-manager, flagging platform concentration deviations before proceeding
+- stat-consulting: power degradation table (100%/75%/50%/25% yield), frame composition audit, and output QC step in sampling strategist
+- stat-consulting: phased design proposal and unverified assumptions section in design architect and research specification
+- stat-consulting: markdown rendering pitfalls reference and formatting requirements in report template and composer
+- stat-consulting: assistant failure escalation (Tier B), translation obligation, process notes, and standing rules across all agents
+
+### Changed
+
+- stat-consulting: source analyst workflow expanded with collection channel recommendation, briefing packet production, and feasibility pilot steps
+- stat-consulting: engagement lifecycle adds assistant lifecycle management and bottleneck detection guidance
+- stat-consulting: engagement folder and access control updated for collection directories and process notes
+- stat-consulting: reference templates updated with extraction yield, collection channel, and positive/negative example fields
+
 ## [3.14.1] - 2026-03-19
 
 ### Changed

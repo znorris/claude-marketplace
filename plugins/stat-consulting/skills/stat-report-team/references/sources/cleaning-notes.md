@@ -1,6 +1,6 @@
 # Cleaning Notes Template
 
-The collection & validation specialist writes the cleaning notes to `engagement/data/cleaning_notes.md`. This document logs every transformation applied to the data, stratum assignments, and known issues.
+The data manager writes the cleaning notes to `engagement/data/cleaning_notes.md`. This document logs every transformation applied to the data, stratum assignments, and known issues.
 
 ```markdown
 # Cleaning Notes

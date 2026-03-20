@@ -115,11 +115,11 @@ Descriptions serve double duty: they are documentation AND a search surface for 
 
 The `Agent` tool is available only to the main session (Manager). Team agents do not have it. When a team agent needs external work done (web research, document extraction, domain discovery), it writes a task file to the engagement folder and sends the Manager a short message requesting a worker spawn. The Manager spawns a general-purpose sub-agent (`subagent_type: general-purpose`, `model: claude-sonnet-4-6`) pointing at the task file path. The worker reads the task file, executes, writes results to the specified output path, sends a completion notice to the `reply_to` agent named in the task file, and shuts down.
 
-**`subagent_type`** is a fixed enum of registered agent types. The available values are determined by marketplace registration -- they are not file paths. Example values: `general-purpose`, `stat-consulting:source-scout`, `stat-consulting:collection-validation`, `development:execution-lead`. Format for plugin-defined agents is `<plugin-name>:<agent-name>`.
+**`subagent_type`** is a fixed enum of registered agent types. The available values are determined by marketplace registration -- they are not file paths. Example values: `general-purpose`, `stat-consulting:source-analyst`, `stat-consulting:collection-specialist`, `development:execution-lead`. Format for plugin-defined agents is `<plugin-name>:<agent-name>`.
 
 **`team_name`** is what distinguishes a team agent from a sub-agent:
 
-- **Team agent**: `Agent` tool with `team_name` set. The agent is persistent, interactive, surfaces permission prompts to the user, and can receive messages via SendMessage. Use the correct `subagent_type` for the specialist role (e.g., `stat-consulting:source-scout`), not `general-purpose`.
+- **Team agent**: `Agent` tool with `team_name` set. The agent is persistent, interactive, surfaces permission prompts to the user, and can receive messages via SendMessage. Use the correct `subagent_type` for the specialist role (e.g., `stat-consulting:source-analyst`), not `general-purpose`.
 - **Sub-agent**: `Agent` tool without `team_name`. Disposable, fire-and-forget, returns a single result to the parent. Use for narrow tasks: web fetches, HTML parsing, PDF extraction, domain research.
 
 Do not describe `subagent_type` as "pointing to a definition file" -- the registered type IS the definition. Do not instruct agents to "bypass the definition file" or describe it as a "behavioral contract" separate from the type registration.

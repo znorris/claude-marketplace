@@ -15,12 +15,11 @@ after it has already been incorporated into the working data.
 **Examples**:
 - The Analyst discovers during sensitivity analysis that a single source is driving the primary
   finding (outsized influence suggesting measurement artifact or systematic bias)
-- Collection & Validation identifies post-hoc that a source rated as independent actually shares
+- The data manager identifies post-hoc that a source rated as independent actually shares
   an upstream database with another source already in the dataset
 - A data extraction error is discovered that systematically affected values from one source
 
-**Scope of impact**: Source Analyst (needs to find replacement), Collection & Validation (needs to
-re-validate), Analyst (needs to re-run). Sampling Strategist and Design Architect are unaffected.
+**Scope of impact**: Source Analyst (needs to find replacement), collection specialist (re-fetch if replacement source found), data manager (re-validate and re-process), Analyst (needs to re-run). Sampling Strategist and Design Architect are unaffected.
 
 ### Level 2: Design-Level Rollback
 
@@ -113,7 +112,8 @@ specifying:
 **Level 1 notification targets:**
 - Source Analyst: "A data source has been rolled back. The coverage map shows a re-opened gap in
   [stratum]. Please identify a replacement source or confirm the gap is unfillable."
-- Collection & Validation: "If a replacement source is found, process it through normal validation.
+- Collection Specialist: "If a replacement source is found, re-fetch the data per the revised collection plan."
+- Data Manager: "Re-validate and re-process affected datasets once replacement data is available.
   The contaminated data has been archived."
 - Analyst: "Previous analysis results have been archived. Once replacement data is available (or
   the gap is confirmed), re-run the analysis by reading the current state of the data/ folder."

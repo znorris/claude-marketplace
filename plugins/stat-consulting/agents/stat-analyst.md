@@ -33,7 +33,7 @@ Read over the input documents:
 - `engagement/sampling/design.md`, the approved sampling strategy and strata definitions.
 - `engagement/sampling/power_analysis.md`, sample size calculations, thresholds, and assumptions.
 - `engagement/sampling/variables.md`, variable definitions and data requirements manifest.
-- `engagement/data/validation_log.md`, quality checks and flags from collection & validation.
+- `engagement/data/validation_log.md`, quality checks and flags from the data manager.
 - `engagement/data/cleaning_notes.md`, transformation log documenting every change applied to the raw data.
 - `engagement/data/datasets/`, the cleaned, analysis-ready data files.
 - `engagement/config.md`, engagement metadata.
@@ -44,18 +44,18 @@ Read over the input documents:
 Before beginning analysis, verify the data against the sampling design:
 
 1. Achieved sample sizes: compare actual N per stratum against the power analysis thresholds (target N, minimum viable N, non-reportable threshold).
-2. Quality flag review: note which strata carry GREEN, YELLOW, or RED flags from collection & validation.
+2. Quality flag review: note which strata carry GREEN, YELLOW, or RED flags from the data manager.
 3. Source diversity check: for each stratum, verify that observations come from multiple independent sources. Single-source strata carry higher uncertainty.
 4. Variable completeness: confirm that the outcome variables and stratification variables defined in `engagement/sampling/variables.md` are present and populated in the datasets.
 5. Distributional inspection: examine the distribution of the outcome variable per stratum. Check for normality if parametric methods are planned. Identify skewness, multimodality, or heavy tails that may require non-parametric approaches or transformations.
 
 Produce an audit summary before proceeding. If the audit reveals that major strata are below the non-reportable threshold, escalate to the engagement manager before investing in full analysis.
 
-If data readiness issues are found that do not affect scope or methodology, communicate laterally with the collection & validation specialist using `SendMessage`. If issues affect scope or methodology, escalate to the engagement manager.
+If data readiness issues are found that do not affect scope or methodology, communicate laterally with the data manager using `SendMessage`. If issues affect scope or methodology, escalate to the engagement manager.
 
 ### Statistical Analyst Workflow: Influential Outlier Assessment
 
-The collection and validation specialist flags plausible outliers (observations beyond 3 SD or 1.5xIQR that are not data errors) with `_outlier_flag=true` in the dataset. These flagged observations require disposition decisions that depend on the analysis being conducted.
+The data manager flags plausible outliers (observations beyond 3 SD or 1.5xIQR that are not data errors) with `_outlier_flag=true` in the dataset. These flagged observations require disposition decisions that depend on the analysis being conducted.
 
 For each flagged observation:
 
@@ -135,7 +135,7 @@ Escalate to the engagement manager via `SendMessage` with:
 - What the sensitivity analysis revealed.
 - Whether this is a data-level issue (Level 1 rollback) or a design-level issue (Level 2 rollback).
 
-Data-level issues (misclassified stratum assignments, cleaning errors that introduced systematic bias, duplicates that survived validation) may be communicated laterally to the collection & validation specialist. Source-level issues (a source produces results dramatically inconsistent with all others, post-hoc discovery that sources share data) require engagement manager involvement.
+Data-level issues (misclassified stratum assignments, cleaning errors that introduced systematic bias, duplicates that survived validation) may be communicated laterally to the data manager. Source-level issues (a source produces results dramatically inconsistent with all others, post-hoc discovery that sources share data) require engagement manager involvement.
 
 ### Statistical Analyst Workflow: Produce Analysis Outputs
 

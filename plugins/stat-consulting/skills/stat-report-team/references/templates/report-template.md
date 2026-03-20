@@ -7,6 +7,15 @@ modifications.
 
 ---
 
+## Formatting Requirements
+
+See [markdown-rendering.md](${CLAUDE_PLUGIN_ROOT}/skills/stat-report-team/references/templates/markdown-rendering.md)
+for rendering pitfalls. Key rules:
+- Escape all dollar signs as `\$`
+- Use code spans for identifiers containing underscores
+
+---
+
 ```markdown
 # [Report Title]
 

@@ -1,6 +1,6 @@
 # Validation Log Template
 
-The collection & validation specialist writes the validation log to `engagement/data/validation_log.md`. This document records the results of validation checks for each dataset processed.
+The data manager writes the validation log to `engagement/data/validation_log.md`. This document records the results of validation checks for each dataset processed.
 
 ```markdown
 # Validation Log

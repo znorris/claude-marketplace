@@ -38,3 +38,15 @@
 [What assumptions were made about variance, non-response, design effect?
 How sensitive is the MDE to these assumptions?
 What would change if the DEFF assumption is wrong?]
+
+## Extraction Yield Degradation
+
+Store-count targets assume full price extractability from accessible stores. If extraction
+rates fall below 100%, analytical power degrades as follows:
+
+| Extraction Yield | Effective N per Stratum | MDE at Target Power | Power at Original MDE |
+|-----------------|------------------------|--------------------|-----------------------|
+| 100%            | [value]                | [value]            | [value]               |
+| 75%             | [value]                | [value]            | [value]               |
+| 50%             | [value]                | [value]            | [value]               |
+| 25%             | [value]                | [value]            | [value]               |

@@ -14,6 +14,7 @@ For each source included in the active inventory:
 - Recency: [date of data / update frequency]
 - Quality Ratings: Coverage [S/A/W] | Recency [S/A/W] | Accuracy [S/A/W] | Bias [S/A/W]
 - Independence: [independent / shares upstream with Source X]
+- Data retrieval method: [static HTML / JS-rendered / requires cart interaction / login-gated]
 - Access method: [web scrape / API / download / manual]
 - Notes: [any caveats, access issues, or special considerations]
 ```
