@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.18.1] - 2026-04-28
+
+### Changed
+
+- converse: SKILL.md now describes the chopped-tail problem (TTS engines returning before the audio buffer drains) and prescribes a trailing silence pad, with macOS `say`'s `[[slnc 400]]` shown as a concrete example
+
 ## [3.18.0] - 2026-04-28
 
 ### Added

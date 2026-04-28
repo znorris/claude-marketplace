@@ -40,6 +40,13 @@ Invoke the engine via Bash. Quote carefully so shell metacharacters in the spoke
 
 Prefer a blocking invocation so the next turn does not start while audio is still playing.
 
+## Avoiding a Chopped Tail
+
+Many TTS engines return control just before the audio buffer finishes draining, which clips the last syllable. Append a short trailing pause to the spoken text so the buffer outlives the process. The exact mechanism is engine-specific, work it out from the engine's docs:
+
+- macOS `say`: append the embedded command `[[slnc 400]]` (400 ms of silence). Example: `say "Hello there.[[slnc 400]]"`.
+- Other engines: look for an equivalent silence directive, an `--end-pause` flag, or simply append a period or trailing space. If nothing exists, run a tiny `sleep 0.4` after the speech command.
+
 # Cadence
 
 Speech is for conversation, not narration. Keep each spoken turn short enough that the user can jump in:
