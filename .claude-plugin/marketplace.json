@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Developer workflow skills for the full development lifecycle: define, plan, implement, review, commit, and release",
-    "version": "3.17.0"
+    "version": "3.18.0"
   },
   "plugins": [
     {
@@ -135,6 +135,19 @@
       "keywords": [
         "mr. meeseeks",
         "meeseeks"
+      ]
+    },
+    {
+      "name": "converse",
+      "source": "./plugins/converse",
+      "description": "Speak responses aloud through the host system's text-to-speech engine with conversational cadence",
+      "version": "1.0.0",
+      "keywords": [
+        "tts",
+        "speech",
+        "voice",
+        "say",
+        "converse"
       ]
     }
   ]

@@ -1,0 +1,5 @@
+{
+  "name": "converse",
+  "description": "Speak responses aloud using the host system's text-to-speech engine, with conversational cadence that leaves room for the user to reply",
+  "version": "1.0.0"
+}

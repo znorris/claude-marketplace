@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.18.0] - 2026-04-28
+
+### Added
+
+- converse: new plugin with `/converse` skill that speaks responses aloud via the host TTS engine (macOS `say`, Linux `spd-say`/`espeak`, Windows `System.Speech`) using a short, back-and-forth cadence that does not duplicate spoken content into the text reply
+
 ## [3.17.0] - 2026-03-20
 
 ### Added

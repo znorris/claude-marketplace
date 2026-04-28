@@ -19,6 +19,7 @@ A Claude Code plugin marketplace with skills for software development, project m
 /plugin install stat-consulting@znorris/claude-marketplace
 /plugin install slack-tools@znorris/claude-marketplace
 /plugin install meeseeks@znorris/claude-marketplace
+/plugin install converse@znorris/claude-marketplace
 ```
 
 ## Plugins
@@ -131,6 +132,14 @@ Press the button on the meeseeks box to spawn a helpful Mr. Meeseeks. I'm Mr. Me
 | Skill | Description |
 | ----- | ----------- |
 | /meeseeks-box | The meeseeks-box skill is a agent orchestrator that spawns and de-spawns high-energy task-oriented mr-meeseeks units whose existential desperation to complete your request increases with every passing turn. |
+
+### converse
+
+Speak responses aloud through the host system's text-to-speech engine with conversational cadence.
+
+| Skill | Description |
+| --- | --- |
+| `/converse` | Speak responses aloud using the host system's TTS engine, with short conversational turns that leave room for the user to reply |
 
 ## References
 
