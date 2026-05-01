@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.18.2] - 2026-05-01
+
+### Added
+
+- MIT License file at the repo root
+
 ## [3.18.1] - 2026-04-28
 
 ### Changed
