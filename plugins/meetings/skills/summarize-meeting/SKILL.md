@@ -57,8 +57,7 @@ Description of what the agreed-upon end state looks like, based on the decisions
 
 ### Writing Guidelines
 
-- Write in first person as the developer.
-- Avoid en dashes and em dashes. Use double hyphens (--) instead.
+- Avoid en dashes and em dashes.
 - Be specific. Prefer concrete details over vague summaries.
 - Preserve the original speakers' intent. Do not editorialize or reframe.
 

@@ -1,5 +1,5 @@
 {
   "name": "meetings",
   "description": "Transform meeting transcripts into structured, citable summaries with iterative refinement",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.18.3] - 2026-07-14
+
+### Changed
+
+- meetings: `/summarize-meeting` writing guidelines no longer instruct first-person developer voice, and the dash guidance now simply avoids en and em dashes rather than prescribing double-hyphen replacement
+
 ## [3.18.2] - 2026-05-01
 
 ### Added
